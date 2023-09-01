@@ -1,0 +1,49 @@
+package model
+
+import (
+	"gorm.io/gorm"
+	"time"
+)
+
+type User struct {
+	ID             uint   `gorm:"primaryKey"`
+	Name           string `json:"name" gorm:"unique;type:varchar(255);not null"`
+	Password       string `json:"password" gorm:"type:varchar(255);not null"`
+	Email          string `json:"email" gorm:"type:varchar(255);not null"`
+	FamilyID       *uint
+	RoleID         *uint
+	Family         Family
+	Role           UserRole       `gorm:"foreignKey:RoleID"`
+	HouseworkPoint HouseworkPoint `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      gorm.DeletedAt `gorm:"index"`
+}
+
+func (u *User) Create(tx *gorm.DB) error {
+	return txExec("create", u, tx)
+}
+
+func (u *User) Update(tx *gorm.DB) error {
+	return txExec("update", u, tx)
+}
+
+func (u *User) Delete(tx *gorm.DB) error {
+	return txExec("delete", u, tx)
+}
+
+func (u *User) Get() (*User, error) {
+	var res User
+	if err := DB.Where(u).First(&res).Error; err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+func (u *User) GetAll() ([]User, error) {
+	var res []User
+	if err := DB.Where(u).Find(&res).Error; err != nil {
+		return nil, err
+	}
+	return res, nil
+}
