@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+
+option go_package = "pkg/grpc";
+
+
+package shw;
+
+
+service HouseworkService {
+  rpc GetHousework(HouseworkRequest) returns (HouseworkResponse) {}
+  rpc GetHouseworkDetail(HouseworkRequest) returns (HouseworkResponse) {}
+  rpc CreateHousework(Housework) returns (CommonResponse) {}
+  rpc UpdateHousework(Housework) returns (CommonResponse) {}
+  rpc FinishHousework(Housework) returns (CommonResponse) {}
+  rpc DeleteHousework(Housework) returns (CommonResponse) {}
+  rpc GetHouseworkMemo(HouseworkDetailRequest) returns (HouseworkDetailResponse) {}
+  rpc CreateHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
+  rpc UpdateHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
+  rpc DeleteHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
+  rpc GetHouseworkPoint(HouseworkPointRequest) returns (HouseworkPointResponse) {}
+  rpc GetHouseworkPointHistory(HouseworkPointHistoryRequest) returns (HouseworkPointHistoryResponse) {}
+}
+
+message HouseworkRequest {
+  uint64 familyId = 1;
+}
+
+message HouseworkDetailRequest {
+  uint64 id = 1;
+}
+
+message HouseworkMemoRequest {
+  uint64 houseworkId = 1;
+}
+
+message HouseworkPointRequest {
+  uint64 userId = 1;
+  uint64 familyId = 2;
+}
+
+message HouseworkPointHistoryRequest {
+  uint64 userId = 1;
+  uint64 familyId = 2;
+}
+
+message HouseworkResponse {
+  repeated Housework housework = 1;
+}
+
+message HouseworkDetailResponse {
+  Housework housework = 1;
+  repeated HouseworkMemo memo = 2;
+}
+
+message HouseworkMemoResponse {
+  repeated HouseworkMemo memo = 1;
+}
+
+message HouseworkPointResponse {
+  repeated HouseworkPoint point = 1;
+}
+
+message HouseworkPointHistoryResponse {
+  repeated HouseworkPointHistory history = 1;
+}
+
+message UserInfo {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message CommonResponse {
+  bool ok = 1;
+  int64 statusCode = 2;
+  string message = 3;
+}
+
+message Housework {
+  uint64 id = 1;
+  uint64 familyId = 2;
+  string name = 3;
+  string detail = 4;
+  string status = 5;
+  UserInfo WorkUser = 6;
+  int64 startedAt = 7;
+  int64 endedAt = 8;
+}
+
+message HouseworkMemo {
+  uint64 id = 1;
+  uint64 houseworkId = 2;
+  string text = 3;
+  UserInfo draftUser = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
+}
+
+message HouseworkPoint {
+  uint64 id = 1;
+  UserInfo user = 2;
+  int64 point = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
+}
+
+message HouseworkPointHistory {
+  uint64 id = 1;
+  UserInfo user = 2;
+  string detail = 3;
+  int64 point = 4;
+}
+
+message HouseworkTemplate {
+  uint64 id = 1;
+  uint64 familyId = 2;
+  string name = 3;
+  string detail = 4;
+}
+

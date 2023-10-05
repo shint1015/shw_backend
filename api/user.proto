@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "pkg/grpc";
+
+package shw;
+
+service UserService {
+  rpc UpdateRole(UpdateRoleRequest) returns (CommonResponse) {}
+}
+
+message UpdateRoleRequest {
+  string userId = 1;
+  string role = 2;
+}
+
+message CommonResponse {
+  bool ok = 1;
+  int64 statusCode = 2;
+  string message = 3;
+}

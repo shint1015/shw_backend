@@ -6,13 +6,14 @@ import (
 )
 
 type HouseworkPointHistory struct {
-	ID        uint   `json:"id" gorm:"primary_key"`
-	UserID    uint   `json:"user_id" gorm:"foreignKey:UserID"`
-	Detail    string `json:"detail" gorm:"type:text;not null"`
-	Point     int    `json:"point" gorm:"type:int;not null"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	ID             uint   `json:"id" gorm:"primary_key"`
+	UserID         uint   `json:"user_id" gorm:"foreignKey:UserID"`
+	Detail         string `json:"detail" gorm:"type:text;not null"`
+	Point          int    `json:"point" gorm:"type:int;not null"`
+	AggregatedFlag bool   `json:"aggregated_flag" gorm:"type:bool;not null"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      gorm.DeletedAt `gorm:"index"`
 }
 
 func (m *HouseworkPointHistory) Create(tx *gorm.DB) error {

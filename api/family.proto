@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package = "pkg/grpc";
+
+package shw;
+
+
+service FamilyService {
+    rpc GetFamily (FamilyRequest) returns (FamilyResponse) {}
+    rpc CreateFamily (Family) returns (CommonResponse) {}
+    rpc UpdateFamily (Family) returns (CommonResponse) {}
+    rpc DeleteFamily (Family) returns (CommonResponse) {}
+    rpc addFamilyMember (Family) returns (CommonResponse) {}
+}
+
+message CommonResponse {
+  bool ok = 1;
+  int64 statusCode = 2;
+  string message = 3;
+}
+
+message FamilyRequest {
+    uint64 userId = 1;
+}
+
+message AddFamilyMemberRequest {
+    uint64 email = 1;
+    uint64 familyId = 2;
+}
+
+message FamilyResponse {
+    repeated Family family = 1;
+}
+
+message UserInfo {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message Family {
+    uint64 id = 1;
+    repeated UserInfo user = 2;
+    string name = 3;
+    string pointPerWorkTime = 4;
+}
+
+
