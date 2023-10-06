@@ -7,13 +7,13 @@ package shw;
 
 service FamilyService {
     rpc GetFamily (FamilyRequest) returns (FamilyResponse) {}
-    rpc CreateFamily (Family) returns (CommonResponse) {}
-    rpc UpdateFamily (Family) returns (CommonResponse) {}
-    rpc DeleteFamily (Family) returns (CommonResponse) {}
-    rpc addFamilyMember (Family) returns (CommonResponse) {}
+    rpc CreateFamily (Family) returns (FamilyCommonResponse) {}
+    rpc UpdateFamily (Family) returns (FamilyCommonResponse) {}
+    rpc DeleteFamily (Family) returns (FamilyCommonResponse) {}
+    rpc AddFamilyMember (Family) returns (FamilyCommonResponse) {}
 }
 
-message CommonResponse {
+message FamilyCommonResponse {
   bool ok = 1;
   int64 statusCode = 2;
   string message = 3;
@@ -32,14 +32,14 @@ message FamilyResponse {
     repeated Family family = 1;
 }
 
-message UserInfo {
+message FamilyUserInfo {
   uint64 id = 1;
   string name = 2;
 }
 
 message Family {
     uint64 id = 1;
-    repeated UserInfo user = 2;
+    repeated FamilyUserInfo user = 2;
     string name = 3;
     string pointPerWorkTime = 4;
 }

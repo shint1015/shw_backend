@@ -10,14 +10,14 @@ package shw;
 service HouseworkService {
   rpc GetHousework(HouseworkRequest) returns (HouseworkResponse) {}
   rpc GetHouseworkDetail(HouseworkRequest) returns (HouseworkResponse) {}
-  rpc CreateHousework(Housework) returns (CommonResponse) {}
-  rpc UpdateHousework(Housework) returns (CommonResponse) {}
-  rpc FinishHousework(Housework) returns (CommonResponse) {}
-  rpc DeleteHousework(Housework) returns (CommonResponse) {}
+  rpc CreateHousework(Housework) returns (HouseworkCommonResponse) {}
+  rpc UpdateHousework(Housework) returns (HouseworkCommonResponse) {}
+  rpc FinishHousework(Housework) returns (HouseworkCommonResponse) {}
+  rpc DeleteHousework(Housework) returns (HouseworkCommonResponse) {}
   rpc GetHouseworkMemo(HouseworkDetailRequest) returns (HouseworkDetailResponse) {}
-  rpc CreateHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
-  rpc UpdateHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
-  rpc DeleteHouseworkMemo(HouseworkMemo) returns (CommonResponse) {}
+  rpc CreateHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
+  rpc UpdateHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
+  rpc DeleteHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
   rpc GetHouseworkPoint(HouseworkPointRequest) returns (HouseworkPointResponse) {}
   rpc GetHouseworkPointHistory(HouseworkPointHistoryRequest) returns (HouseworkPointHistoryResponse) {}
 }
@@ -65,12 +65,12 @@ message HouseworkPointHistoryResponse {
   repeated HouseworkPointHistory history = 1;
 }
 
-message UserInfo {
+message HouseworkUserInfo {
   uint64 id = 1;
   string name = 2;
 }
 
-message CommonResponse {
+message HouseworkCommonResponse {
   bool ok = 1;
   int64 statusCode = 2;
   string message = 3;
@@ -82,7 +82,7 @@ message Housework {
   string name = 3;
   string detail = 4;
   string status = 5;
-  UserInfo WorkUser = 6;
+  HouseworkUserInfo WorkUser = 6;
   int64 startedAt = 7;
   int64 endedAt = 8;
 }
@@ -91,14 +91,14 @@ message HouseworkMemo {
   uint64 id = 1;
   uint64 houseworkId = 2;
   string text = 3;
-  UserInfo draftUser = 4;
+  HouseworkUserInfo draftUser = 4;
   int64 createdAt = 5;
   int64 updatedAt = 6;
 }
 
 message HouseworkPoint {
   uint64 id = 1;
-  UserInfo user = 2;
+  HouseworkUserInfo user = 2;
   int64 point = 4;
   int64 createdAt = 5;
   int64 updatedAt = 6;
@@ -106,7 +106,7 @@ message HouseworkPoint {
 
 message HouseworkPointHistory {
   uint64 id = 1;
-  UserInfo user = 2;
+  HouseworkUserInfo user = 2;
   string detail = 3;
   int64 point = 4;
 }

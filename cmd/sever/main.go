@@ -14,6 +14,9 @@ import (
 
 type ShwServer struct {
 	shwgrpc.UnimplementedHelloServiceServer
+	shwgrpc.UnimplementedHouseworkServiceServer
+	shwgrpc.UnimplementedFamilyServiceServer
+	shwgrpc.UnimplementedUserServiceServer
 }
 
 func NewShwServer() *ShwServer {

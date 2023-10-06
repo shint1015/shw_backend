@@ -5,7 +5,7 @@ option go_package = "pkg/grpc";
 package shw;
 
 service UserService {
-  rpc UpdateRole(UpdateRoleRequest) returns (CommonResponse) {}
+  rpc UpdateRole(UpdateRoleRequest) returns (UserCommonResponse) {}
 }
 
 message UpdateRoleRequest {
@@ -13,7 +13,7 @@ message UpdateRoleRequest {
   string role = 2;
 }
 
-message CommonResponse {
+message UserCommonResponse {
   bool ok = 1;
   int64 statusCode = 2;
   string message = 3;

@@ -23,10 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FamilyServiceClient interface {
 	GetFamily(ctx context.Context, in *FamilyRequest, opts ...grpc.CallOption) (*FamilyResponse, error)
-	CreateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error)
-	UpdateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error)
-	DeleteFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error)
-	AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error)
+	CreateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
+	UpdateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
+	DeleteFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
+	AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
 }
 
 type familyServiceClient struct {
@@ -46,8 +46,8 @@ func (c *familyServiceClient) GetFamily(ctx context.Context, in *FamilyRequest, 
 	return out, nil
 }
 
-func (c *familyServiceClient) CreateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *familyServiceClient) CreateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
+	out := new(FamilyCommonResponse)
 	err := c.cc.Invoke(ctx, "/shw.FamilyService/CreateFamily", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -55,8 +55,8 @@ func (c *familyServiceClient) CreateFamily(ctx context.Context, in *Family, opts
 	return out, nil
 }
 
-func (c *familyServiceClient) UpdateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *familyServiceClient) UpdateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
+	out := new(FamilyCommonResponse)
 	err := c.cc.Invoke(ctx, "/shw.FamilyService/UpdateFamily", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -64,8 +64,8 @@ func (c *familyServiceClient) UpdateFamily(ctx context.Context, in *Family, opts
 	return out, nil
 }
 
-func (c *familyServiceClient) DeleteFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *familyServiceClient) DeleteFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
+	out := new(FamilyCommonResponse)
 	err := c.cc.Invoke(ctx, "/shw.FamilyService/DeleteFamily", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -73,9 +73,9 @@ func (c *familyServiceClient) DeleteFamily(ctx context.Context, in *Family, opts
 	return out, nil
 }
 
-func (c *familyServiceClient) AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
-	err := c.cc.Invoke(ctx, "/shw.FamilyService/addFamilyMember", in, out, opts...)
+func (c *familyServiceClient) AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
+	out := new(FamilyCommonResponse)
+	err := c.cc.Invoke(ctx, "/shw.FamilyService/AddFamilyMember", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,10 +87,10 @@ func (c *familyServiceClient) AddFamilyMember(ctx context.Context, in *Family, o
 // for forward compatibility
 type FamilyServiceServer interface {
 	GetFamily(context.Context, *FamilyRequest) (*FamilyResponse, error)
-	CreateFamily(context.Context, *Family) (*CommonResponse, error)
-	UpdateFamily(context.Context, *Family) (*CommonResponse, error)
-	DeleteFamily(context.Context, *Family) (*CommonResponse, error)
-	AddFamilyMember(context.Context, *Family) (*CommonResponse, error)
+	CreateFamily(context.Context, *Family) (*FamilyCommonResponse, error)
+	UpdateFamily(context.Context, *Family) (*FamilyCommonResponse, error)
+	DeleteFamily(context.Context, *Family) (*FamilyCommonResponse, error)
+	AddFamilyMember(context.Context, *Family) (*FamilyCommonResponse, error)
 	mustEmbedUnimplementedFamilyServiceServer()
 }
 
@@ -101,16 +101,16 @@ type UnimplementedFamilyServiceServer struct {
 func (UnimplementedFamilyServiceServer) GetFamily(context.Context, *FamilyRequest) (*FamilyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFamily not implemented")
 }
-func (UnimplementedFamilyServiceServer) CreateFamily(context.Context, *Family) (*CommonResponse, error) {
+func (UnimplementedFamilyServiceServer) CreateFamily(context.Context, *Family) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFamily not implemented")
 }
-func (UnimplementedFamilyServiceServer) UpdateFamily(context.Context, *Family) (*CommonResponse, error) {
+func (UnimplementedFamilyServiceServer) UpdateFamily(context.Context, *Family) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFamily not implemented")
 }
-func (UnimplementedFamilyServiceServer) DeleteFamily(context.Context, *Family) (*CommonResponse, error) {
+func (UnimplementedFamilyServiceServer) DeleteFamily(context.Context, *Family) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFamily not implemented")
 }
-func (UnimplementedFamilyServiceServer) AddFamilyMember(context.Context, *Family) (*CommonResponse, error) {
+func (UnimplementedFamilyServiceServer) AddFamilyMember(context.Context, *Family) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFamilyMember not implemented")
 }
 func (UnimplementedFamilyServiceServer) mustEmbedUnimplementedFamilyServiceServer() {}
@@ -208,7 +208,7 @@ func _FamilyService_AddFamilyMember_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shw.FamilyService/addFamilyMember",
+		FullMethod: "/shw.FamilyService/AddFamilyMember",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FamilyServiceServer).AddFamilyMember(ctx, req.(*Family))
@@ -240,7 +240,7 @@ var FamilyService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _FamilyService_DeleteFamily_Handler,
 		},
 		{
-			MethodName: "addFamilyMember",
+			MethodName: "AddFamilyMember",
 			Handler:    _FamilyService_AddFamilyMember_Handler,
 		},
 	},
