@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/joho/godotenv"
-	"shw/utils"
+	"shwgrpc/utils"
 )
 
 func LoadEnv() *utils.CustomError {
