@@ -16,6 +16,7 @@ type Housework struct {
 	WorkToUser   User `json:"work_to_id" gorm:"foreignKey:WorkTo"`
 	WorkTimeNum  uint
 	WorkTimeType string
+	IsPointAdded bool
 	StartedAt    time.Time
 	EndedAt      time.Time
 	CreatedAt    time.Time
