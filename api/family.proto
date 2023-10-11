@@ -10,7 +10,7 @@ service FamilyService {
     rpc CreateFamily (Family) returns (FamilyCommonResponse) {}
     rpc UpdateFamily (Family) returns (FamilyCommonResponse) {}
     rpc DeleteFamily (Family) returns (FamilyCommonResponse) {}
-    rpc AddFamilyMember (Family) returns (FamilyCommonResponse) {}
+    rpc AddFamilyMember (AddFamilyMemberRequest) returns (FamilyCommonResponse) {}
 }
 
 message FamilyCommonResponse {
@@ -20,21 +20,39 @@ message FamilyCommonResponse {
 }
 
 message FamilyRequest {
-    uint64 userId = 1;
+    uint64 FamilyId = 1;
+}
+
+message FamilyHouseworkPointRequest {
+  uint64 familyId = 2;
+}
+
+message FamilyHouseworkPointResponse {
+  repeated FamilyHouseworkPoint houseworkPoint = 1;
+}
+
+message FamilyHouseworkPoint {
+  uint64 id = 1;
+  FamilyUserInfo user = 2;
+  int64 point = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
 }
 
 message AddFamilyMemberRequest {
-    uint64 email = 1;
-    uint64 familyId = 2;
+    string name = 1;
+    string email = 2;
+    uint64 familyId = 3;
 }
 
 message FamilyResponse {
-    repeated Family family = 1;
+    Family family = 1;
 }
 
 message FamilyUserInfo {
   uint64 id = 1;
   string name = 2;
+  string role = 3;
 }
 
 message Family {

@@ -26,7 +26,7 @@ type FamilyServiceClient interface {
 	CreateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
 	UpdateFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
 	DeleteFamily(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
-	AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
+	AddFamilyMember(ctx context.Context, in *AddFamilyMemberRequest, opts ...grpc.CallOption) (*FamilyCommonResponse, error)
 }
 
 type familyServiceClient struct {
@@ -73,7 +73,7 @@ func (c *familyServiceClient) DeleteFamily(ctx context.Context, in *Family, opts
 	return out, nil
 }
 
-func (c *familyServiceClient) AddFamilyMember(ctx context.Context, in *Family, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
+func (c *familyServiceClient) AddFamilyMember(ctx context.Context, in *AddFamilyMemberRequest, opts ...grpc.CallOption) (*FamilyCommonResponse, error) {
 	out := new(FamilyCommonResponse)
 	err := c.cc.Invoke(ctx, "/shw.FamilyService/AddFamilyMember", in, out, opts...)
 	if err != nil {
@@ -90,7 +90,7 @@ type FamilyServiceServer interface {
 	CreateFamily(context.Context, *Family) (*FamilyCommonResponse, error)
 	UpdateFamily(context.Context, *Family) (*FamilyCommonResponse, error)
 	DeleteFamily(context.Context, *Family) (*FamilyCommonResponse, error)
-	AddFamilyMember(context.Context, *Family) (*FamilyCommonResponse, error)
+	AddFamilyMember(context.Context, *AddFamilyMemberRequest) (*FamilyCommonResponse, error)
 	mustEmbedUnimplementedFamilyServiceServer()
 }
 
@@ -110,7 +110,7 @@ func (UnimplementedFamilyServiceServer) UpdateFamily(context.Context, *Family) (
 func (UnimplementedFamilyServiceServer) DeleteFamily(context.Context, *Family) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFamily not implemented")
 }
-func (UnimplementedFamilyServiceServer) AddFamilyMember(context.Context, *Family) (*FamilyCommonResponse, error) {
+func (UnimplementedFamilyServiceServer) AddFamilyMember(context.Context, *AddFamilyMemberRequest) (*FamilyCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFamilyMember not implemented")
 }
 func (UnimplementedFamilyServiceServer) mustEmbedUnimplementedFamilyServiceServer() {}
@@ -199,7 +199,7 @@ func _FamilyService_DeleteFamily_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _FamilyService_AddFamilyMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Family)
+	in := new(AddFamilyMemberRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func _FamilyService_AddFamilyMember_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/shw.FamilyService/AddFamilyMember",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FamilyServiceServer).AddFamilyMember(ctx, req.(*Family))
+		return srv.(FamilyServiceServer).AddFamilyMember(ctx, req.(*AddFamilyMemberRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

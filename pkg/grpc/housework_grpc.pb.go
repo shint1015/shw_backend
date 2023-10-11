@@ -23,12 +23,12 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HouseworkServiceClient interface {
 	GetHousework(ctx context.Context, in *HouseworkRequest, opts ...grpc.CallOption) (*HouseworkResponse, error)
-	GetHouseworkDetail(ctx context.Context, in *HouseworkRequest, opts ...grpc.CallOption) (*HouseworkResponse, error)
+	GetHouseworkDetail(ctx context.Context, in *HouseworkDetailRequest, opts ...grpc.CallOption) (*HouseworkDetailResponse, error)
 	CreateHousework(ctx context.Context, in *Housework, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
 	UpdateHousework(ctx context.Context, in *Housework, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
 	FinishHousework(ctx context.Context, in *Housework, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
 	DeleteHousework(ctx context.Context, in *Housework, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
-	GetHouseworkMemo(ctx context.Context, in *HouseworkDetailRequest, opts ...grpc.CallOption) (*HouseworkDetailResponse, error)
+	GetHouseworkMemo(ctx context.Context, in *HouseworkMemoRequest, opts ...grpc.CallOption) (*HouseworkMemoResponse, error)
 	CreateHouseworkMemo(ctx context.Context, in *HouseworkMemo, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
 	UpdateHouseworkMemo(ctx context.Context, in *HouseworkMemo, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
 	DeleteHouseworkMemo(ctx context.Context, in *HouseworkMemo, opts ...grpc.CallOption) (*HouseworkCommonResponse, error)
@@ -53,8 +53,8 @@ func (c *houseworkServiceClient) GetHousework(ctx context.Context, in *Housework
 	return out, nil
 }
 
-func (c *houseworkServiceClient) GetHouseworkDetail(ctx context.Context, in *HouseworkRequest, opts ...grpc.CallOption) (*HouseworkResponse, error) {
-	out := new(HouseworkResponse)
+func (c *houseworkServiceClient) GetHouseworkDetail(ctx context.Context, in *HouseworkDetailRequest, opts ...grpc.CallOption) (*HouseworkDetailResponse, error) {
+	out := new(HouseworkDetailResponse)
 	err := c.cc.Invoke(ctx, "/shw.HouseworkService/GetHouseworkDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -98,8 +98,8 @@ func (c *houseworkServiceClient) DeleteHousework(ctx context.Context, in *Housew
 	return out, nil
 }
 
-func (c *houseworkServiceClient) GetHouseworkMemo(ctx context.Context, in *HouseworkDetailRequest, opts ...grpc.CallOption) (*HouseworkDetailResponse, error) {
-	out := new(HouseworkDetailResponse)
+func (c *houseworkServiceClient) GetHouseworkMemo(ctx context.Context, in *HouseworkMemoRequest, opts ...grpc.CallOption) (*HouseworkMemoResponse, error) {
+	out := new(HouseworkMemoResponse)
 	err := c.cc.Invoke(ctx, "/shw.HouseworkService/GetHouseworkMemo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -157,12 +157,12 @@ func (c *houseworkServiceClient) GetHouseworkPointHistory(ctx context.Context, i
 // for forward compatibility
 type HouseworkServiceServer interface {
 	GetHousework(context.Context, *HouseworkRequest) (*HouseworkResponse, error)
-	GetHouseworkDetail(context.Context, *HouseworkRequest) (*HouseworkResponse, error)
+	GetHouseworkDetail(context.Context, *HouseworkDetailRequest) (*HouseworkDetailResponse, error)
 	CreateHousework(context.Context, *Housework) (*HouseworkCommonResponse, error)
 	UpdateHousework(context.Context, *Housework) (*HouseworkCommonResponse, error)
 	FinishHousework(context.Context, *Housework) (*HouseworkCommonResponse, error)
 	DeleteHousework(context.Context, *Housework) (*HouseworkCommonResponse, error)
-	GetHouseworkMemo(context.Context, *HouseworkDetailRequest) (*HouseworkDetailResponse, error)
+	GetHouseworkMemo(context.Context, *HouseworkMemoRequest) (*HouseworkMemoResponse, error)
 	CreateHouseworkMemo(context.Context, *HouseworkMemo) (*HouseworkCommonResponse, error)
 	UpdateHouseworkMemo(context.Context, *HouseworkMemo) (*HouseworkCommonResponse, error)
 	DeleteHouseworkMemo(context.Context, *HouseworkMemo) (*HouseworkCommonResponse, error)
@@ -178,7 +178,7 @@ type UnimplementedHouseworkServiceServer struct {
 func (UnimplementedHouseworkServiceServer) GetHousework(context.Context, *HouseworkRequest) (*HouseworkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHousework not implemented")
 }
-func (UnimplementedHouseworkServiceServer) GetHouseworkDetail(context.Context, *HouseworkRequest) (*HouseworkResponse, error) {
+func (UnimplementedHouseworkServiceServer) GetHouseworkDetail(context.Context, *HouseworkDetailRequest) (*HouseworkDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHouseworkDetail not implemented")
 }
 func (UnimplementedHouseworkServiceServer) CreateHousework(context.Context, *Housework) (*HouseworkCommonResponse, error) {
@@ -193,7 +193,7 @@ func (UnimplementedHouseworkServiceServer) FinishHousework(context.Context, *Hou
 func (UnimplementedHouseworkServiceServer) DeleteHousework(context.Context, *Housework) (*HouseworkCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHousework not implemented")
 }
-func (UnimplementedHouseworkServiceServer) GetHouseworkMemo(context.Context, *HouseworkDetailRequest) (*HouseworkDetailResponse, error) {
+func (UnimplementedHouseworkServiceServer) GetHouseworkMemo(context.Context, *HouseworkMemoRequest) (*HouseworkMemoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHouseworkMemo not implemented")
 }
 func (UnimplementedHouseworkServiceServer) CreateHouseworkMemo(context.Context, *HouseworkMemo) (*HouseworkCommonResponse, error) {
@@ -243,7 +243,7 @@ func _HouseworkService_GetHousework_Handler(srv interface{}, ctx context.Context
 }
 
 func _HouseworkService_GetHouseworkDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HouseworkRequest)
+	in := new(HouseworkDetailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func _HouseworkService_GetHouseworkDetail_Handler(srv interface{}, ctx context.C
 		FullMethod: "/shw.HouseworkService/GetHouseworkDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HouseworkServiceServer).GetHouseworkDetail(ctx, req.(*HouseworkRequest))
+		return srv.(HouseworkServiceServer).GetHouseworkDetail(ctx, req.(*HouseworkDetailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -333,7 +333,7 @@ func _HouseworkService_DeleteHousework_Handler(srv interface{}, ctx context.Cont
 }
 
 func _HouseworkService_GetHouseworkMemo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HouseworkDetailRequest)
+	in := new(HouseworkMemoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -345,7 +345,7 @@ func _HouseworkService_GetHouseworkMemo_Handler(srv interface{}, ctx context.Con
 		FullMethod: "/shw.HouseworkService/GetHouseworkMemo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HouseworkServiceServer).GetHouseworkMemo(ctx, req.(*HouseworkDetailRequest))
+		return srv.(HouseworkServiceServer).GetHouseworkMemo(ctx, req.(*HouseworkMemoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

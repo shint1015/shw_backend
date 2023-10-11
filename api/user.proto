@@ -9,8 +9,8 @@ service UserService {
 }
 
 message UpdateRoleRequest {
-  string userId = 1;
-  string role = 2;
+  uint64 userId = 1;
+  uint64 roleId = 2;
 }
 
 message UserCommonResponse {

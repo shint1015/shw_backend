@@ -9,12 +9,12 @@ package shw;
 
 service HouseworkService {
   rpc GetHousework(HouseworkRequest) returns (HouseworkResponse) {}
-  rpc GetHouseworkDetail(HouseworkRequest) returns (HouseworkResponse) {}
+  rpc GetHouseworkDetail(HouseworkDetailRequest) returns (HouseworkDetailResponse) {}
   rpc CreateHousework(Housework) returns (HouseworkCommonResponse) {}
   rpc UpdateHousework(Housework) returns (HouseworkCommonResponse) {}
   rpc FinishHousework(Housework) returns (HouseworkCommonResponse) {}
   rpc DeleteHousework(Housework) returns (HouseworkCommonResponse) {}
-  rpc GetHouseworkMemo(HouseworkDetailRequest) returns (HouseworkDetailResponse) {}
+  rpc GetHouseworkMemo(HouseworkMemoRequest) returns (HouseworkMemoResponse) {}
   rpc CreateHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
   rpc UpdateHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
   rpc DeleteHouseworkMemo(HouseworkMemo) returns (HouseworkCommonResponse) {}
@@ -36,12 +36,14 @@ message HouseworkMemoRequest {
 
 message HouseworkPointRequest {
   uint64 userId = 1;
-  uint64 familyId = 2;
+}
+
+message HouseworkTemplateRequest {
+  uint64 familyId = 1;
 }
 
 message HouseworkPointHistoryRequest {
   uint64 userId = 1;
-  uint64 familyId = 2;
 }
 
 message HouseworkResponse {
@@ -58,11 +60,15 @@ message HouseworkMemoResponse {
 }
 
 message HouseworkPointResponse {
-  repeated HouseworkPoint point = 1;
+  HouseworkPoint point = 1;
 }
 
 message HouseworkPointHistoryResponse {
   repeated HouseworkPointHistory history = 1;
+}
+
+message HouseworkTemplateResponse {
+  repeated HouseworkTemplate template = 1;
 }
 
 message HouseworkUserInfo {
@@ -109,6 +115,7 @@ message HouseworkPointHistory {
   HouseworkUserInfo user = 2;
   string detail = 3;
   int64 point = 4;
+  int64 createdAt = 5;
 }
 
 message HouseworkTemplate {
@@ -116,5 +123,7 @@ message HouseworkTemplate {
   uint64 familyId = 2;
   string name = 3;
   string detail = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
 }
 
