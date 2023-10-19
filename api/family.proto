@@ -4,23 +4,18 @@ option go_package = "pkg/grpc";
 
 package shw;
 
+import "common.proto";
 
 service FamilyService {
     rpc GetFamily (FamilyRequest) returns (FamilyResponse) {}
-    rpc CreateFamily (Family) returns (FamilyCommonResponse) {}
-    rpc UpdateFamily (Family) returns (FamilyCommonResponse) {}
-    rpc DeleteFamily (Family) returns (FamilyCommonResponse) {}
-    rpc AddFamilyMember (AddFamilyMemberRequest) returns (FamilyCommonResponse) {}
-}
-
-message FamilyCommonResponse {
-  bool ok = 1;
-  int64 statusCode = 2;
-  string message = 3;
+    rpc CreateFamily (Family) returns (CommonResponse) {}
+    rpc UpdateFamily (Family) returns (CommonResponse) {}
+    rpc DeleteFamily (Family) returns (CommonResponse) {}
+    rpc AddFamilyMember (AddFamilyMemberRequest) returns (CommonResponse) {}
 }
 
 message FamilyRequest {
-    uint64 FamilyId = 1;
+    uint64 familyId = 1;
 }
 
 message FamilyHouseworkPointRequest {
@@ -33,7 +28,7 @@ message FamilyHouseworkPointResponse {
 
 message FamilyHouseworkPoint {
   uint64 id = 1;
-  FamilyUserInfo user = 2;
+  UserInfo user = 2;
   int64 point = 4;
   int64 createdAt = 5;
   int64 updatedAt = 6;
@@ -49,15 +44,9 @@ message FamilyResponse {
     Family family = 1;
 }
 
-message FamilyUserInfo {
-  uint64 id = 1;
-  string name = 2;
-  string role = 3;
-}
-
 message Family {
     uint64 id = 1;
-    repeated FamilyUserInfo user = 2;
+    repeated UserInfo user = 2;
     string name = 3;
     string pointPerWorkTime = 4;
 }
