@@ -115,9 +115,9 @@ func (s *FamilyService) VerifyAddFamily() error {
 }
 
 func (s *FamilyService) createFormatGrpcFamily(template model.Family) *shwgrpc.Family {
-	var familyMember []*shwgrpc.FamilyUserInfo
+	var familyMember []*shwgrpc.UserInfo
 	for _, val := range template.Users {
-		familyMember = append(familyMember, &shwgrpc.FamilyUserInfo{
+		familyMember = append(familyMember, &shwgrpc.UserInfo{
 			Id:   uint64(val.ID),
 			Name: val.Name,
 			Role: val.Role.Name,
@@ -134,7 +134,7 @@ func (s *FamilyService) createFormatGrpcFamily(template model.Family) *shwgrpc.F
 func (s *FamilyService) createFormatGrpcHouseworkPoint(user model.User) *shwgrpc.FamilyHouseworkPoint {
 	return &shwgrpc.FamilyHouseworkPoint{
 		Point: int64(user.HouseworkPoint.Point),
-		User: &shwgrpc.FamilyUserInfo{
+		User: &shwgrpc.UserInfo{
 			Id:   uint64(user.ID),
 			Name: user.Name,
 		},

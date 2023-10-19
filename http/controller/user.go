@@ -14,9 +14,9 @@ func NewUserController() *UserController {
 	return &UserController{}
 }
 
-func (c *UserController) UpdateRole(ctx context.Context, req *shwgrpc.UpdateRoleRequest) (*shwgrpc.UserCommonResponse, error) {
+func (c *UserController) UpdateRole(ctx context.Context, req *shwgrpc.UpdateRoleRequest) (*shwgrpc.CommonResponse, error) {
 	if err := userService.UpdateRole(req); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.UserCommonResponse{Message: "success"}, nil
+	return &shwgrpc.CommonResponse{Message: "success"}, nil
 }

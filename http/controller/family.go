@@ -22,25 +22,25 @@ func (c *FamilyController) GetFamily(ctx context.Context, req *shwgrpc.FamilyReq
 	return &shwgrpc.FamilyResponse{Family: family}, nil
 }
 
-func (c *FamilyController) CreateFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.FamilyCommonResponse, error) {
+func (c *FamilyController) CreateFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.CommonResponse, error) {
 	if err := familyService.CreateFamily(req); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.FamilyCommonResponse{Message: "success"}, nil
+	return &shwgrpc.CommonResponse{Message: "success"}, nil
 }
 
-func (c *FamilyController) UpdateFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.FamilyCommonResponse, error) {
+func (c *FamilyController) UpdateFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.CommonResponse, error) {
 	if err := familyService.UpdateFamily(req); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.FamilyCommonResponse{Message: "success"}, nil
+	return &shwgrpc.CommonResponse{Message: "success"}, nil
 }
 
-func (c *FamilyController) DeleteFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.FamilyCommonResponse, error) {
+func (c *FamilyController) DeleteFamily(ctx context.Context, req *shwgrpc.Family) (*shwgrpc.CommonResponse, error) {
 	if err := familyService.DeleteFamily(req); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.FamilyCommonResponse{Message: "success"}, nil
+	return &shwgrpc.CommonResponse{Message: "success"}, nil
 }
 
 func (c *FamilyController) GetFamilyHouseworkPoints(ctx context.Context, req *shwgrpc.FamilyHouseworkPointRequest) (*shwgrpc.FamilyHouseworkPointResponse, error) {
@@ -51,9 +51,9 @@ func (c *FamilyController) GetFamilyHouseworkPoints(ctx context.Context, req *sh
 	return &shwgrpc.FamilyHouseworkPointResponse{HouseworkPoint: familyHouseworkPoints}, nil
 }
 
-func (c *FamilyController) AddFamilyMember(ctx context.Context, req *shwgrpc.AddFamilyMemberRequest) (*shwgrpc.FamilyCommonResponse, error) {
+func (c *FamilyController) AddFamilyMember(ctx context.Context, req *shwgrpc.AddFamilyMemberRequest) (*shwgrpc.CommonResponse, error) {
 	if err := familyService.AddFamilyMember(req); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.FamilyCommonResponse{Message: "success"}, nil
+	return &shwgrpc.CommonResponse{Message: "success"}, nil
 }

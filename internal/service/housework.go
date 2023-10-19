@@ -24,6 +24,7 @@ func (s *HouseworkService) GetHousework(req *shwgrpc.HouseworkRequest) ([]*shwgr
 		FamilyID: uint(req.FamilyId),
 	}
 	houseworks, err := housework.GetAll()
+
 	if err != nil {
 		return nil, err
 	}
@@ -261,7 +262,7 @@ func (s *HouseworkService) createFormatGrpcHousework(housework model.Housework) 
 		Name:     housework.Name,
 		Detail:   housework.Detail,
 		Status:   housework.Status,
-		WorkUser: &shwgrpc.HouseworkUserInfo{
+		WorkUser: &shwgrpc.UserInfo{
 			Id:   uint64(workToUser.ID),
 			Name: workToUser.Name,
 		},
@@ -276,7 +277,7 @@ func (s *HouseworkService) createFormatGrpcHouseworkMemo(memo model.HouseworkMem
 		Id:          uint64(memo.ID),
 		HouseworkId: uint64(memo.HouseworkID),
 		Text:        memo.Text,
-		DraftUser: &shwgrpc.HouseworkUserInfo{
+		DraftUser: &shwgrpc.UserInfo{
 			Id:   uint64(draftedToUser.ID),
 			Name: draftedToUser.Name,
 		},
@@ -286,7 +287,7 @@ func (s *HouseworkService) createFormatGrpcHouseworkMemo(memo model.HouseworkMem
 func (s *HouseworkService) createFormatGrpcHouseworkPoint(user model.User) *shwgrpc.HouseworkPoint {
 	return &shwgrpc.HouseworkPoint{
 		Point: int64(user.HouseworkPoint.Point),
-		User: &shwgrpc.HouseworkUserInfo{
+		User: &shwgrpc.UserInfo{
 			Id:   uint64(user.ID),
 			Name: user.Name,
 		},
