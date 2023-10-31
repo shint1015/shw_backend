@@ -50,5 +50,3 @@ message Family {
     string name = 3;
     string pointPerWorkTime = 4;
 }
-
-

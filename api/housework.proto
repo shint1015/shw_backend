@@ -116,4 +116,3 @@ message HouseworkTemplate {
   int64 createdAt = 5;
   int64 updatedAt = 6;
 }
-
