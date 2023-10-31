@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"connectrpc.com/connect"
 	"context"
 	"shwgrpc/internal/service"
 	shwgrpc "shwgrpc/pkg/grpc"
@@ -14,9 +15,10 @@ func NewUserController() *UserController {
 	return &UserController{}
 }
 
-func (c *UserController) UpdateRole(ctx context.Context, req *shwgrpc.UpdateRoleRequest) (*shwgrpc.CommonResponse, error) {
-	if err := userService.UpdateRole(req); err != nil {
+func (c *UserController) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.UpdateRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := userService.UpdateRole(req.Msg); err != nil {
 		return nil, err
 	}
-	return &shwgrpc.CommonResponse{Message: "success"}, nil
+	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
+	return res, nil
 }
