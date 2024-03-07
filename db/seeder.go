@@ -38,6 +38,6 @@ func (s *Seeder) houseworkTemplate() {
 
 }
 
-func (Seeder *Seeder) houseworkPoint() {
+func (s *Seeder) houseworkPoint() {
 
 }
