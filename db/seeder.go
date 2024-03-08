@@ -40,15 +40,15 @@ func (s *Seeder) family() {
 
 func (s *Seeder) housework() {
 	var houseworks []Housework
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
-	houseworks = append(houseworks, Housework{FamilyID: 1, Title: , Detail: , Status: WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "洗濯", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "掃除", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "食事作り", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "洗濯", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "掃除", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "食事作り", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "洗濯", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "掃除", Detail: , Status: , WorkTo: ,})
+	houseworks = append(houseworks, Housework{FamilyID: 1, Title: "食事作り", Detail: , Status: , WorkTo: ,})
 }
 
 func (s *Seeder) houseworkMemo() {
