@@ -1,4 +1,4 @@
-package model
+	package model
 
 import (
 	"gorm.io/gorm"
@@ -14,6 +14,8 @@ type Family struct {
 	PointPerWorkTime   string              `json:"point_per_work_time" gorm:"type:enum('1', '5', '10', '15', '30', '60'); default: '10'; not null"`
 	Housework          []Housework         `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	HouseworkTemplates []HouseworkTemplate `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	OwnerUserID     uint
+	OwnerUser User   `gorm:"foreignKey:OwnerUserID"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 	DeletedAt          gorm.DeletedAt `gorm:"index"`
