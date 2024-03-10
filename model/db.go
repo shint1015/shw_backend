@@ -25,14 +25,14 @@ func init() {
 		log.Fatalf("Error connecting to DB %s: %v", CONNECT, err)
 	}
 
-	if err = DB.AutoMigrate(&UserRole{}, &Family{}, &User{}, &Housework{}, &HouseworkMemo{}, &HouseworkTemplate{}, &HouseworkPoint{}, &HouseworkPointHistory{}); err != nil {
+	if err = DB.AutoMigrate(&FamilyRole{}, &Family{}, &User{}, &Housework{}, &HouseworkMemo{}, &HouseworkTemplate{}, &HouseworkPoint{}, &HouseworkPointHistory{}); err != nil {
 		log.Fatalf("Error migrating DB %s: %v", CONNECT, err)
 	}
 }
 
 func txExec[
 	modelData *User |
-		*UserRole |
+		*FamilyRole |
 		*Family |
 		*Housework |
 		*HouseworkMemo |

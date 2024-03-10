@@ -10,7 +10,7 @@ type HouseworkMemo struct {
 	HouseworkID   uint
 	DraftedTo     uint
 	DraftedToUser User   `gorm:"foreignKey:DraftedTo"`
-	Text          string `json:"text" gorm:"type:text;not null"`
+	Message       string `json:"message" gorm:"type:text;not null"`
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     gorm.DeletedAt `gorm:"index"`

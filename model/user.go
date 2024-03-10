@@ -13,7 +13,7 @@ type User struct {
 	FamilyID             *uint
 	RoleID               *uint
 	Family               Family
-	Role                 UserRole       `gorm:"foreignKey:RoleID"`
+	Role                 FamilyRole     `gorm:"foreignKey:RoleID"`
 	HouseworkPoint       HouseworkPoint `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	IsFamilyVerified     bool
 	FamilyVerifyExpireAt time.Time
