@@ -56,7 +56,7 @@ func (s *HouseworkService) CreateHousework(req *shwgrpc.Housework) error {
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	housework := model.Housework{
 		FamilyID:  uint(req.FamilyId),
-		Name:      req.Name,
+		Title:     req.Name,
 		Detail:    req.Detail,
 		Status:    string(HouseworkStatusPlan),
 		WorkTo:    uint(req.WorkUser.Id),
@@ -74,7 +74,7 @@ func (s *HouseworkService) UpdateHousework(req *shwgrpc.Housework) error {
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	housework := model.Housework{
 		ID:        uint(req.Id),
-		Name:      req.Name,
+		Title:     req.Name,
 		Detail:    req.Detail,
 		WorkTo:    uint(req.WorkUser.Id),
 		StartedAt: time.Unix(req.StartedAt, 0),
@@ -223,7 +223,7 @@ func (s *HouseworkService) GetHouseworkTemplate(req *shwgrpc.HouseworkTemplateRe
 func (s *HouseworkService) CreateHouseworkTemplate(req *shwgrpc.HouseworkTemplate) error {
 	houseworkTemplate := model.HouseworkTemplate{
 		FamilyID: uint(req.FamilyId),
-		Name:     req.Name,
+		Title:    req.Title,
 		Detail:   req.Detail,
 	}
 	if err := houseworkTemplate.Create(nil); err != nil {
@@ -235,7 +235,7 @@ func (s *HouseworkService) CreateHouseworkTemplate(req *shwgrpc.HouseworkTemplat
 func (s *HouseworkService) UpdateHouseworkTemplate(req *shwgrpc.HouseworkTemplate) error {
 	houseworkTemplate := model.HouseworkTemplate{
 		ID:     uint(req.Id),
-		Name:   req.Name,
+		Title:  req.Title,
 		Detail: req.Detail,
 	}
 	if err := houseworkTemplate.Update(nil); err != nil {
@@ -259,7 +259,7 @@ func (s *HouseworkService) createFormatGrpcHousework(housework model.Housework) 
 	return &shwgrpc.Housework{
 		Id:       uint64(housework.ID),
 		FamilyId: uint64(housework.FamilyID),
-		Name:     housework.Name,
+		Title:    housework.Title,
 		Detail:   housework.Detail,
 		Status:   housework.Status,
 		WorkUser: &shwgrpc.UserInfo{
@@ -309,7 +309,7 @@ func (s *HouseworkService) createFormatGrpcHouseworkTemplate(template model.Hous
 	return &shwgrpc.HouseworkTemplate{
 		Id:        uint64(template.ID),
 		FamilyId:  uint64(template.FamilyID),
-		Name:      template.Name,
+		Title:     template.Title,
 		Detail:    template.Detail,
 		CreatedAt: template.CreatedAt.Unix(),
 		UpdatedAt: template.UpdatedAt.Unix(),
