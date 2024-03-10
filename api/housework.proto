@@ -75,7 +75,7 @@ message HouseworkTemplateResponse {
 message Housework {
   uint64 id = 1;
   uint64 familyId = 2;
-  string name = 3;
+  string title = 3;
   string detail = 4;
   string status = 5;
   UserInfo workUser = 6;
@@ -86,7 +86,7 @@ message Housework {
 message HouseworkMemo {
   uint64 id = 1;
   uint64 houseworkId = 2;
-  string text = 3;
+  string message = 3;
   UserInfo draftUser = 4;
   int64 createdAt = 5;
   int64 updatedAt = 6;
@@ -111,7 +111,7 @@ message HouseworkPointHistory {
 message HouseworkTemplate {
   uint64 id = 1;
   uint64 familyId = 2;
-  string name = 3;
+  string title = 3;
   string detail = 4;
   int64 createdAt = 5;
   int64 updatedAt = 6;
