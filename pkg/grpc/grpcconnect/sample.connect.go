@@ -9,7 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	http "net/http"
-	"shwgrpc/pkg/grpc"
+	grpc "pkg/grpc"
 	strings "strings"
 )
 
@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// HelloServiceName is the fully-qualified name of the HelloService service.
@@ -35,6 +35,12 @@ const (
 const (
 	// HelloServiceHelloProcedure is the fully-qualified name of the HelloService's Hello RPC.
 	HelloServiceHelloProcedure = "/shw.HelloService/Hello"
+)
+
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	helloServiceServiceDescriptor     = grpc.File_sample_proto.Services().ByName("HelloService")
+	helloServiceHelloMethodDescriptor = helloServiceServiceDescriptor.Methods().ByName("Hello")
 )
 
 // HelloServiceClient is a client for the shw.HelloService service.
@@ -55,7 +61,8 @@ func NewHelloServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 		hello: connect.NewClient[grpc.HelloRequest, grpc.HelloResponse](
 			httpClient,
 			baseURL+HelloServiceHelloProcedure,
-			opts...,
+			connect.WithSchema(helloServiceHelloMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -84,7 +91,8 @@ func NewHelloServiceHandler(svc HelloServiceHandler, opts ...connect.HandlerOpti
 	helloServiceHelloHandler := connect.NewUnaryHandler(
 		HelloServiceHelloProcedure,
 		svc.Hello,
-		opts...,
+		connect.WithSchema(helloServiceHelloMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.HelloService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

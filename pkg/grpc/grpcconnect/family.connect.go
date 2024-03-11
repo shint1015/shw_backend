@@ -9,7 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	http "net/http"
-	"shwgrpc/pkg/grpc"
+	grpc "pkg/grpc"
 	strings "strings"
 )
 
@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// FamilyServiceName is the fully-qualified name of the FamilyService service.
@@ -49,6 +49,16 @@ const (
 	FamilyServiceAddFamilyMemberProcedure = "/shw.FamilyService/AddFamilyMember"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	familyServiceServiceDescriptor               = grpc.File_family_proto.Services().ByName("FamilyService")
+	familyServiceGetFamilyMethodDescriptor       = familyServiceServiceDescriptor.Methods().ByName("GetFamily")
+	familyServiceCreateFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("CreateFamily")
+	familyServiceUpdateFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("UpdateFamily")
+	familyServiceDeleteFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("DeleteFamily")
+	familyServiceAddFamilyMemberMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("AddFamilyMember")
+)
+
 // FamilyServiceClient is a client for the shw.FamilyService service.
 type FamilyServiceClient interface {
 	GetFamily(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyResponse], error)
@@ -71,27 +81,32 @@ func NewFamilyServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 		getFamily: connect.NewClient[grpc.FamilyRequest, grpc.FamilyResponse](
 			httpClient,
 			baseURL+FamilyServiceGetFamilyProcedure,
-			opts...,
+			connect.WithSchema(familyServiceGetFamilyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		createFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceCreateFamilyProcedure,
-			opts...,
+			connect.WithSchema(familyServiceCreateFamilyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceUpdateFamilyProcedure,
-			opts...,
+			connect.WithSchema(familyServiceUpdateFamilyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceDeleteFamilyProcedure,
-			opts...,
+			connect.WithSchema(familyServiceDeleteFamilyMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		addFamilyMember: connect.NewClient[grpc.AddFamilyMemberRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceAddFamilyMemberProcedure,
-			opts...,
+			connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -148,27 +163,32 @@ func NewFamilyServiceHandler(svc FamilyServiceHandler, opts ...connect.HandlerOp
 	familyServiceGetFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceGetFamilyProcedure,
 		svc.GetFamily,
-		opts...,
+		connect.WithSchema(familyServiceGetFamilyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceCreateFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceCreateFamilyProcedure,
 		svc.CreateFamily,
-		opts...,
+		connect.WithSchema(familyServiceCreateFamilyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceUpdateFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceUpdateFamilyProcedure,
 		svc.UpdateFamily,
-		opts...,
+		connect.WithSchema(familyServiceUpdateFamilyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceDeleteFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceDeleteFamilyProcedure,
 		svc.DeleteFamily,
-		opts...,
+		connect.WithSchema(familyServiceDeleteFamilyMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceAddFamilyMemberHandler := connect.NewUnaryHandler(
 		FamilyServiceAddFamilyMemberProcedure,
 		svc.AddFamilyMember,
-		opts...,
+		connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.FamilyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

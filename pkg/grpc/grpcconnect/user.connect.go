@@ -9,7 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	http "net/http"
-	"shwgrpc/pkg/grpc"
+	grpc "pkg/grpc"
 	strings "strings"
 )
 
@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// UserServiceName is the fully-qualified name of the UserService service.
@@ -35,6 +35,12 @@ const (
 const (
 	// UserServiceUpdateRoleProcedure is the fully-qualified name of the UserService's UpdateRole RPC.
 	UserServiceUpdateRoleProcedure = "/shw.UserService/UpdateRole"
+)
+
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	userServiceServiceDescriptor          = grpc.File_user_proto.Services().ByName("UserService")
+	userServiceUpdateRoleMethodDescriptor = userServiceServiceDescriptor.Methods().ByName("UpdateRole")
 )
 
 // UserServiceClient is a client for the shw.UserService service.
@@ -55,7 +61,8 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 		updateRole: connect.NewClient[grpc.UpdateRoleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+UserServiceUpdateRoleProcedure,
-			opts...,
+			connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -84,7 +91,8 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 	userServiceUpdateRoleHandler := connect.NewUnaryHandler(
 		UserServiceUpdateRoleProcedure,
 		svc.UpdateRole,
-		opts...,
+		connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
