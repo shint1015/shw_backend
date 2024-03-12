@@ -6,12 +6,14 @@ import (
 )
 
 type HouseworkPointHistory struct {
-	ID             uint   `json:"id" gorm:"primary_key"`
-	UserID         uint   `json:"user_id" gorm:"foreignKey:UserID"`
-	TargetUser     User   `json:"target_user_id" gorm:"foreignKey:UserID"`
-	Detail         string `json:"detail" gorm:"type:text;not null"`
-	Point          int    `json:"point" gorm:"type:int;not null"`
-	AggregatedFlag bool   `json:"aggregated_flag" gorm:"type:bool;not null"`
+	ID             uint `json:"id" gorm:"primary_key"`
+	UserID         uint `json:"user_id" gorm:"foreignKey:UserID"`
+	TargetUser     User `json:"target_user_id" gorm:"foreignKey:UserID"`
+	HouseworkID    *uint
+	Housework      Housework `json:"housework_id" gorm:"foreignKey:HouseworkID"`
+	Detail         string    `json:"detail" gorm:"type:text;not null"`
+	Point          int       `json:"point" gorm:"type:int;not null"`
+	AggregatedFlag bool      `json:"aggregated_flag" gorm:"type:bool;not null"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 	DeletedAt      gorm.DeletedAt `gorm:"index"`

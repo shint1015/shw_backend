@@ -6,14 +6,14 @@ import (
 )
 
 type HouseworkMemo struct {
-	ID            uint `json:"id" gorm:"primaryKey"`
-	HouseworkID   uint
-	DraftedTo     uint
-	DraftedToUser User   `gorm:"foreignKey:DraftedTo"`
-	Message       string `json:"message" gorm:"type:text;not null"`
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     gorm.DeletedAt `gorm:"index"`
+	ID           uint `json:"id" gorm:"primaryKey"`
+	HouseworkID  uint
+	SendFrom     uint
+	SendFromUser User   `gorm:"foreignKey:SendFrom"`
+	Message      string `json:"message" gorm:"type:text;not null"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	DeletedAt    gorm.DeletedAt `gorm:"index"`
 }
 
 func (m *HouseworkMemo) Create(tx *gorm.DB) error {
