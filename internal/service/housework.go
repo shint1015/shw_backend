@@ -56,7 +56,7 @@ func (s *HouseworkService) CreateHousework(req *shwgrpc.Housework) error {
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	housework := model.Housework{
 		FamilyID:  uint(req.FamilyId),
-		Title:     req.Name,
+		Title:     req.Title,
 		Detail:    req.Detail,
 		Status:    string(HouseworkStatusPlan),
 		WorkTo:    uint(req.WorkUser.Id),
@@ -74,7 +74,7 @@ func (s *HouseworkService) UpdateHousework(req *shwgrpc.Housework) error {
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	housework := model.Housework{
 		ID:        uint(req.Id),
-		Title:     req.Name,
+		Title:     req.Title,
 		Detail:    req.Detail,
 		WorkTo:    uint(req.WorkUser.Id),
 		StartedAt: time.Unix(req.StartedAt, 0),
@@ -139,8 +139,8 @@ func (s *HouseworkService) CreateHouseworkMemo(req *shwgrpc.HouseworkMemo) error
 	userId := uint(1)
 	houseworkMemo := model.HouseworkMemo{
 		HouseworkID: uint(req.HouseworkId),
-		Text:        req.Text,
-		DraftedTo:   userId,
+		Message:     req.Message,
+		SendFrom:    userId,
 	}
 
 	if err := houseworkMemo.Create(nil); err != nil {
@@ -154,8 +154,8 @@ func (s *HouseworkService) UpdateHouseworkMemo(req *shwgrpc.HouseworkMemo) error
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	// TODO: houseworkIdから存在するかどうか
 	houseworkMemo := model.HouseworkMemo{
-		ID:   uint(req.Id),
-		Text: req.Text,
+		ID:      uint(req.Id),
+		Message: req.Message,
 	}
 	if err := houseworkMemo.Update(nil); err != nil {
 		return err
@@ -272,14 +272,14 @@ func (s *HouseworkService) createFormatGrpcHousework(housework model.Housework) 
 }
 
 func (s *HouseworkService) createFormatGrpcHouseworkMemo(memo model.HouseworkMemo) *shwgrpc.HouseworkMemo {
-	draftedToUser := memo.DraftedToUser
+	sendFromUser := memo.SendFromUser
 	return &shwgrpc.HouseworkMemo{
 		Id:          uint64(memo.ID),
 		HouseworkId: uint64(memo.HouseworkID),
-		Text:        memo.Text,
+		Message:     memo.Message,
 		DraftUser: &shwgrpc.UserInfo{
-			Id:   uint64(draftedToUser.ID),
-			Name: draftedToUser.Name,
+			Id:   uint64(sendFromUser.ID),
+			Name: sendFromUser.Name,
 		},
 	}
 }
