@@ -15,6 +15,7 @@ func DoSeed() {
 	s.housework()
 	s.houseworkMemo()
 	s.houseworkTemplate()
+	s.houseworkPointHistory()
 	s.houseworkPoint()
 }
 
