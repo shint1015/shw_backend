@@ -12,11 +12,11 @@ type User struct {
 	Email                string `json:"email" gorm:"type:varchar(255);not null"`
 	FamilyID             *uint
 	RoleID               *uint
-	Family               Family
-	Role                 FamilyRole     `gorm:"foreignKey:RoleID"`
-	HouseworkPoint       HouseworkPoint `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Family               *Family
+	Role                 *FamilyRole     `gorm:"foreignKey:RoleID"`
+	HouseworkPoint       *HouseworkPoint `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	IsFamilyVerified     bool
-	FamilyVerifyExpireAt time.Time
+	FamilyVerifyExpireAt *time.Time
 	CreatedAt            time.Time
 	UpdatedAt            time.Time
 	DeletedAt            gorm.DeletedAt `gorm:"index"`

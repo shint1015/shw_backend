@@ -8,10 +8,10 @@ import (
 type Housework struct {
 	ID           uint `json:"id" gorm:"primary_key"`
 	FamilyID     uint
-	Title        string `json:"title" gorm:"unique;type:varchar(255);not null"`
+	Title        string `json:"title" gorm:"type:varchar(255);not null"`
 	Detail       string `json:"detail" gorm:"type:varchar(255);not null"`
 	Status       string `json:"status" gorm:"type:varchar(255);not null"`
-	Memo         []HouseworkMemo
+	Memo         *[]HouseworkMemo
 	WorkTo       uint
 	WorkToUser   User `json:"work_to_id" gorm:"foreignKey:WorkTo"`
 	WorkTimeNum  uint

@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 var err error
 
-func init() {
+func Init() {
 	if err := config.LoadEnv(); err != nil {
 		log.Fatalf("Error loading env: %v", err)
 	}

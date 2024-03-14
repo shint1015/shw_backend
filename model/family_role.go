@@ -7,7 +7,7 @@ import (
 
 type FamilyRole struct {
 	ID        uint   `json:"id" gorm:"primary_key"`
-	Name      string `json:"name" gorm:"unique;type:varchar(255);not null"`
+	Name      string `json:"name" gorm:"type:varchar(255);not null"`
 	FamilyID  uint
 	CreatedAt time.Time
 	UpdatedAt time.Time
