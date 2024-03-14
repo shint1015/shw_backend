@@ -102,7 +102,7 @@ func (s *FamilyService) AddFamilyMember(req *shwgrpc.AddFamilyMemberRequest) err
 	familyId := uint(req.FamilyId)
 	user.FamilyID = &familyId
 	user.IsFamilyVerified = false
-	user.FamilyVerifyExpireAt = expiredTime
+	user.FamilyVerifyExpireAt = &expiredTime
 	if err := user.Update(nil); err != nil {
 		return err
 	}
@@ -116,7 +116,7 @@ func (s *FamilyService) VerifyAddFamily() error {
 
 func (s *FamilyService) createFormatGrpcFamily(template model.Family) *shwgrpc.Family {
 	var familyMember []*shwgrpc.UserInfo
-	for _, val := range template.Users {
+	for _, val := range *template.Users {
 		familyMember = append(familyMember, &shwgrpc.UserInfo{
 			Id:   uint64(val.ID),
 			Name: val.Name,

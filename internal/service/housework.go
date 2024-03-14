@@ -45,7 +45,7 @@ func (s *HouseworkService) GetHouseworkDetail(req *shwgrpc.HouseworkDetailReques
 	}
 	resHousework := s.createFormatGrpcHousework(*housework)
 	var resHouseworkMemo []*shwgrpc.HouseworkMemo
-	for _, val := range housework.Memo {
+	for _, val := range *housework.Memo {
 		resHouseworkMemo = append(resHouseworkMemo, s.createFormatGrpcHouseworkMemo(val))
 	}
 	return resHousework, resHouseworkMemo, nil
@@ -277,7 +277,7 @@ func (s *HouseworkService) createFormatGrpcHouseworkMemo(memo model.HouseworkMem
 		Id:          uint64(memo.ID),
 		HouseworkId: uint64(memo.HouseworkID),
 		Message:     memo.Message,
-		DraftUser: &shwgrpc.UserInfo{
+		SendFrom: &shwgrpc.UserInfo{
 			Id:   uint64(sendFromUser.ID),
 			Name: sendFromUser.Name,
 		},
