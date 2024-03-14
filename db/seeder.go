@@ -1,6 +1,7 @@
 package db
 
 import (
+	"gorm.io/gorm"
 	"shwgrpc/model"
 	"shwgrpc/utils"
 )
@@ -8,6 +9,7 @@ import (
 type Seeder struct{}
 
 func DoSeed() {
+	DoAllTruncate()
 	s := Seeder{}
 	s.user()
 	s.family()
@@ -17,6 +19,33 @@ func DoSeed() {
 	s.houseworkTemplate()
 	s.houseworkPointHistory()
 	s.houseworkPoint()
+}
+
+func DoAllTruncate() {
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.HouseworkPointHistory{})
+	//model.DB.Exec("TRUNCATE TABLE `housework_point_histories`")
+	model.DB.Exec("ALTER TABLE `housework_point_histories` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.HouseworkPoint{})
+	//model.DB.Exec("TRUNCATE TABLE `housework_points`")
+	model.DB.Exec("ALTER TABLE `housework_points` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.HouseworkMemo{})
+	//model.DB.Exec("TRUNCATE TABLE `housework_memos`")
+	model.DB.Exec("ALTER TABLE `housework_memos` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.HouseworkTemplate{})
+	//model.DB.Exec("TRUNCATE TABLE `housework_templates`")
+	model.DB.Exec("ALTER TABLE `housework_templates` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.Housework{})
+	//model.DB.Exec("TRUNCATE TABLE `houseworks`")
+	model.DB.Exec("ALTER TABLE `houseworks` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.FamilyRole{})
+	//model.DB.Exec("TRUNCATE TABLE `family_roles`")
+	model.DB.Exec("ALTER TABLE `family_roles` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.Family{})
+	//model.DB.Exec("TRUNCATE TABLE `families`")
+	model.DB.Exec("ALTER TABLE `families` AUTO_INCREMENT = 1;")
+	model.DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&model.User{})
+	//model.DB.Exec("TRUNCATE TABLE `users`")
+	model.DB.Exec("ALTER TABLE `users` AUTO_INCREMENT = 1;")
 }
 
 func (s *Seeder) user() {
@@ -39,12 +68,9 @@ func (s *Seeder) user() {
 
 func (s *Seeder) family() {
 	var families []model.Family
-	var ownerOne uint = 1
-	var ownerTwo uint = 2
-	var ownerThree uint = 3
-	families = append(families, model.Family{Name: "Smith", PointPerWorkTime: "1", OwnerUserID: &ownerOne})
-	families = append(families, model.Family{Name: "Johnson", PointPerWorkTime: "5", OwnerUserID: &ownerTwo})
-	families = append(families, model.Family{Name: "Willams", PointPerWorkTime: "10", OwnerUserID: &ownerThree})
+	families = append(families, model.Family{Name: "Smith", PointPerWorkTime: "1", OwnerUserID: 1})
+	families = append(families, model.Family{Name: "Johnson", PointPerWorkTime: "5", OwnerUserID: 2})
+	families = append(families, model.Family{Name: "Willams", PointPerWorkTime: "10", OwnerUserID: 3})
 
 	tx := model.DB.Begin()
 	for _, family := range families {
@@ -164,5 +190,8 @@ func (s *Seeder) houseworkPointHistory() {
 		}
 	}
 	tx.Commit()
+}
+
+func (s *Seeder) addRelation() {
 
 }
