@@ -9,6 +9,7 @@ type FamilyRole struct {
 	ID        uint   `json:"id" gorm:"primary_key"`
 	Name      string `json:"name" gorm:"type:varchar(255);not null"`
 	FamilyID  uint
+	Family    Family `json:"family_id" gorm:"foreignKey:FamilyID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`

@@ -19,6 +19,7 @@ func DoSeed() {
 	s.houseworkTemplate()
 	s.houseworkPointHistory()
 	s.houseworkPoint()
+	s.addRelation()
 }
 
 func DoAllTruncate() {
@@ -193,12 +194,14 @@ func (s *Seeder) houseworkPointHistory() {
 }
 
 func (s *Seeder) addRelation() {
-	fId1 := 1
-	fId2 := 2
-	frId1 := 1
-	frId2 := 2
-	frId3 := 3
+	fIds := []uint{1, 2, 3}
+	frIds := []uint{1, 2, 3, 4, 5, 6}
 	tx := model.DB.Begin()
-	tx.Save(&model.User{ID: 1, FamilyID: new(int), RoleID: 1})
-
+	tx.Model(&model.User{ID: 1}).Updates(model.User{FamilyID: &fIds[0], RoleID: &frIds[0]})
+	tx.Model(&model.User{ID: 2}).Updates(model.User{FamilyID: &fIds[1], RoleID: &frIds[3]})
+	tx.Model(&model.User{ID: 3}).Updates(model.User{FamilyID: &fIds[2], RoleID: &frIds[4]})
+	tx.Model(&model.User{ID: 4}).Updates(model.User{FamilyID: &fIds[0], RoleID: &frIds[1]})
+	tx.Model(&model.User{ID: 5}).Updates(model.User{FamilyID: &fIds[0], RoleID: &frIds[2]})
+	tx.Model(&model.User{ID: 6}).Updates(model.User{FamilyID: &fIds[1], RoleID: &frIds[5]})
+	tx.Commit()
 }

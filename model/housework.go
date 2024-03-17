@@ -8,6 +8,7 @@ import (
 type Housework struct {
 	ID           uint `json:"id" gorm:"primary_key"`
 	FamilyID     uint
+	Family       Family `json:"family_id" gorm:"foreignKey:FamilyID"`
 	Title        string `json:"title" gorm:"type:varchar(255);not null"`
 	Detail       string `json:"detail" gorm:"type:varchar(255);not null"`
 	Status       string `json:"status" gorm:"type:varchar(255);not null"`

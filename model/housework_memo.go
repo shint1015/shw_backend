@@ -8,6 +8,7 @@ import (
 type HouseworkMemo struct {
 	ID           uint `json:"id" gorm:"primaryKey"`
 	HouseworkID  uint
+	Housework    Housework `json:"housework_id" gorm:"foreignKey:HouseworkID"`
 	SendFrom     uint
 	SendFromUser User   `gorm:"foreignKey:SendFrom"`
 	Message      string `json:"message" gorm:"type:text;not null"`
