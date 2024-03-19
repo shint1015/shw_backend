@@ -10,7 +10,9 @@ import (
 	"golang.org/x/net/http2/h2c"
 	"log"
 	"net/http"
+	"shwgrpc/config"
 	"shwgrpc/http/controller"
+	"shwgrpc/model"
 	shwgrpc "shwgrpc/pkg/grpc"
 	"shwgrpc/pkg/grpc/grpcconnect"
 )
@@ -58,6 +60,10 @@ func newInterceptors() connect.Option {
 }
 
 func main() {
+	if err := config.LoadEnv(); err != nil {
+		log.Fatalf("Error loading env: %v", err)
+	}
+	model.Init()
 	//fmt.Println("Hello World")
 	//domain := "localhost"
 	port := 8080
@@ -78,7 +84,7 @@ func main() {
 		corsHandler.Handler(h2c.NewHandler(mux, &http2.Server{})),
 	)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 
 	log.Println("Shutting down gRPC server...")

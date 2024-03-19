@@ -6,7 +6,7 @@ import (
 )
 
 func LoadEnv() *utils.CustomError {
-	err := godotenv.Load()
+	err := godotenv.Load("../../config/.env")
 
 	if err != nil {
 		return utils.Error(err, 2)
