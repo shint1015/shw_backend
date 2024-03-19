@@ -22,10 +22,6 @@ var familyController = controller.NewFamilyController()
 var userController = controller.NewUserController()
 
 type ShwServer struct {
-	//shwgrpc.UnimplementedHelloServiceServer
-	//shwgrpc.UnimplementedHouseworkServiceServer
-	//shwgrpc.UnimplementedFamilyServiceServer
-	//shwgrpc.UnimplementedUserServiceServer
 	grpcconnect.UnimplementedHelloServiceHandler
 	grpcconnect.UnimplementedHouseworkServiceHandler
 	grpcconnect.UnimplementedFamilyServiceHandler
@@ -88,33 +84,6 @@ func main() {
 	}
 
 	log.Println("Shutting down gRPC server...")
-
-	//listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
-	//
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//s := grpc.NewServer()
-	//
-	//shwgrpc.RegisterHelloServiceServer(s, NewShwServer())
-	//shwgrpc.RegisterFamilyServiceServer(s, NewShwServer())
-	//shwgrpc.RegisterHouseworkServiceServer(s, NewShwServer())
-	//shwgrpc.RegisterUserServiceServer(s, NewShwServer())
-	//
-	//reflection.Register(s)
-	//
-	//go func() {
-	//	log.Printf("gRPC server is running on port %d", port)
-	//	s.Serve(listener)
-	//}()
-	//
-	//quit := make(chan os.Signal, 1)
-	//signal.Notify(quit, os.Interrupt)
-	//<-quit
-	//
-	//log.Println("Shutting down gRPC server...")
-	//s.GracefulStop()
 }
 
 func makeCorsHandler() *cors.Cors {
