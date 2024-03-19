@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"gorm.io/gorm"
 	"time"
 )
@@ -46,8 +47,10 @@ func (m *Housework) Get() (*Housework, error) {
 }
 
 func (m *Housework) GetAll() ([]Housework, error) {
+	fmt.Println(DB)
 	var res []Housework
-	if err := DB.Where(m).Find(&res).Error; err != nil {
+	result := DB.Where(m).Find(&res)
+	if result.Error != nil {
 		return nil, err
 	}
 	return res, nil
