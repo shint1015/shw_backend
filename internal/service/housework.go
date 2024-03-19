@@ -23,13 +23,12 @@ func (s *HouseworkService) GetHousework(req *shwgrpc.HouseworkRequest) ([]*shwgr
 	housework := model.Housework{
 		FamilyID: uint(req.FamilyId),
 	}
-	houseworks, err := housework.GetAll()
-
+	houseworkLists, err := housework.GetAll()
 	if err != nil {
 		return nil, err
 	}
 	var res []*shwgrpc.Housework
-	for _, val := range houseworks {
+	for _, val := range houseworkLists {
 		res = append(res, s.createFormatGrpcHousework(val))
 	}
 	return res, nil

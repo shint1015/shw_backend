@@ -16,11 +16,11 @@ func NewHouseworkController() *HouseworkController {
 }
 
 func (c *HouseworkController) GetHousework(ctx context.Context, req *connect.Request[shwgrpc.HouseworkRequest]) (*connect.Response[shwgrpc.HouseworkResponse], error) {
-	houseworks, err := houseworkService.GetHousework(req.Msg)
+	housework, err := houseworkService.GetHousework(req.Msg)
 	if err != nil {
 		return nil, err
 	}
-	res := connect.NewResponse(&shwgrpc.HouseworkResponse{Housework: houseworks})
+	res := connect.NewResponse(&shwgrpc.HouseworkResponse{Housework: housework})
 	return res, nil
 }
 
