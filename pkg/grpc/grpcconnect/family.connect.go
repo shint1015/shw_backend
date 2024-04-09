@@ -47,16 +47,32 @@ const (
 	// FamilyServiceAddFamilyMemberProcedure is the fully-qualified name of the FamilyService's
 	// AddFamilyMember RPC.
 	FamilyServiceAddFamilyMemberProcedure = "/shw.FamilyService/AddFamilyMember"
+	// FamilyServiceGetFamilyRoleProcedure is the fully-qualified name of the FamilyService's
+	// GetFamilyRole RPC.
+	FamilyServiceGetFamilyRoleProcedure = "/shw.FamilyService/GetFamilyRole"
+	// FamilyServiceCreateFamilyRoleProcedure is the fully-qualified name of the FamilyService's
+	// CreateFamilyRole RPC.
+	FamilyServiceCreateFamilyRoleProcedure = "/shw.FamilyService/CreateFamilyRole"
+	// FamilyServiceUpdateFamilyRoleProcedure is the fully-qualified name of the FamilyService's
+	// UpdateFamilyRole RPC.
+	FamilyServiceUpdateFamilyRoleProcedure = "/shw.FamilyService/UpdateFamilyRole"
+	// FamilyServiceDeleteFamilyRoleProcedure is the fully-qualified name of the FamilyService's
+	// DeleteFamilyRole RPC.
+	FamilyServiceDeleteFamilyRoleProcedure = "/shw.FamilyService/DeleteFamilyRole"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	familyServiceServiceDescriptor               = grpc.File_family_proto.Services().ByName("FamilyService")
-	familyServiceGetFamilyMethodDescriptor       = familyServiceServiceDescriptor.Methods().ByName("GetFamily")
-	familyServiceCreateFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("CreateFamily")
-	familyServiceUpdateFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("UpdateFamily")
-	familyServiceDeleteFamilyMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("DeleteFamily")
-	familyServiceAddFamilyMemberMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("AddFamilyMember")
+	familyServiceServiceDescriptor                = grpc.File_family_proto.Services().ByName("FamilyService")
+	familyServiceGetFamilyMethodDescriptor        = familyServiceServiceDescriptor.Methods().ByName("GetFamily")
+	familyServiceCreateFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("CreateFamily")
+	familyServiceUpdateFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("UpdateFamily")
+	familyServiceDeleteFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("DeleteFamily")
+	familyServiceAddFamilyMemberMethodDescriptor  = familyServiceServiceDescriptor.Methods().ByName("AddFamilyMember")
+	familyServiceGetFamilyRoleMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("GetFamilyRole")
+	familyServiceCreateFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("CreateFamilyRole")
+	familyServiceUpdateFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("UpdateFamilyRole")
+	familyServiceDeleteFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("DeleteFamilyRole")
 )
 
 // FamilyServiceClient is a client for the shw.FamilyService service.
@@ -66,6 +82,10 @@ type FamilyServiceClient interface {
 	UpdateFamily(context.Context, *connect.Request[grpc.Family]) (*connect.Response[grpc.CommonResponse], error)
 	DeleteFamily(context.Context, *connect.Request[grpc.Family]) (*connect.Response[grpc.CommonResponse], error)
 	AddFamilyMember(context.Context, *connect.Request[grpc.AddFamilyMemberRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetFamilyRole(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyRoleResponse], error)
+	CreateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteFamilyRole(context.Context, *connect.Request[grpc.FamilyRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewFamilyServiceClient constructs a client for the shw.FamilyService service. By default, it uses
@@ -108,16 +128,44 @@ func NewFamilyServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getFamilyRole: connect.NewClient[grpc.FamilyRequest, grpc.FamilyRoleResponse](
+			httpClient,
+			baseURL+FamilyServiceGetFamilyRoleProcedure,
+			connect.WithSchema(familyServiceGetFamilyRoleMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		createFamilyRole: connect.NewClient[grpc.FamilyRole, grpc.CommonResponse](
+			httpClient,
+			baseURL+FamilyServiceCreateFamilyRoleProcedure,
+			connect.WithSchema(familyServiceCreateFamilyRoleMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		updateFamilyRole: connect.NewClient[grpc.FamilyRole, grpc.CommonResponse](
+			httpClient,
+			baseURL+FamilyServiceUpdateFamilyRoleProcedure,
+			connect.WithSchema(familyServiceUpdateFamilyRoleMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		deleteFamilyRole: connect.NewClient[grpc.FamilyRoleRequest, grpc.CommonResponse](
+			httpClient,
+			baseURL+FamilyServiceDeleteFamilyRoleProcedure,
+			connect.WithSchema(familyServiceDeleteFamilyRoleMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // familyServiceClient implements FamilyServiceClient.
 type familyServiceClient struct {
-	getFamily       *connect.Client[grpc.FamilyRequest, grpc.FamilyResponse]
-	createFamily    *connect.Client[grpc.Family, grpc.CommonResponse]
-	updateFamily    *connect.Client[grpc.Family, grpc.CommonResponse]
-	deleteFamily    *connect.Client[grpc.Family, grpc.CommonResponse]
-	addFamilyMember *connect.Client[grpc.AddFamilyMemberRequest, grpc.CommonResponse]
+	getFamily        *connect.Client[grpc.FamilyRequest, grpc.FamilyResponse]
+	createFamily     *connect.Client[grpc.Family, grpc.CommonResponse]
+	updateFamily     *connect.Client[grpc.Family, grpc.CommonResponse]
+	deleteFamily     *connect.Client[grpc.Family, grpc.CommonResponse]
+	addFamilyMember  *connect.Client[grpc.AddFamilyMemberRequest, grpc.CommonResponse]
+	getFamilyRole    *connect.Client[grpc.FamilyRequest, grpc.FamilyRoleResponse]
+	createFamilyRole *connect.Client[grpc.FamilyRole, grpc.CommonResponse]
+	updateFamilyRole *connect.Client[grpc.FamilyRole, grpc.CommonResponse]
+	deleteFamilyRole *connect.Client[grpc.FamilyRoleRequest, grpc.CommonResponse]
 }
 
 // GetFamily calls shw.FamilyService.GetFamily.
@@ -145,6 +193,26 @@ func (c *familyServiceClient) AddFamilyMember(ctx context.Context, req *connect.
 	return c.addFamilyMember.CallUnary(ctx, req)
 }
 
+// GetFamilyRole calls shw.FamilyService.GetFamilyRole.
+func (c *familyServiceClient) GetFamilyRole(ctx context.Context, req *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyRoleResponse], error) {
+	return c.getFamilyRole.CallUnary(ctx, req)
+}
+
+// CreateFamilyRole calls shw.FamilyService.CreateFamilyRole.
+func (c *familyServiceClient) CreateFamilyRole(ctx context.Context, req *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.createFamilyRole.CallUnary(ctx, req)
+}
+
+// UpdateFamilyRole calls shw.FamilyService.UpdateFamilyRole.
+func (c *familyServiceClient) UpdateFamilyRole(ctx context.Context, req *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.updateFamilyRole.CallUnary(ctx, req)
+}
+
+// DeleteFamilyRole calls shw.FamilyService.DeleteFamilyRole.
+func (c *familyServiceClient) DeleteFamilyRole(ctx context.Context, req *connect.Request[grpc.FamilyRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.deleteFamilyRole.CallUnary(ctx, req)
+}
+
 // FamilyServiceHandler is an implementation of the shw.FamilyService service.
 type FamilyServiceHandler interface {
 	GetFamily(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyResponse], error)
@@ -152,6 +220,10 @@ type FamilyServiceHandler interface {
 	UpdateFamily(context.Context, *connect.Request[grpc.Family]) (*connect.Response[grpc.CommonResponse], error)
 	DeleteFamily(context.Context, *connect.Request[grpc.Family]) (*connect.Response[grpc.CommonResponse], error)
 	AddFamilyMember(context.Context, *connect.Request[grpc.AddFamilyMemberRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetFamilyRole(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyRoleResponse], error)
+	CreateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteFamilyRole(context.Context, *connect.Request[grpc.FamilyRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewFamilyServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -190,6 +262,30 @@ func NewFamilyServiceHandler(svc FamilyServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	familyServiceGetFamilyRoleHandler := connect.NewUnaryHandler(
+		FamilyServiceGetFamilyRoleProcedure,
+		svc.GetFamilyRole,
+		connect.WithSchema(familyServiceGetFamilyRoleMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	familyServiceCreateFamilyRoleHandler := connect.NewUnaryHandler(
+		FamilyServiceCreateFamilyRoleProcedure,
+		svc.CreateFamilyRole,
+		connect.WithSchema(familyServiceCreateFamilyRoleMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	familyServiceUpdateFamilyRoleHandler := connect.NewUnaryHandler(
+		FamilyServiceUpdateFamilyRoleProcedure,
+		svc.UpdateFamilyRole,
+		connect.WithSchema(familyServiceUpdateFamilyRoleMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	familyServiceDeleteFamilyRoleHandler := connect.NewUnaryHandler(
+		FamilyServiceDeleteFamilyRoleProcedure,
+		svc.DeleteFamilyRole,
+		connect.WithSchema(familyServiceDeleteFamilyRoleMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/shw.FamilyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case FamilyServiceGetFamilyProcedure:
@@ -202,6 +298,14 @@ func NewFamilyServiceHandler(svc FamilyServiceHandler, opts ...connect.HandlerOp
 			familyServiceDeleteFamilyHandler.ServeHTTP(w, r)
 		case FamilyServiceAddFamilyMemberProcedure:
 			familyServiceAddFamilyMemberHandler.ServeHTTP(w, r)
+		case FamilyServiceGetFamilyRoleProcedure:
+			familyServiceGetFamilyRoleHandler.ServeHTTP(w, r)
+		case FamilyServiceCreateFamilyRoleProcedure:
+			familyServiceCreateFamilyRoleHandler.ServeHTTP(w, r)
+		case FamilyServiceUpdateFamilyRoleProcedure:
+			familyServiceUpdateFamilyRoleHandler.ServeHTTP(w, r)
+		case FamilyServiceDeleteFamilyRoleProcedure:
+			familyServiceDeleteFamilyRoleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -229,4 +333,20 @@ func (UnimplementedFamilyServiceHandler) DeleteFamily(context.Context, *connect.
 
 func (UnimplementedFamilyServiceHandler) AddFamilyMember(context.Context, *connect.Request[grpc.AddFamilyMemberRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyService.AddFamilyMember is not implemented"))
+}
+
+func (UnimplementedFamilyServiceHandler) GetFamilyRole(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyRoleResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyService.GetFamilyRole is not implemented"))
+}
+
+func (UnimplementedFamilyServiceHandler) CreateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyService.CreateFamilyRole is not implemented"))
+}
+
+func (UnimplementedFamilyServiceHandler) UpdateFamilyRole(context.Context, *connect.Request[grpc.FamilyRole]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyService.UpdateFamilyRole is not implemented"))
+}
+
+func (UnimplementedFamilyServiceHandler) DeleteFamilyRole(context.Context, *connect.Request[grpc.FamilyRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyService.DeleteFamilyRole is not implemented"))
 }
