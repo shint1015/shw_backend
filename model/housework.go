@@ -45,6 +45,14 @@ func (m *Housework) Get() (*Housework, error) {
 	return &res, nil
 }
 
+func (m *Housework) GetDetail() (*Housework, error) {
+	var res Housework
+	if err := DB.Where(m).Preload("WorkToUser").Preload("Memo").First(&res).Error; err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
 func (m *Housework) GetAll() ([]Housework, error) {
 	var res []Housework
 	result := DB.Where(m).Find(&res)

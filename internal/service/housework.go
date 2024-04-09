@@ -38,7 +38,7 @@ func (s *HouseworkService) GetHouseworkDetail(req *shwgrpc.HouseworkDetailReques
 	houseworkModel := model.Housework{
 		ID: uint(req.Id),
 	}
-	housework, err := houseworkModel.Get()
+	housework, err := houseworkModel.GetDetail()
 	if err != nil {
 		return nil, nil, err
 	}
