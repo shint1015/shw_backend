@@ -35,17 +35,22 @@ const (
 const (
 	// UserServiceUpdateRoleProcedure is the fully-qualified name of the UserService's UpdateRole RPC.
 	UserServiceUpdateRoleProcedure = "/shw.UserService/UpdateRole"
+	// UserServiceGetBelongToUserProcedure is the fully-qualified name of the UserService's
+	// GetBelongToUser RPC.
+	UserServiceGetBelongToUserProcedure = "/shw.UserService/GetBelongToUser"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	userServiceServiceDescriptor          = grpc.File_user_proto.Services().ByName("UserService")
-	userServiceUpdateRoleMethodDescriptor = userServiceServiceDescriptor.Methods().ByName("UpdateRole")
+	userServiceServiceDescriptor               = grpc.File_user_proto.Services().ByName("UserService")
+	userServiceUpdateRoleMethodDescriptor      = userServiceServiceDescriptor.Methods().ByName("UpdateRole")
+	userServiceGetBelongToUserMethodDescriptor = userServiceServiceDescriptor.Methods().ByName("GetBelongToUser")
 )
 
 // UserServiceClient is a client for the shw.UserService service.
 type UserServiceClient interface {
 	UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error)
 }
 
 // NewUserServiceClient constructs a client for the shw.UserService service. By default, it uses the
@@ -64,12 +69,19 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getBelongToUser: connect.NewClient[grpc.GetBelongToUserRequest, grpc.GetBelongToUserResponse](
+			httpClient,
+			baseURL+UserServiceGetBelongToUserProcedure,
+			connect.WithSchema(userServiceGetBelongToUserMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
-	updateRole *connect.Client[grpc.UpdateRoleRequest, grpc.CommonResponse]
+	updateRole      *connect.Client[grpc.UpdateRoleRequest, grpc.CommonResponse]
+	getBelongToUser *connect.Client[grpc.GetBelongToUserRequest, grpc.GetBelongToUserResponse]
 }
 
 // UpdateRole calls shw.UserService.UpdateRole.
@@ -77,9 +89,15 @@ func (c *userServiceClient) UpdateRole(ctx context.Context, req *connect.Request
 	return c.updateRole.CallUnary(ctx, req)
 }
 
+// GetBelongToUser calls shw.UserService.GetBelongToUser.
+func (c *userServiceClient) GetBelongToUser(ctx context.Context, req *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error) {
+	return c.getBelongToUser.CallUnary(ctx, req)
+}
+
 // UserServiceHandler is an implementation of the shw.UserService service.
 type UserServiceHandler interface {
 	UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error)
 }
 
 // NewUserServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -94,10 +112,18 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	userServiceGetBelongToUserHandler := connect.NewUnaryHandler(
+		UserServiceGetBelongToUserProcedure,
+		svc.GetBelongToUser,
+		connect.WithSchema(userServiceGetBelongToUserMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/shw.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case UserServiceUpdateRoleProcedure:
 			userServiceUpdateRoleHandler.ServeHTTP(w, r)
+		case UserServiceGetBelongToUserProcedure:
+			userServiceGetBelongToUserHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -109,4 +135,8 @@ type UnimplementedUserServiceHandler struct{}
 
 func (UnimplementedUserServiceHandler) UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.UpdateRole is not implemented"))
+}
+
+func (UnimplementedUserServiceHandler) GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.GetBelongToUser is not implemented"))
 }
