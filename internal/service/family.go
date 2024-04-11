@@ -142,3 +142,24 @@ func (s *FamilyService) createFormatGrpcHouseworkPoint(user model.User) *shwgrpc
 		UpdatedAt: user.HouseworkPoint.UpdatedAt.Unix(),
 	}
 }
+
+func (s *FamilyService) GetBelongToUser(req *shwgrpc.GetBelongToUserRequest) ([]*shwgrpc.User, error) {
+	familyId := uint(req.FamilyId)
+	u := model.User{
+		FamilyID: &familyId,
+	}
+	users, err := u.GetUsersByFamilyID()
+	if err != nil {
+		return nil, err
+	}
+	var res []*shwgrpc.User
+	for _, val := range users {
+		res = append(res, &shwgrpc.User{
+			Id:       uint64(val.ID),
+			Name:     val.Name,
+			RoleId:   uint64(val.Role.ID),
+			FamilyId: uint64(*val.FamilyID),
+		})
+	}
+	return res, nil
+}

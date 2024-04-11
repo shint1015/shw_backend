@@ -94,3 +94,7 @@ func (s *ShwServer) AddFamilyMember(ctx context.Context, req *connect.Request[sh
 func (s *ShwServer) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.UpdateRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	return userController.UpdateRole(ctx, req)
 }
+
+func (s *ShwServer) GetBelongToUser(ctx context.Context, req *connect.Request[shwgrpc.GetBelongToUserRequest]) (*connect.Response[shwgrpc.GetBelongToUserResponse], error) {
+	return familyController.GetBelongToUser(ctx, req)
+}

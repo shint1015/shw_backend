@@ -64,3 +64,12 @@ func (c *FamilyController) AddFamilyMember(ctx context.Context, req *connect.Req
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
+
+func (c *FamilyController) GetBelongToUser(ctx context.Context, req *connect.Request[shwgrpc.GetBelongToUserRequest]) (*connect.Response[shwgrpc.GetBelongToUserResponse], error) {
+	users, err := familyService.GetBelongToUser(req.Msg)
+	if err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.GetBelongToUserResponse{Users: users})
+	return res, nil
+}
