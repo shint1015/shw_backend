@@ -157,7 +157,7 @@ func (s *FamilyService) GetBelongToUser(req *shwgrpc.GetBelongToUserRequest) ([]
 		res = append(res, &shwgrpc.User{
 			Id:       uint64(val.ID),
 			Name:     val.Name,
-			RoleId:   uint64(val.Role.ID),
+			RoleId:   uint64(*val.RoleID),
 			FamilyId: uint64(*val.FamilyID),
 		})
 	}
