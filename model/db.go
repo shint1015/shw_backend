@@ -27,14 +27,14 @@ func Init() {
 }
 
 func txExec[
-modelData *User |
-*FamilyRole |
-*Family |
-*Housework |
-*HouseworkMemo |
-*HouseworkTemplate |
-*HouseworkPoint |
-*HouseworkPointHistory](
+	modelData *User |
+		*FamilyRole |
+		*Family |
+		*Housework |
+		*HouseworkMemo |
+		*HouseworkTemplate |
+		*HouseworkPoint |
+		*HouseworkPointHistory](
 	queryType string,
 	m modelData,
 	tx *gorm.DB,
@@ -49,7 +49,7 @@ modelData *User |
 	case "create":
 		res = tx.Create(&m)
 	case "update":
-		res = tx.Save(&m)
+		res = tx.Updates(&m)
 	case "delete":
 		res = tx.Delete(&m)
 	}

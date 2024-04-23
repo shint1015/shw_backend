@@ -79,20 +79,19 @@ func (s *HouseworkService) UpdateHousework(req *shwgrpc.Housework) error {
 		StartedAt: time.Unix(req.StartedAt, 0),
 		EndedAt:   time.Unix(req.EndedAt, 0),
 	}
+
 	if err := housework.Update(nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *HouseworkService) FinishHousework(req *shwgrpc.Housework) error {
+func (s *HouseworkService) FinishHousework(req *shwgrpc.HouseworkTargetRequest) error {
 	// TODO: familyIdから存在するかどうか
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 	housework := model.Housework{
-		ID:      uint(req.Id),
-		WorkTo:  uint(req.WorkUser.Id),
-		Status:  string(HouseworkStatusDone),
-		EndedAt: time.Unix(req.EndedAt, 0),
+		ID:     uint(req.Id),
+		Status: string(HouseworkStatusDone),
 	}
 	if err := housework.Update(nil); err != nil {
 		return err
@@ -100,7 +99,7 @@ func (s *HouseworkService) FinishHousework(req *shwgrpc.Housework) error {
 	return nil
 }
 
-func (s *HouseworkService) DeleteHousework(req *shwgrpc.Housework) error {
+func (s *HouseworkService) DeleteHousework(req *shwgrpc.HouseworkTargetRequest) error {
 	// TODO: familyIdから存在するかどうか
 	// TODO: login情報から、所属するfamilyIdを取得し、それ以外のfamilyIdを指定されたらエラー
 

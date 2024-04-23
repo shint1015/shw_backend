@@ -49,7 +49,7 @@ func (c *HouseworkController) UpdateHousework(ctx context.Context, req *connect.
 	return res, nil
 }
 
-func (c *HouseworkController) FinishHousework(ctx context.Context, req *connect.Request[shwgrpc.Housework]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (c *HouseworkController) FinishHousework(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTargetRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	if err := houseworkService.FinishHousework(req.Msg); err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *HouseworkController) FinishHousework(ctx context.Context, req *connect.
 	return res, nil
 }
 
-func (c *HouseworkController) DeleteHousework(ctx context.Context, req *connect.Request[shwgrpc.Housework]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (c *HouseworkController) DeleteHousework(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTargetRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	if err := houseworkService.DeleteHousework(req.Msg); err != nil {
 		return nil, err
 	}

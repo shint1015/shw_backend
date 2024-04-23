@@ -22,11 +22,11 @@ func (s *ShwServer) UpdateHousework(ctx context.Context, req *connect.Request[sh
 	return houseworkController.UpdateHousework(ctx, req)
 }
 
-func (s *ShwServer) FinishHousework(ctx context.Context, req *connect.Request[shwgrpc.Housework]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (s *ShwServer) FinishHousework(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTargetRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	return houseworkController.FinishHousework(ctx, req)
 }
 
-func (s *ShwServer) DeleteHousework(ctx context.Context, req *connect.Request[shwgrpc.Housework]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (s *ShwServer) DeleteHousework(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTargetRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	return houseworkController.DeleteHousework(ctx, req)
 }
 
