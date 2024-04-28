@@ -163,3 +163,54 @@ func (s *FamilyService) GetBelongToUser(req *shwgrpc.GetBelongToUserRequest) ([]
 	}
 	return res, nil
 }
+
+func (s *FamilyService) GetRole(req *shwgrpc.FamilyRequest) ([]*shwgrpc.FamilyRole, error) {
+	familyId := uint(req.FamilyId)
+	r := model.FamilyRole{
+		FamilyID: familyId,
+	}
+	roles, err := r.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	var res []*shwgrpc.FamilyRole
+	for _, val := range roles {
+		res = append(res, &shwgrpc.FamilyRole{
+			Id:   uint64(val.ID),
+			Name: val.Name,
+		})
+	}
+	return res, nil
+}
+
+func (s *FamilyService) CreateRole(req *shwgrpc.FamilyRole) error {
+	r := model.FamilyRole{
+		Name:     req.Name,
+		FamilyID: uint(req.FamilyId),
+	}
+	if err := r.Create(nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *FamilyService) UpdateRole(req *shwgrpc.FamilyRole) error {
+	r := model.FamilyRole{
+		ID:   uint(req.Id),
+		Name: req.Name,
+	}
+	if err := r.Update(nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *FamilyService) DeleteRole(req *shwgrpc.FamilyRoleRequest) error {
+	r := model.FamilyRole{
+		ID: uint(req.FamilyRoleId),
+	}
+	if err := r.Delete(nil); err != nil {
+		return err
+	}
+	return nil
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"connectrpc.com/connect"
 	"context"
+	"fmt"
 	shwgrpc "shwgrpc/pkg/grpc"
 )
 
@@ -92,6 +93,20 @@ func (s *ShwServer) AddFamilyMember(ctx context.Context, req *connect.Request[sh
 
 func (s *ShwServer) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.UpdateRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	return userController.UpdateRole(ctx, req)
+}
+
+func (s *ShwServer) GetFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyRoleResponse], error) {
+	fmt.Println("GetFamilyRole", req)
+	return familyController.GetRole(ctx, req)
+}
+func (s *ShwServer) CreateFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	return familyController.CreateRole(ctx, req)
+}
+func (s *ShwServer) UpdateFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	return familyController.UpdateRole(ctx, req)
+}
+func (s *ShwServer) DeleteFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	return familyController.DeleteRole(ctx, req)
 }
 
 func (s *ShwServer) GetBelongToUser(ctx context.Context, req *connect.Request[shwgrpc.GetBelongToUserRequest]) (*connect.Response[shwgrpc.GetBelongToUserResponse], error) {

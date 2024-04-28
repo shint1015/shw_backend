@@ -73,3 +73,33 @@ func (c *FamilyController) GetBelongToUser(ctx context.Context, req *connect.Req
 	res := connect.NewResponse(&shwgrpc.GetBelongToUserResponse{Users: users})
 	return res, nil
 }
+
+func (c *FamilyController) GetRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyRoleResponse], error) {
+	roles, err := familyService.GetRole(req.Msg)
+	if err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.FamilyRoleResponse{FamilyRole: roles})
+	return res, nil
+}
+func (c *FamilyController) CreateRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyService.CreateRole(req.Msg); err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
+	return res, nil
+}
+func (c *FamilyController) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyService.UpdateRole(req.Msg); err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
+	return res, nil
+}
+func (c *FamilyController) DeleteRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyService.DeleteRole(req.Msg); err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
+	return res, nil
+}
