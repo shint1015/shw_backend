@@ -69,6 +69,21 @@ const (
 	// HouseworkServiceGetHouseworkPointHistoryProcedure is the fully-qualified name of the
 	// HouseworkService's GetHouseworkPointHistory RPC.
 	HouseworkServiceGetHouseworkPointHistoryProcedure = "/shw.HouseworkService/GetHouseworkPointHistory"
+	// HouseworkServiceGetHouseworkTemplateProcedure is the fully-qualified name of the
+	// HouseworkService's GetHouseworkTemplate RPC.
+	HouseworkServiceGetHouseworkTemplateProcedure = "/shw.HouseworkService/GetHouseworkTemplate"
+	// HouseworkServiceGetHouseworkTemplatesProcedure is the fully-qualified name of the
+	// HouseworkService's GetHouseworkTemplates RPC.
+	HouseworkServiceGetHouseworkTemplatesProcedure = "/shw.HouseworkService/GetHouseworkTemplates"
+	// HouseworkServiceCreateHouseworkTemplateProcedure is the fully-qualified name of the
+	// HouseworkService's CreateHouseworkTemplate RPC.
+	HouseworkServiceCreateHouseworkTemplateProcedure = "/shw.HouseworkService/CreateHouseworkTemplate"
+	// HouseworkServiceUpdateHouseworkTemplateProcedure is the fully-qualified name of the
+	// HouseworkService's UpdateHouseworkTemplate RPC.
+	HouseworkServiceUpdateHouseworkTemplateProcedure = "/shw.HouseworkService/UpdateHouseworkTemplate"
+	// HouseworkServiceDeleteHouseworkTemplateProcedure is the fully-qualified name of the
+	// HouseworkService's DeleteHouseworkTemplate RPC.
+	HouseworkServiceDeleteHouseworkTemplateProcedure = "/shw.HouseworkService/DeleteHouseworkTemplate"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -86,6 +101,11 @@ var (
 	houseworkServiceDeleteHouseworkMemoMethodDescriptor      = houseworkServiceServiceDescriptor.Methods().ByName("DeleteHouseworkMemo")
 	houseworkServiceGetHouseworkPointMethodDescriptor        = houseworkServiceServiceDescriptor.Methods().ByName("GetHouseworkPoint")
 	houseworkServiceGetHouseworkPointHistoryMethodDescriptor = houseworkServiceServiceDescriptor.Methods().ByName("GetHouseworkPointHistory")
+	houseworkServiceGetHouseworkTemplateMethodDescriptor     = houseworkServiceServiceDescriptor.Methods().ByName("GetHouseworkTemplate")
+	houseworkServiceGetHouseworkTemplatesMethodDescriptor    = houseworkServiceServiceDescriptor.Methods().ByName("GetHouseworkTemplates")
+	houseworkServiceCreateHouseworkTemplateMethodDescriptor  = houseworkServiceServiceDescriptor.Methods().ByName("CreateHouseworkTemplate")
+	houseworkServiceUpdateHouseworkTemplateMethodDescriptor  = houseworkServiceServiceDescriptor.Methods().ByName("UpdateHouseworkTemplate")
+	houseworkServiceDeleteHouseworkTemplateMethodDescriptor  = houseworkServiceServiceDescriptor.Methods().ByName("DeleteHouseworkTemplate")
 )
 
 // HouseworkServiceClient is a client for the shw.HouseworkService service.
@@ -102,6 +122,11 @@ type HouseworkServiceClient interface {
 	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
 	GetHouseworkPoint(context.Context, *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error)
 	GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error)
+	GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error)
+	GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error)
+	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkServiceClient constructs a client for the shw.HouseworkService service. By default,
@@ -186,6 +211,36 @@ func NewHouseworkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(houseworkServiceGetHouseworkPointHistoryMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplateRequest, grpc.HouseworkTemplateResponse](
+			httpClient,
+			baseURL+HouseworkServiceGetHouseworkTemplateProcedure,
+			connect.WithSchema(houseworkServiceGetHouseworkTemplateMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getHouseworkTemplates: connect.NewClient[grpc.HouseworkTemplatesRequest, grpc.HouseworkTemplatesResponse](
+			httpClient,
+			baseURL+HouseworkServiceGetHouseworkTemplatesProcedure,
+			connect.WithSchema(houseworkServiceGetHouseworkTemplatesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		createHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkServiceCreateHouseworkTemplateProcedure,
+			connect.WithSchema(houseworkServiceCreateHouseworkTemplateMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		updateHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkServiceUpdateHouseworkTemplateProcedure,
+			connect.WithSchema(houseworkServiceUpdateHouseworkTemplateMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		deleteHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkServiceDeleteHouseworkTemplateProcedure,
+			connect.WithSchema(houseworkServiceDeleteHouseworkTemplateMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -203,6 +258,11 @@ type houseworkServiceClient struct {
 	deleteHouseworkMemo      *connect.Client[grpc.HouseworkMemo, grpc.CommonResponse]
 	getHouseworkPoint        *connect.Client[grpc.HouseworkPointRequest, grpc.HouseworkPointResponse]
 	getHouseworkPointHistory *connect.Client[grpc.HouseworkPointHistoryRequest, grpc.HouseworkPointHistoryResponse]
+	getHouseworkTemplate     *connect.Client[grpc.HouseworkTemplateRequest, grpc.HouseworkTemplateResponse]
+	getHouseworkTemplates    *connect.Client[grpc.HouseworkTemplatesRequest, grpc.HouseworkTemplatesResponse]
+	createHouseworkTemplate  *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
+	updateHouseworkTemplate  *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
+	deleteHouseworkTemplate  *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
 }
 
 // GetHousework calls shw.HouseworkService.GetHousework.
@@ -265,6 +325,31 @@ func (c *houseworkServiceClient) GetHouseworkPointHistory(ctx context.Context, r
 	return c.getHouseworkPointHistory.CallUnary(ctx, req)
 }
 
+// GetHouseworkTemplate calls shw.HouseworkService.GetHouseworkTemplate.
+func (c *houseworkServiceClient) GetHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error) {
+	return c.getHouseworkTemplate.CallUnary(ctx, req)
+}
+
+// GetHouseworkTemplates calls shw.HouseworkService.GetHouseworkTemplates.
+func (c *houseworkServiceClient) GetHouseworkTemplates(ctx context.Context, req *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error) {
+	return c.getHouseworkTemplates.CallUnary(ctx, req)
+}
+
+// CreateHouseworkTemplate calls shw.HouseworkService.CreateHouseworkTemplate.
+func (c *houseworkServiceClient) CreateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.createHouseworkTemplate.CallUnary(ctx, req)
+}
+
+// UpdateHouseworkTemplate calls shw.HouseworkService.UpdateHouseworkTemplate.
+func (c *houseworkServiceClient) UpdateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.updateHouseworkTemplate.CallUnary(ctx, req)
+}
+
+// DeleteHouseworkTemplate calls shw.HouseworkService.DeleteHouseworkTemplate.
+func (c *houseworkServiceClient) DeleteHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.deleteHouseworkTemplate.CallUnary(ctx, req)
+}
+
 // HouseworkServiceHandler is an implementation of the shw.HouseworkService service.
 type HouseworkServiceHandler interface {
 	GetHousework(context.Context, *connect.Request[grpc.HouseworkRequest]) (*connect.Response[grpc.HouseworkResponse], error)
@@ -279,6 +364,11 @@ type HouseworkServiceHandler interface {
 	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
 	GetHouseworkPoint(context.Context, *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error)
 	GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error)
+	GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error)
+	GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error)
+	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -359,6 +449,36 @@ func NewHouseworkServiceHandler(svc HouseworkServiceHandler, opts ...connect.Han
 		connect.WithSchema(houseworkServiceGetHouseworkPointHistoryMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	houseworkServiceGetHouseworkTemplateHandler := connect.NewUnaryHandler(
+		HouseworkServiceGetHouseworkTemplateProcedure,
+		svc.GetHouseworkTemplate,
+		connect.WithSchema(houseworkServiceGetHouseworkTemplateMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkServiceGetHouseworkTemplatesHandler := connect.NewUnaryHandler(
+		HouseworkServiceGetHouseworkTemplatesProcedure,
+		svc.GetHouseworkTemplates,
+		connect.WithSchema(houseworkServiceGetHouseworkTemplatesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkServiceCreateHouseworkTemplateHandler := connect.NewUnaryHandler(
+		HouseworkServiceCreateHouseworkTemplateProcedure,
+		svc.CreateHouseworkTemplate,
+		connect.WithSchema(houseworkServiceCreateHouseworkTemplateMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkServiceUpdateHouseworkTemplateHandler := connect.NewUnaryHandler(
+		HouseworkServiceUpdateHouseworkTemplateProcedure,
+		svc.UpdateHouseworkTemplate,
+		connect.WithSchema(houseworkServiceUpdateHouseworkTemplateMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkServiceDeleteHouseworkTemplateHandler := connect.NewUnaryHandler(
+		HouseworkServiceDeleteHouseworkTemplateProcedure,
+		svc.DeleteHouseworkTemplate,
+		connect.WithSchema(houseworkServiceDeleteHouseworkTemplateMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/shw.HouseworkService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HouseworkServiceGetHouseworkProcedure:
@@ -385,6 +505,16 @@ func NewHouseworkServiceHandler(svc HouseworkServiceHandler, opts ...connect.Han
 			houseworkServiceGetHouseworkPointHandler.ServeHTTP(w, r)
 		case HouseworkServiceGetHouseworkPointHistoryProcedure:
 			houseworkServiceGetHouseworkPointHistoryHandler.ServeHTTP(w, r)
+		case HouseworkServiceGetHouseworkTemplateProcedure:
+			houseworkServiceGetHouseworkTemplateHandler.ServeHTTP(w, r)
+		case HouseworkServiceGetHouseworkTemplatesProcedure:
+			houseworkServiceGetHouseworkTemplatesHandler.ServeHTTP(w, r)
+		case HouseworkServiceCreateHouseworkTemplateProcedure:
+			houseworkServiceCreateHouseworkTemplateHandler.ServeHTTP(w, r)
+		case HouseworkServiceUpdateHouseworkTemplateProcedure:
+			houseworkServiceUpdateHouseworkTemplateHandler.ServeHTTP(w, r)
+		case HouseworkServiceDeleteHouseworkTemplateProcedure:
+			houseworkServiceDeleteHouseworkTemplateHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -440,4 +570,24 @@ func (UnimplementedHouseworkServiceHandler) GetHouseworkPoint(context.Context, *
 
 func (UnimplementedHouseworkServiceHandler) GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.GetHouseworkPointHistory is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.GetHouseworkTemplate is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.GetHouseworkTemplates is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.CreateHouseworkTemplate is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.UpdateHouseworkTemplate is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.DeleteHouseworkTemplate is not implemented"))
 }
