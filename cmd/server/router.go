@@ -46,11 +46,11 @@ func (s *ShwServer) DeleteHouseworkMemo(ctx context.Context, req *connect.Reques
 	return houseworkController.DeleteHouseworkMemo(ctx, req)
 }
 
-func (s *ShwServer) GetHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplateRequest]) (*connect.Response[shwgrpc.HouseworkTemplate], error) {
+func (s *ShwServer) GetHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplateRequest]) (*connect.Response[shwgrpc.HouseworkTemplateResponse], error) {
 	return houseworkController.GetHouseworkTemplate(ctx, req)
 }
 
-func (s *ShwServer) GetHouseworkTemplates(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplatesRequest]) (*connect.Response[shwgrpc.HouseworkTemplates], error) {
+func (s *ShwServer) GetHouseworkTemplates(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplatesRequest]) (*connect.Response[shwgrpc.HouseworkTemplatesResponse], error) {
 	return houseworkController.GetHouseworkTemplates(ctx, req)
 }
 
