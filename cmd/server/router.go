@@ -3,7 +3,6 @@ package main
 import (
 	"connectrpc.com/connect"
 	"context"
-	"fmt"
 	shwgrpc "shwgrpc/pkg/grpc"
 )
 
@@ -47,8 +46,12 @@ func (s *ShwServer) DeleteHouseworkMemo(ctx context.Context, req *connect.Reques
 	return houseworkController.DeleteHouseworkMemo(ctx, req)
 }
 
-func (s *ShwServer) GetHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplateRequest]) (*connect.Response[shwgrpc.HouseworkTemplateResponse], error) {
+func (s *ShwServer) GetHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplateRequest]) (*connect.Response[shwgrpc.HouseworkTemplate], error) {
 	return houseworkController.GetHouseworkTemplate(ctx, req)
+}
+
+func (s *ShwServer) GetHouseworkTemplates(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplatesRequest]) (*connect.Response[shwgrpc.HouseworkTemplates], error) {
+	return houseworkController.GetHouseworkTemplates(ctx, req)
 }
 
 func (s *ShwServer) CreateHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplate]) (*connect.Response[shwgrpc.CommonResponse], error) {
@@ -59,8 +62,8 @@ func (s *ShwServer) UpdateHouseworkTemplate(ctx context.Context, req *connect.Re
 	return houseworkController.UpdateHouseworkTemplate(ctx, req)
 }
 
-func (s *ShwServer) RemoveHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplate]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	return houseworkController.RemoveHouseworkTemplate(ctx, req)
+func (s *ShwServer) DeleteHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplate]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	return houseworkController.DeleteHouseworkTemplate(ctx, req)
 }
 
 func (s *ShwServer) GetHouseworkPoint(ctx context.Context, req *connect.Request[shwgrpc.HouseworkPointRequest]) (*connect.Response[shwgrpc.HouseworkPointResponse], error) {
@@ -96,7 +99,6 @@ func (s *ShwServer) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc
 }
 
 func (s *ShwServer) GetFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyRoleResponse], error) {
-	fmt.Println("GetFamilyRole", req)
 	return familyController.GetRole(ctx, req)
 }
 func (s *ShwServer) CreateFamilyRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {

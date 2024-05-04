@@ -99,11 +99,20 @@ func (c *HouseworkController) DeleteHouseworkMemo(ctx context.Context, req *conn
 }
 
 func (c *HouseworkController) GetHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplateRequest]) (*connect.Response[shwgrpc.HouseworkTemplateResponse], error) {
-	houseworkTemplates, err := houseworkService.GetHouseworkTemplate(req.Msg)
+	houseworkTemplate, err := houseworkService.GetHouseworkTemplate(req.Msg)
 	if err != nil {
 		return nil, err
 	}
-	res := connect.NewResponse(&shwgrpc.HouseworkTemplateResponse{Template: houseworkTemplates})
+	res := connect.NewResponse(&shwgrpc.HouseworkTemplateResponse{Template: houseworkTemplate})
+	return res, nil
+}
+
+func (c *HouseworkController) GetHouseworkTemplates(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplatesRequest]) (*connect.Response[shwgrpc.HouseworkTemplatesResponse], error) {
+	houseworkTemplates, err := houseworkService.GetHouseworkTemplates(req.Msg)
+	if err != nil {
+		return nil, err
+	}
+	res := connect.NewResponse(&shwgrpc.HouseworkTemplatesResponse{Templates: houseworkTemplates})
 	return res, nil
 }
 
@@ -123,7 +132,7 @@ func (c *HouseworkController) UpdateHouseworkTemplate(ctx context.Context, req *
 	return res, nil
 }
 
-func (c *HouseworkController) RemoveHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplate]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (c *HouseworkController) DeleteHouseworkTemplate(ctx context.Context, req *connect.Request[shwgrpc.HouseworkTemplate]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	if err := houseworkService.RemoveHouseworkTemplate(req.Msg); err != nil {
 		return nil, err
 	}

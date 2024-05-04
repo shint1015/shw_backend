@@ -27,12 +27,12 @@ func (m *HouseworkTemplate) Delete(tx *gorm.DB) error {
 	return txExec("delete", m, tx)
 }
 
-func (m *HouseworkTemplate) Get() (*HouseworkTemplate, error) {
+func (m *HouseworkTemplate) Get() (HouseworkTemplate, error) {
 	var res HouseworkTemplate
 	if err := DB.Where(m).First(&res).Error; err != nil {
-		return nil, err
+		return HouseworkTemplate{}, err
 	}
-	return &res, nil
+	return res, nil
 }
 
 func (m *HouseworkTemplate) GetAll() ([]HouseworkTemplate, error) {

@@ -203,7 +203,18 @@ func (s *HouseworkService) GetHouseworkPointHistory(req *shwgrpc.HouseworkPointH
 	return res, nil
 }
 
-func (s *HouseworkService) GetHouseworkTemplate(req *shwgrpc.HouseworkTemplateRequest) ([]*shwgrpc.HouseworkTemplate, error) {
+func (s *HouseworkService) GetHouseworkTemplate(req *shwgrpc.HouseworkTemplateRequest) (*shwgrpc.HouseworkTemplate, error) {
+	houseworkTemplate := model.HouseworkTemplate{
+		ID: uint(req.Id),
+	}
+	res, err := houseworkTemplate.Get()
+	if err != nil {
+		return nil, err
+	}
+	return s.createFormatGrpcHouseworkTemplate(res), nil
+}
+
+func (s *HouseworkService) GetHouseworkTemplates(req *shwgrpc.HouseworkTemplatesRequest) ([]*shwgrpc.HouseworkTemplate, error) {
 	houseworkTemplate := model.HouseworkTemplate{
 		FamilyID: uint(req.FamilyId),
 	}
