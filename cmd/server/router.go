@@ -74,6 +74,10 @@ func (s *ShwServer) GetHouseworkPointHistory(ctx context.Context, req *connect.R
 	return houseworkController.GetHouseworkPointHistory(ctx, req)
 }
 
+func (s *ShwServer) GetFamilyPointList(ctx context.Context, req *connect.Request[shwgrpc.FamilyPointListRequest]) (*connect.Response[shwgrpc.FamilyPointList], error) {
+	return pointController.GetFamilyPointList(ctx, req)
+}
+
 func (s *ShwServer) GetFamily(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyResponse], error) {
 	return familyController.GetFamily(ctx, req)
 }

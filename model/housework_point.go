@@ -8,8 +8,10 @@ import (
 type HouseworkPoint struct {
 	ID        uint `json:"id" gorm:"primary_key"`
 	UserID    uint
-	User      User `json:"user_id" gorm:"foreignKey:UserID"`
-	Point     int  `json:"point" gorm:"type:int;not null"`
+	FamilyID  uint
+	Family    Family `json:"family_id" gorm:"foreignKey:FamilyID"`
+	User      User   `json:"user_id" gorm:"foreignKey:UserID"`
+	Point     int    `json:"point" gorm:"type:int;not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
