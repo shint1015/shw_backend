@@ -55,8 +55,7 @@ func (m *Housework) GetDetail() (*Housework, error) {
 
 func (m *Housework) GetAll() ([]Housework, error) {
 	var res []Housework
-	result := DB.Where(m).Find(&res)
-	if result.Error != nil {
+	if err := DB.Where(m).Find(&res).Error; err != nil {
 		return nil, err
 	}
 	return res, nil
