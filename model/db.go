@@ -5,12 +5,16 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"os"
+	"shwgrpc/config"
 )
 
 var DB *gorm.DB
 var err error
 
 func Init() {
+	if err := config.LoadEnv(); err != nil {
+		log.Fatalf("Error loading env: %v", err)
+	}
 	USER, _ := os.LookupEnv("DATABASE_USER")
 	PASS, _ := os.LookupEnv("DATABASE_PASSWORD")
 	PROTOCOL, _ := os.LookupEnv("DATABASE_PROTOCOL")

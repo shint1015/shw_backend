@@ -49,16 +49,6 @@ const (
 	PointServiceDeletePointProcedure = "/shw.PointService/DeletePoint"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	pointServiceServiceDescriptor                  = grpc.File_point_proto.Services().ByName("PointService")
-	pointServiceGetPointMethodDescriptor           = pointServiceServiceDescriptor.Methods().ByName("GetPoint")
-	pointServiceGetFamilyPointListMethodDescriptor = pointServiceServiceDescriptor.Methods().ByName("GetFamilyPointList")
-	pointServiceCreatePointMethodDescriptor        = pointServiceServiceDescriptor.Methods().ByName("CreatePoint")
-	pointServiceUpdatePointMethodDescriptor        = pointServiceServiceDescriptor.Methods().ByName("UpdatePoint")
-	pointServiceDeletePointMethodDescriptor        = pointServiceServiceDescriptor.Methods().ByName("DeletePoint")
-)
-
 // PointServiceClient is a client for the shw.PointService service.
 type PointServiceClient interface {
 	GetPoint(context.Context, *connect.Request[grpc.PointRequest]) (*connect.Response[grpc.PointResponse], error)
@@ -77,35 +67,36 @@ type PointServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewPointServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) PointServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	pointServiceMethods := grpc.File_point_proto.Services().ByName("PointService").Methods()
 	return &pointServiceClient{
 		getPoint: connect.NewClient[grpc.PointRequest, grpc.PointResponse](
 			httpClient,
 			baseURL+PointServiceGetPointProcedure,
-			connect.WithSchema(pointServiceGetPointMethodDescriptor),
+			connect.WithSchema(pointServiceMethods.ByName("GetPoint")),
 			connect.WithClientOptions(opts...),
 		),
 		getFamilyPointList: connect.NewClient[grpc.FamilyPointListRequest, grpc.FamilyPointList](
 			httpClient,
 			baseURL+PointServiceGetFamilyPointListProcedure,
-			connect.WithSchema(pointServiceGetFamilyPointListMethodDescriptor),
+			connect.WithSchema(pointServiceMethods.ByName("GetFamilyPointList")),
 			connect.WithClientOptions(opts...),
 		),
 		createPoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
 			httpClient,
 			baseURL+PointServiceCreatePointProcedure,
-			connect.WithSchema(pointServiceCreatePointMethodDescriptor),
+			connect.WithSchema(pointServiceMethods.ByName("CreatePoint")),
 			connect.WithClientOptions(opts...),
 		),
 		updatePoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
 			httpClient,
 			baseURL+PointServiceUpdatePointProcedure,
-			connect.WithSchema(pointServiceUpdatePointMethodDescriptor),
+			connect.WithSchema(pointServiceMethods.ByName("UpdatePoint")),
 			connect.WithClientOptions(opts...),
 		),
 		deletePoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
 			httpClient,
 			baseURL+PointServiceDeletePointProcedure,
-			connect.WithSchema(pointServiceDeletePointMethodDescriptor),
+			connect.WithSchema(pointServiceMethods.ByName("DeletePoint")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -160,34 +151,35 @@ type PointServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewPointServiceHandler(svc PointServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	pointServiceMethods := grpc.File_point_proto.Services().ByName("PointService").Methods()
 	pointServiceGetPointHandler := connect.NewUnaryHandler(
 		PointServiceGetPointProcedure,
 		svc.GetPoint,
-		connect.WithSchema(pointServiceGetPointMethodDescriptor),
+		connect.WithSchema(pointServiceMethods.ByName("GetPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
 	pointServiceGetFamilyPointListHandler := connect.NewUnaryHandler(
 		PointServiceGetFamilyPointListProcedure,
 		svc.GetFamilyPointList,
-		connect.WithSchema(pointServiceGetFamilyPointListMethodDescriptor),
+		connect.WithSchema(pointServiceMethods.ByName("GetFamilyPointList")),
 		connect.WithHandlerOptions(opts...),
 	)
 	pointServiceCreatePointHandler := connect.NewUnaryHandler(
 		PointServiceCreatePointProcedure,
 		svc.CreatePoint,
-		connect.WithSchema(pointServiceCreatePointMethodDescriptor),
+		connect.WithSchema(pointServiceMethods.ByName("CreatePoint")),
 		connect.WithHandlerOptions(opts...),
 	)
 	pointServiceUpdatePointHandler := connect.NewUnaryHandler(
 		PointServiceUpdatePointProcedure,
 		svc.UpdatePoint,
-		connect.WithSchema(pointServiceUpdatePointMethodDescriptor),
+		connect.WithSchema(pointServiceMethods.ByName("UpdatePoint")),
 		connect.WithHandlerOptions(opts...),
 	)
 	pointServiceDeletePointHandler := connect.NewUnaryHandler(
 		PointServiceDeletePointProcedure,
 		svc.DeletePoint,
-		connect.WithSchema(pointServiceDeletePointMethodDescriptor),
+		connect.WithSchema(pointServiceMethods.ByName("DeletePoint")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.PointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

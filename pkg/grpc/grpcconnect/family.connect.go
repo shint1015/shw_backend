@@ -61,20 +61,6 @@ const (
 	FamilyServiceDeleteFamilyRoleProcedure = "/shw.FamilyService/DeleteFamilyRole"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	familyServiceServiceDescriptor                = grpc.File_family_proto.Services().ByName("FamilyService")
-	familyServiceGetFamilyMethodDescriptor        = familyServiceServiceDescriptor.Methods().ByName("GetFamily")
-	familyServiceCreateFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("CreateFamily")
-	familyServiceUpdateFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("UpdateFamily")
-	familyServiceDeleteFamilyMethodDescriptor     = familyServiceServiceDescriptor.Methods().ByName("DeleteFamily")
-	familyServiceAddFamilyMemberMethodDescriptor  = familyServiceServiceDescriptor.Methods().ByName("AddFamilyMember")
-	familyServiceGetFamilyRoleMethodDescriptor    = familyServiceServiceDescriptor.Methods().ByName("GetFamilyRole")
-	familyServiceCreateFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("CreateFamilyRole")
-	familyServiceUpdateFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("UpdateFamilyRole")
-	familyServiceDeleteFamilyRoleMethodDescriptor = familyServiceServiceDescriptor.Methods().ByName("DeleteFamilyRole")
-)
-
 // FamilyServiceClient is a client for the shw.FamilyService service.
 type FamilyServiceClient interface {
 	GetFamily(context.Context, *connect.Request[grpc.FamilyRequest]) (*connect.Response[grpc.FamilyResponse], error)
@@ -97,59 +83,60 @@ type FamilyServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewFamilyServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) FamilyServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	familyServiceMethods := grpc.File_family_proto.Services().ByName("FamilyService").Methods()
 	return &familyServiceClient{
 		getFamily: connect.NewClient[grpc.FamilyRequest, grpc.FamilyResponse](
 			httpClient,
 			baseURL+FamilyServiceGetFamilyProcedure,
-			connect.WithSchema(familyServiceGetFamilyMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("GetFamily")),
 			connect.WithClientOptions(opts...),
 		),
 		createFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceCreateFamilyProcedure,
-			connect.WithSchema(familyServiceCreateFamilyMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("CreateFamily")),
 			connect.WithClientOptions(opts...),
 		),
 		updateFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceUpdateFamilyProcedure,
-			connect.WithSchema(familyServiceUpdateFamilyMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("UpdateFamily")),
 			connect.WithClientOptions(opts...),
 		),
 		deleteFamily: connect.NewClient[grpc.Family, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceDeleteFamilyProcedure,
-			connect.WithSchema(familyServiceDeleteFamilyMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("DeleteFamily")),
 			connect.WithClientOptions(opts...),
 		),
 		addFamilyMember: connect.NewClient[grpc.AddFamilyMemberRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceAddFamilyMemberProcedure,
-			connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("AddFamilyMember")),
 			connect.WithClientOptions(opts...),
 		),
 		getFamilyRole: connect.NewClient[grpc.FamilyRequest, grpc.FamilyRoleResponse](
 			httpClient,
 			baseURL+FamilyServiceGetFamilyRoleProcedure,
-			connect.WithSchema(familyServiceGetFamilyRoleMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("GetFamilyRole")),
 			connect.WithClientOptions(opts...),
 		),
 		createFamilyRole: connect.NewClient[grpc.FamilyRole, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceCreateFamilyRoleProcedure,
-			connect.WithSchema(familyServiceCreateFamilyRoleMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("CreateFamilyRole")),
 			connect.WithClientOptions(opts...),
 		),
 		updateFamilyRole: connect.NewClient[grpc.FamilyRole, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceUpdateFamilyRoleProcedure,
-			connect.WithSchema(familyServiceUpdateFamilyRoleMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("UpdateFamilyRole")),
 			connect.WithClientOptions(opts...),
 		),
 		deleteFamilyRole: connect.NewClient[grpc.FamilyRoleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+FamilyServiceDeleteFamilyRoleProcedure,
-			connect.WithSchema(familyServiceDeleteFamilyRoleMethodDescriptor),
+			connect.WithSchema(familyServiceMethods.ByName("DeleteFamilyRole")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -232,58 +219,59 @@ type FamilyServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewFamilyServiceHandler(svc FamilyServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	familyServiceMethods := grpc.File_family_proto.Services().ByName("FamilyService").Methods()
 	familyServiceGetFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceGetFamilyProcedure,
 		svc.GetFamily,
-		connect.WithSchema(familyServiceGetFamilyMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("GetFamily")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceCreateFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceCreateFamilyProcedure,
 		svc.CreateFamily,
-		connect.WithSchema(familyServiceCreateFamilyMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("CreateFamily")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceUpdateFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceUpdateFamilyProcedure,
 		svc.UpdateFamily,
-		connect.WithSchema(familyServiceUpdateFamilyMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("UpdateFamily")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceDeleteFamilyHandler := connect.NewUnaryHandler(
 		FamilyServiceDeleteFamilyProcedure,
 		svc.DeleteFamily,
-		connect.WithSchema(familyServiceDeleteFamilyMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("DeleteFamily")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceAddFamilyMemberHandler := connect.NewUnaryHandler(
 		FamilyServiceAddFamilyMemberProcedure,
 		svc.AddFamilyMember,
-		connect.WithSchema(familyServiceAddFamilyMemberMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("AddFamilyMember")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceGetFamilyRoleHandler := connect.NewUnaryHandler(
 		FamilyServiceGetFamilyRoleProcedure,
 		svc.GetFamilyRole,
-		connect.WithSchema(familyServiceGetFamilyRoleMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("GetFamilyRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceCreateFamilyRoleHandler := connect.NewUnaryHandler(
 		FamilyServiceCreateFamilyRoleProcedure,
 		svc.CreateFamilyRole,
-		connect.WithSchema(familyServiceCreateFamilyRoleMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("CreateFamilyRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceUpdateFamilyRoleHandler := connect.NewUnaryHandler(
 		FamilyServiceUpdateFamilyRoleProcedure,
 		svc.UpdateFamilyRole,
-		connect.WithSchema(familyServiceUpdateFamilyRoleMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("UpdateFamilyRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	familyServiceDeleteFamilyRoleHandler := connect.NewUnaryHandler(
 		FamilyServiceDeleteFamilyRoleProcedure,
 		svc.DeleteFamilyRole,
-		connect.WithSchema(familyServiceDeleteFamilyRoleMethodDescriptor),
+		connect.WithSchema(familyServiceMethods.ByName("DeleteFamilyRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.FamilyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

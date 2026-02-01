@@ -40,13 +40,6 @@ const (
 	UserServiceGetBelongToUserProcedure = "/shw.UserService/GetBelongToUser"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	userServiceServiceDescriptor               = grpc.File_user_proto.Services().ByName("UserService")
-	userServiceUpdateRoleMethodDescriptor      = userServiceServiceDescriptor.Methods().ByName("UpdateRole")
-	userServiceGetBelongToUserMethodDescriptor = userServiceServiceDescriptor.Methods().ByName("GetBelongToUser")
-)
-
 // UserServiceClient is a client for the shw.UserService service.
 type UserServiceClient interface {
 	UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
@@ -62,17 +55,18 @@ type UserServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) UserServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	userServiceMethods := grpc.File_user_proto.Services().ByName("UserService").Methods()
 	return &userServiceClient{
 		updateRole: connect.NewClient[grpc.UpdateRoleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+UserServiceUpdateRoleProcedure,
-			connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
+			connect.WithSchema(userServiceMethods.ByName("UpdateRole")),
 			connect.WithClientOptions(opts...),
 		),
 		getBelongToUser: connect.NewClient[grpc.GetBelongToUserRequest, grpc.GetBelongToUserResponse](
 			httpClient,
 			baseURL+UserServiceGetBelongToUserProcedure,
-			connect.WithSchema(userServiceGetBelongToUserMethodDescriptor),
+			connect.WithSchema(userServiceMethods.ByName("GetBelongToUser")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -106,16 +100,17 @@ type UserServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	userServiceMethods := grpc.File_user_proto.Services().ByName("UserService").Methods()
 	userServiceUpdateRoleHandler := connect.NewUnaryHandler(
 		UserServiceUpdateRoleProcedure,
 		svc.UpdateRole,
-		connect.WithSchema(userServiceUpdateRoleMethodDescriptor),
+		connect.WithSchema(userServiceMethods.ByName("UpdateRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	userServiceGetBelongToUserHandler := connect.NewUnaryHandler(
 		UserServiceGetBelongToUserProcedure,
 		svc.GetBelongToUser,
-		connect.WithSchema(userServiceGetBelongToUserMethodDescriptor),
+		connect.WithSchema(userServiceMethods.ByName("GetBelongToUser")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

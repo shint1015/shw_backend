@@ -37,12 +37,6 @@ const (
 	HelloServiceHelloProcedure = "/shw.HelloService/Hello"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	helloServiceServiceDescriptor     = grpc.File_sample_proto.Services().ByName("HelloService")
-	helloServiceHelloMethodDescriptor = helloServiceServiceDescriptor.Methods().ByName("Hello")
-)
-
 // HelloServiceClient is a client for the shw.HelloService service.
 type HelloServiceClient interface {
 	Hello(context.Context, *connect.Request[grpc.HelloRequest]) (*connect.Response[grpc.HelloResponse], error)
@@ -57,11 +51,12 @@ type HelloServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewHelloServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) HelloServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	helloServiceMethods := grpc.File_sample_proto.Services().ByName("HelloService").Methods()
 	return &helloServiceClient{
 		hello: connect.NewClient[grpc.HelloRequest, grpc.HelloResponse](
 			httpClient,
 			baseURL+HelloServiceHelloProcedure,
-			connect.WithSchema(helloServiceHelloMethodDescriptor),
+			connect.WithSchema(helloServiceMethods.ByName("Hello")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -88,10 +83,11 @@ type HelloServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewHelloServiceHandler(svc HelloServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	helloServiceMethods := grpc.File_sample_proto.Services().ByName("HelloService").Methods()
 	helloServiceHelloHandler := connect.NewUnaryHandler(
 		HelloServiceHelloProcedure,
 		svc.Hello,
-		connect.WithSchema(helloServiceHelloMethodDescriptor),
+		connect.WithSchema(helloServiceMethods.ByName("Hello")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.HelloService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
