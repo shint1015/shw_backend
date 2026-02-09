@@ -41,12 +41,12 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// HouseworkServiceListHouseworksProcedure is the fully-qualified name of the HouseworkService's
+	// ListHouseworks RPC.
+	HouseworkServiceListHouseworksProcedure = "/shw.HouseworkService/ListHouseworks"
 	// HouseworkServiceGetHouseworkProcedure is the fully-qualified name of the HouseworkService's
 	// GetHousework RPC.
 	HouseworkServiceGetHouseworkProcedure = "/shw.HouseworkService/GetHousework"
-	// HouseworkServiceGetHouseworkDetailProcedure is the fully-qualified name of the HouseworkService's
-	// GetHouseworkDetail RPC.
-	HouseworkServiceGetHouseworkDetailProcedure = "/shw.HouseworkService/GetHouseworkDetail"
 	// HouseworkServiceCreateHouseworkProcedure is the fully-qualified name of the HouseworkService's
 	// CreateHousework RPC.
 	HouseworkServiceCreateHouseworkProcedure = "/shw.HouseworkService/CreateHousework"
@@ -59,9 +59,9 @@ const (
 	// HouseworkServiceDeleteHouseworkProcedure is the fully-qualified name of the HouseworkService's
 	// DeleteHousework RPC.
 	HouseworkServiceDeleteHouseworkProcedure = "/shw.HouseworkService/DeleteHousework"
-	// HouseworkMemoServiceGetHouseworkMemoProcedure is the fully-qualified name of the
-	// HouseworkMemoService's GetHouseworkMemo RPC.
-	HouseworkMemoServiceGetHouseworkMemoProcedure = "/shw.HouseworkMemoService/GetHouseworkMemo"
+	// HouseworkMemoServiceListHouseworkMemosProcedure is the fully-qualified name of the
+	// HouseworkMemoService's ListHouseworkMemos RPC.
+	HouseworkMemoServiceListHouseworkMemosProcedure = "/shw.HouseworkMemoService/ListHouseworkMemos"
 	// HouseworkMemoServiceCreateHouseworkMemoProcedure is the fully-qualified name of the
 	// HouseworkMemoService's CreateHouseworkMemo RPC.
 	HouseworkMemoServiceCreateHouseworkMemoProcedure = "/shw.HouseworkMemoService/CreateHouseworkMemo"
@@ -74,15 +74,15 @@ const (
 	// HouseworkPointServiceGetHouseworkPointProcedure is the fully-qualified name of the
 	// HouseworkPointService's GetHouseworkPoint RPC.
 	HouseworkPointServiceGetHouseworkPointProcedure = "/shw.HouseworkPointService/GetHouseworkPoint"
-	// HouseworkPointServiceGetHouseworkPointHistoryProcedure is the fully-qualified name of the
-	// HouseworkPointService's GetHouseworkPointHistory RPC.
-	HouseworkPointServiceGetHouseworkPointHistoryProcedure = "/shw.HouseworkPointService/GetHouseworkPointHistory"
+	// HouseworkPointServiceListHouseworkPointHistoriesProcedure is the fully-qualified name of the
+	// HouseworkPointService's ListHouseworkPointHistories RPC.
+	HouseworkPointServiceListHouseworkPointHistoriesProcedure = "/shw.HouseworkPointService/ListHouseworkPointHistories"
 	// HouseworkTemplateServiceGetHouseworkTemplateProcedure is the fully-qualified name of the
 	// HouseworkTemplateService's GetHouseworkTemplate RPC.
 	HouseworkTemplateServiceGetHouseworkTemplateProcedure = "/shw.HouseworkTemplateService/GetHouseworkTemplate"
-	// HouseworkTemplateServiceGetHouseworkTemplatesProcedure is the fully-qualified name of the
-	// HouseworkTemplateService's GetHouseworkTemplates RPC.
-	HouseworkTemplateServiceGetHouseworkTemplatesProcedure = "/shw.HouseworkTemplateService/GetHouseworkTemplates"
+	// HouseworkTemplateServiceListHouseworkTemplatesProcedure is the fully-qualified name of the
+	// HouseworkTemplateService's ListHouseworkTemplates RPC.
+	HouseworkTemplateServiceListHouseworkTemplatesProcedure = "/shw.HouseworkTemplateService/ListHouseworkTemplates"
 	// HouseworkTemplateServiceCreateHouseworkTemplateProcedure is the fully-qualified name of the
 	// HouseworkTemplateService's CreateHouseworkTemplate RPC.
 	HouseworkTemplateServiceCreateHouseworkTemplateProcedure = "/shw.HouseworkTemplateService/CreateHouseworkTemplate"
@@ -92,12 +92,12 @@ const (
 	// HouseworkTemplateServiceDeleteHouseworkTemplateProcedure is the fully-qualified name of the
 	// HouseworkTemplateService's DeleteHouseworkTemplate RPC.
 	HouseworkTemplateServiceDeleteHouseworkTemplateProcedure = "/shw.HouseworkTemplateService/DeleteHouseworkTemplate"
-	// HouseworkScheduleServiceGetHouseworkSchedulesProcedure is the fully-qualified name of the
-	// HouseworkScheduleService's GetHouseworkSchedules RPC.
-	HouseworkScheduleServiceGetHouseworkSchedulesProcedure = "/shw.HouseworkScheduleService/GetHouseworkSchedules"
 	// HouseworkScheduleServiceGetHouseworkScheduleProcedure is the fully-qualified name of the
 	// HouseworkScheduleService's GetHouseworkSchedule RPC.
 	HouseworkScheduleServiceGetHouseworkScheduleProcedure = "/shw.HouseworkScheduleService/GetHouseworkSchedule"
+	// HouseworkScheduleServiceListHouseworkSchedulesProcedure is the fully-qualified name of the
+	// HouseworkScheduleService's ListHouseworkSchedules RPC.
+	HouseworkScheduleServiceListHouseworkSchedulesProcedure = "/shw.HouseworkScheduleService/ListHouseworkSchedules"
 	// HouseworkScheduleServiceCreateHouseworkScheduleProcedure is the fully-qualified name of the
 	// HouseworkScheduleService's CreateHouseworkSchedule RPC.
 	HouseworkScheduleServiceCreateHouseworkScheduleProcedure = "/shw.HouseworkScheduleService/CreateHouseworkSchedule"
@@ -111,12 +111,15 @@ const (
 
 // HouseworkServiceClient is a client for the shw.HouseworkService service.
 type HouseworkServiceClient interface {
-	GetHousework(context.Context, *connect.Request[grpc.HouseworkRequest]) (*connect.Response[grpc.HouseworkResponse], error)
-	GetHouseworkDetail(context.Context, *connect.Request[grpc.HouseworkDetailRequest]) (*connect.Response[grpc.HouseworkDetailResponse], error)
-	CreateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error)
-	FinishHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error)
+	// List
+	ListHouseworks(context.Context, *connect.Request[grpc.ListHouseworksRequest]) (*connect.Response[grpc.ListHouseworksResponse], error)
+	// Get
+	GetHousework(context.Context, *connect.Request[grpc.GetHouseworkRequest]) (*connect.Response[grpc.GetHouseworkResponse], error)
+	// Write
+	CreateHousework(context.Context, *connect.Request[grpc.CreateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHousework(context.Context, *connect.Request[grpc.UpdateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	FinishHousework(context.Context, *connect.Request[grpc.FinishHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHousework(context.Context, *connect.Request[grpc.DeleteHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkServiceClient constructs a client for the shw.HouseworkService service. By default,
@@ -130,37 +133,37 @@ func NewHouseworkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 	baseURL = strings.TrimRight(baseURL, "/")
 	houseworkServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkService").Methods()
 	return &houseworkServiceClient{
-		getHousework: connect.NewClient[grpc.HouseworkRequest, grpc.HouseworkResponse](
+		listHouseworks: connect.NewClient[grpc.ListHouseworksRequest, grpc.ListHouseworksResponse](
+			httpClient,
+			baseURL+HouseworkServiceListHouseworksProcedure,
+			connect.WithSchema(houseworkServiceMethods.ByName("ListHouseworks")),
+			connect.WithClientOptions(opts...),
+		),
+		getHousework: connect.NewClient[grpc.GetHouseworkRequest, grpc.GetHouseworkResponse](
 			httpClient,
 			baseURL+HouseworkServiceGetHouseworkProcedure,
 			connect.WithSchema(houseworkServiceMethods.ByName("GetHousework")),
 			connect.WithClientOptions(opts...),
 		),
-		getHouseworkDetail: connect.NewClient[grpc.HouseworkDetailRequest, grpc.HouseworkDetailResponse](
-			httpClient,
-			baseURL+HouseworkServiceGetHouseworkDetailProcedure,
-			connect.WithSchema(houseworkServiceMethods.ByName("GetHouseworkDetail")),
-			connect.WithClientOptions(opts...),
-		),
-		createHousework: connect.NewClient[grpc.Housework, grpc.CommonResponse](
+		createHousework: connect.NewClient[grpc.CreateHouseworkRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkServiceCreateHouseworkProcedure,
 			connect.WithSchema(houseworkServiceMethods.ByName("CreateHousework")),
 			connect.WithClientOptions(opts...),
 		),
-		updateHousework: connect.NewClient[grpc.Housework, grpc.CommonResponse](
+		updateHousework: connect.NewClient[grpc.UpdateHouseworkRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkServiceUpdateHouseworkProcedure,
 			connect.WithSchema(houseworkServiceMethods.ByName("UpdateHousework")),
 			connect.WithClientOptions(opts...),
 		),
-		finishHousework: connect.NewClient[grpc.HouseworkTargetRequest, grpc.CommonResponse](
+		finishHousework: connect.NewClient[grpc.FinishHouseworkRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkServiceFinishHouseworkProcedure,
 			connect.WithSchema(houseworkServiceMethods.ByName("FinishHousework")),
 			connect.WithClientOptions(opts...),
 		),
-		deleteHousework: connect.NewClient[grpc.HouseworkTargetRequest, grpc.CommonResponse](
+		deleteHousework: connect.NewClient[grpc.DeleteHouseworkRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkServiceDeleteHouseworkProcedure,
 			connect.WithSchema(houseworkServiceMethods.ByName("DeleteHousework")),
@@ -171,52 +174,55 @@ func NewHouseworkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 
 // houseworkServiceClient implements HouseworkServiceClient.
 type houseworkServiceClient struct {
-	getHousework       *connect.Client[grpc.HouseworkRequest, grpc.HouseworkResponse]
-	getHouseworkDetail *connect.Client[grpc.HouseworkDetailRequest, grpc.HouseworkDetailResponse]
-	createHousework    *connect.Client[grpc.Housework, grpc.CommonResponse]
-	updateHousework    *connect.Client[grpc.Housework, grpc.CommonResponse]
-	finishHousework    *connect.Client[grpc.HouseworkTargetRequest, grpc.CommonResponse]
-	deleteHousework    *connect.Client[grpc.HouseworkTargetRequest, grpc.CommonResponse]
+	listHouseworks  *connect.Client[grpc.ListHouseworksRequest, grpc.ListHouseworksResponse]
+	getHousework    *connect.Client[grpc.GetHouseworkRequest, grpc.GetHouseworkResponse]
+	createHousework *connect.Client[grpc.CreateHouseworkRequest, grpc.CommonResponse]
+	updateHousework *connect.Client[grpc.UpdateHouseworkRequest, grpc.CommonResponse]
+	finishHousework *connect.Client[grpc.FinishHouseworkRequest, grpc.CommonResponse]
+	deleteHousework *connect.Client[grpc.DeleteHouseworkRequest, grpc.CommonResponse]
+}
+
+// ListHouseworks calls shw.HouseworkService.ListHouseworks.
+func (c *houseworkServiceClient) ListHouseworks(ctx context.Context, req *connect.Request[grpc.ListHouseworksRequest]) (*connect.Response[grpc.ListHouseworksResponse], error) {
+	return c.listHouseworks.CallUnary(ctx, req)
 }
 
 // GetHousework calls shw.HouseworkService.GetHousework.
-func (c *houseworkServiceClient) GetHousework(ctx context.Context, req *connect.Request[grpc.HouseworkRequest]) (*connect.Response[grpc.HouseworkResponse], error) {
+func (c *houseworkServiceClient) GetHousework(ctx context.Context, req *connect.Request[grpc.GetHouseworkRequest]) (*connect.Response[grpc.GetHouseworkResponse], error) {
 	return c.getHousework.CallUnary(ctx, req)
 }
 
-// GetHouseworkDetail calls shw.HouseworkService.GetHouseworkDetail.
-func (c *houseworkServiceClient) GetHouseworkDetail(ctx context.Context, req *connect.Request[grpc.HouseworkDetailRequest]) (*connect.Response[grpc.HouseworkDetailResponse], error) {
-	return c.getHouseworkDetail.CallUnary(ctx, req)
-}
-
 // CreateHousework calls shw.HouseworkService.CreateHousework.
-func (c *houseworkServiceClient) CreateHousework(ctx context.Context, req *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkServiceClient) CreateHousework(ctx context.Context, req *connect.Request[grpc.CreateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.createHousework.CallUnary(ctx, req)
 }
 
 // UpdateHousework calls shw.HouseworkService.UpdateHousework.
-func (c *houseworkServiceClient) UpdateHousework(ctx context.Context, req *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkServiceClient) UpdateHousework(ctx context.Context, req *connect.Request[grpc.UpdateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.updateHousework.CallUnary(ctx, req)
 }
 
 // FinishHousework calls shw.HouseworkService.FinishHousework.
-func (c *houseworkServiceClient) FinishHousework(ctx context.Context, req *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkServiceClient) FinishHousework(ctx context.Context, req *connect.Request[grpc.FinishHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.finishHousework.CallUnary(ctx, req)
 }
 
 // DeleteHousework calls shw.HouseworkService.DeleteHousework.
-func (c *houseworkServiceClient) DeleteHousework(ctx context.Context, req *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkServiceClient) DeleteHousework(ctx context.Context, req *connect.Request[grpc.DeleteHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.deleteHousework.CallUnary(ctx, req)
 }
 
 // HouseworkServiceHandler is an implementation of the shw.HouseworkService service.
 type HouseworkServiceHandler interface {
-	GetHousework(context.Context, *connect.Request[grpc.HouseworkRequest]) (*connect.Response[grpc.HouseworkResponse], error)
-	GetHouseworkDetail(context.Context, *connect.Request[grpc.HouseworkDetailRequest]) (*connect.Response[grpc.HouseworkDetailResponse], error)
-	CreateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error)
-	FinishHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error)
+	// List
+	ListHouseworks(context.Context, *connect.Request[grpc.ListHouseworksRequest]) (*connect.Response[grpc.ListHouseworksResponse], error)
+	// Get
+	GetHousework(context.Context, *connect.Request[grpc.GetHouseworkRequest]) (*connect.Response[grpc.GetHouseworkResponse], error)
+	// Write
+	CreateHousework(context.Context, *connect.Request[grpc.CreateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHousework(context.Context, *connect.Request[grpc.UpdateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	FinishHousework(context.Context, *connect.Request[grpc.FinishHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHousework(context.Context, *connect.Request[grpc.DeleteHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -226,16 +232,16 @@ type HouseworkServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewHouseworkServiceHandler(svc HouseworkServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	houseworkServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkService").Methods()
+	houseworkServiceListHouseworksHandler := connect.NewUnaryHandler(
+		HouseworkServiceListHouseworksProcedure,
+		svc.ListHouseworks,
+		connect.WithSchema(houseworkServiceMethods.ByName("ListHouseworks")),
+		connect.WithHandlerOptions(opts...),
+	)
 	houseworkServiceGetHouseworkHandler := connect.NewUnaryHandler(
 		HouseworkServiceGetHouseworkProcedure,
 		svc.GetHousework,
 		connect.WithSchema(houseworkServiceMethods.ByName("GetHousework")),
-		connect.WithHandlerOptions(opts...),
-	)
-	houseworkServiceGetHouseworkDetailHandler := connect.NewUnaryHandler(
-		HouseworkServiceGetHouseworkDetailProcedure,
-		svc.GetHouseworkDetail,
-		connect.WithSchema(houseworkServiceMethods.ByName("GetHouseworkDetail")),
 		connect.WithHandlerOptions(opts...),
 	)
 	houseworkServiceCreateHouseworkHandler := connect.NewUnaryHandler(
@@ -264,10 +270,10 @@ func NewHouseworkServiceHandler(svc HouseworkServiceHandler, opts ...connect.Han
 	)
 	return "/shw.HouseworkService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case HouseworkServiceListHouseworksProcedure:
+			houseworkServiceListHouseworksHandler.ServeHTTP(w, r)
 		case HouseworkServiceGetHouseworkProcedure:
 			houseworkServiceGetHouseworkHandler.ServeHTTP(w, r)
-		case HouseworkServiceGetHouseworkDetailProcedure:
-			houseworkServiceGetHouseworkDetailHandler.ServeHTTP(w, r)
 		case HouseworkServiceCreateHouseworkProcedure:
 			houseworkServiceCreateHouseworkHandler.ServeHTTP(w, r)
 		case HouseworkServiceUpdateHouseworkProcedure:
@@ -285,36 +291,36 @@ func NewHouseworkServiceHandler(svc HouseworkServiceHandler, opts ...connect.Han
 // UnimplementedHouseworkServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedHouseworkServiceHandler struct{}
 
-func (UnimplementedHouseworkServiceHandler) GetHousework(context.Context, *connect.Request[grpc.HouseworkRequest]) (*connect.Response[grpc.HouseworkResponse], error) {
+func (UnimplementedHouseworkServiceHandler) ListHouseworks(context.Context, *connect.Request[grpc.ListHouseworksRequest]) (*connect.Response[grpc.ListHouseworksResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.ListHouseworks is not implemented"))
+}
+
+func (UnimplementedHouseworkServiceHandler) GetHousework(context.Context, *connect.Request[grpc.GetHouseworkRequest]) (*connect.Response[grpc.GetHouseworkResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.GetHousework is not implemented"))
 }
 
-func (UnimplementedHouseworkServiceHandler) GetHouseworkDetail(context.Context, *connect.Request[grpc.HouseworkDetailRequest]) (*connect.Response[grpc.HouseworkDetailResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.GetHouseworkDetail is not implemented"))
-}
-
-func (UnimplementedHouseworkServiceHandler) CreateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkServiceHandler) CreateHousework(context.Context, *connect.Request[grpc.CreateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.CreateHousework is not implemented"))
 }
 
-func (UnimplementedHouseworkServiceHandler) UpdateHousework(context.Context, *connect.Request[grpc.Housework]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkServiceHandler) UpdateHousework(context.Context, *connect.Request[grpc.UpdateHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.UpdateHousework is not implemented"))
 }
 
-func (UnimplementedHouseworkServiceHandler) FinishHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkServiceHandler) FinishHousework(context.Context, *connect.Request[grpc.FinishHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.FinishHousework is not implemented"))
 }
 
-func (UnimplementedHouseworkServiceHandler) DeleteHousework(context.Context, *connect.Request[grpc.HouseworkTargetRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkServiceHandler) DeleteHousework(context.Context, *connect.Request[grpc.DeleteHouseworkRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkService.DeleteHousework is not implemented"))
 }
 
 // HouseworkMemoServiceClient is a client for the shw.HouseworkMemoService service.
 type HouseworkMemoServiceClient interface {
-	GetHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemoRequest]) (*connect.Response[grpc.HouseworkMemoResponse], error)
-	CreateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
+	ListHouseworkMemos(context.Context, *connect.Request[grpc.ListHouseworkMemosRequest]) (*connect.Response[grpc.ListHouseworkMemosResponse], error)
+	CreateHouseworkMemo(context.Context, *connect.Request[grpc.CreateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkMemo(context.Context, *connect.Request[grpc.UpdateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.DeleteHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkMemoServiceClient constructs a client for the shw.HouseworkMemoService service. By
@@ -328,25 +334,25 @@ func NewHouseworkMemoServiceClient(httpClient connect.HTTPClient, baseURL string
 	baseURL = strings.TrimRight(baseURL, "/")
 	houseworkMemoServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkMemoService").Methods()
 	return &houseworkMemoServiceClient{
-		getHouseworkMemo: connect.NewClient[grpc.HouseworkMemoRequest, grpc.HouseworkMemoResponse](
+		listHouseworkMemos: connect.NewClient[grpc.ListHouseworkMemosRequest, grpc.ListHouseworkMemosResponse](
 			httpClient,
-			baseURL+HouseworkMemoServiceGetHouseworkMemoProcedure,
-			connect.WithSchema(houseworkMemoServiceMethods.ByName("GetHouseworkMemo")),
+			baseURL+HouseworkMemoServiceListHouseworkMemosProcedure,
+			connect.WithSchema(houseworkMemoServiceMethods.ByName("ListHouseworkMemos")),
 			connect.WithClientOptions(opts...),
 		),
-		createHouseworkMemo: connect.NewClient[grpc.HouseworkMemo, grpc.CommonResponse](
+		createHouseworkMemo: connect.NewClient[grpc.CreateHouseworkMemoRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkMemoServiceCreateHouseworkMemoProcedure,
 			connect.WithSchema(houseworkMemoServiceMethods.ByName("CreateHouseworkMemo")),
 			connect.WithClientOptions(opts...),
 		),
-		updateHouseworkMemo: connect.NewClient[grpc.HouseworkMemo, grpc.CommonResponse](
+		updateHouseworkMemo: connect.NewClient[grpc.UpdateHouseworkMemoRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkMemoServiceUpdateHouseworkMemoProcedure,
 			connect.WithSchema(houseworkMemoServiceMethods.ByName("UpdateHouseworkMemo")),
 			connect.WithClientOptions(opts...),
 		),
-		deleteHouseworkMemo: connect.NewClient[grpc.HouseworkMemo, grpc.CommonResponse](
+		deleteHouseworkMemo: connect.NewClient[grpc.DeleteHouseworkMemoRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkMemoServiceDeleteHouseworkMemoProcedure,
 			connect.WithSchema(houseworkMemoServiceMethods.ByName("DeleteHouseworkMemo")),
@@ -357,38 +363,38 @@ func NewHouseworkMemoServiceClient(httpClient connect.HTTPClient, baseURL string
 
 // houseworkMemoServiceClient implements HouseworkMemoServiceClient.
 type houseworkMemoServiceClient struct {
-	getHouseworkMemo    *connect.Client[grpc.HouseworkMemoRequest, grpc.HouseworkMemoResponse]
-	createHouseworkMemo *connect.Client[grpc.HouseworkMemo, grpc.CommonResponse]
-	updateHouseworkMemo *connect.Client[grpc.HouseworkMemo, grpc.CommonResponse]
-	deleteHouseworkMemo *connect.Client[grpc.HouseworkMemo, grpc.CommonResponse]
+	listHouseworkMemos  *connect.Client[grpc.ListHouseworkMemosRequest, grpc.ListHouseworkMemosResponse]
+	createHouseworkMemo *connect.Client[grpc.CreateHouseworkMemoRequest, grpc.CommonResponse]
+	updateHouseworkMemo *connect.Client[grpc.UpdateHouseworkMemoRequest, grpc.CommonResponse]
+	deleteHouseworkMemo *connect.Client[grpc.DeleteHouseworkMemoRequest, grpc.CommonResponse]
 }
 
-// GetHouseworkMemo calls shw.HouseworkMemoService.GetHouseworkMemo.
-func (c *houseworkMemoServiceClient) GetHouseworkMemo(ctx context.Context, req *connect.Request[grpc.HouseworkMemoRequest]) (*connect.Response[grpc.HouseworkMemoResponse], error) {
-	return c.getHouseworkMemo.CallUnary(ctx, req)
+// ListHouseworkMemos calls shw.HouseworkMemoService.ListHouseworkMemos.
+func (c *houseworkMemoServiceClient) ListHouseworkMemos(ctx context.Context, req *connect.Request[grpc.ListHouseworkMemosRequest]) (*connect.Response[grpc.ListHouseworkMemosResponse], error) {
+	return c.listHouseworkMemos.CallUnary(ctx, req)
 }
 
 // CreateHouseworkMemo calls shw.HouseworkMemoService.CreateHouseworkMemo.
-func (c *houseworkMemoServiceClient) CreateHouseworkMemo(ctx context.Context, req *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkMemoServiceClient) CreateHouseworkMemo(ctx context.Context, req *connect.Request[grpc.CreateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.createHouseworkMemo.CallUnary(ctx, req)
 }
 
 // UpdateHouseworkMemo calls shw.HouseworkMemoService.UpdateHouseworkMemo.
-func (c *houseworkMemoServiceClient) UpdateHouseworkMemo(ctx context.Context, req *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkMemoServiceClient) UpdateHouseworkMemo(ctx context.Context, req *connect.Request[grpc.UpdateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.updateHouseworkMemo.CallUnary(ctx, req)
 }
 
 // DeleteHouseworkMemo calls shw.HouseworkMemoService.DeleteHouseworkMemo.
-func (c *houseworkMemoServiceClient) DeleteHouseworkMemo(ctx context.Context, req *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkMemoServiceClient) DeleteHouseworkMemo(ctx context.Context, req *connect.Request[grpc.DeleteHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.deleteHouseworkMemo.CallUnary(ctx, req)
 }
 
 // HouseworkMemoServiceHandler is an implementation of the shw.HouseworkMemoService service.
 type HouseworkMemoServiceHandler interface {
-	GetHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemoRequest]) (*connect.Response[grpc.HouseworkMemoResponse], error)
-	CreateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error)
+	ListHouseworkMemos(context.Context, *connect.Request[grpc.ListHouseworkMemosRequest]) (*connect.Response[grpc.ListHouseworkMemosResponse], error)
+	CreateHouseworkMemo(context.Context, *connect.Request[grpc.CreateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkMemo(context.Context, *connect.Request[grpc.UpdateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkMemo(context.Context, *connect.Request[grpc.DeleteHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkMemoServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -398,10 +404,10 @@ type HouseworkMemoServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewHouseworkMemoServiceHandler(svc HouseworkMemoServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	houseworkMemoServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkMemoService").Methods()
-	houseworkMemoServiceGetHouseworkMemoHandler := connect.NewUnaryHandler(
-		HouseworkMemoServiceGetHouseworkMemoProcedure,
-		svc.GetHouseworkMemo,
-		connect.WithSchema(houseworkMemoServiceMethods.ByName("GetHouseworkMemo")),
+	houseworkMemoServiceListHouseworkMemosHandler := connect.NewUnaryHandler(
+		HouseworkMemoServiceListHouseworkMemosProcedure,
+		svc.ListHouseworkMemos,
+		connect.WithSchema(houseworkMemoServiceMethods.ByName("ListHouseworkMemos")),
 		connect.WithHandlerOptions(opts...),
 	)
 	houseworkMemoServiceCreateHouseworkMemoHandler := connect.NewUnaryHandler(
@@ -424,8 +430,8 @@ func NewHouseworkMemoServiceHandler(svc HouseworkMemoServiceHandler, opts ...con
 	)
 	return "/shw.HouseworkMemoService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case HouseworkMemoServiceGetHouseworkMemoProcedure:
-			houseworkMemoServiceGetHouseworkMemoHandler.ServeHTTP(w, r)
+		case HouseworkMemoServiceListHouseworkMemosProcedure:
+			houseworkMemoServiceListHouseworkMemosHandler.ServeHTTP(w, r)
 		case HouseworkMemoServiceCreateHouseworkMemoProcedure:
 			houseworkMemoServiceCreateHouseworkMemoHandler.ServeHTTP(w, r)
 		case HouseworkMemoServiceUpdateHouseworkMemoProcedure:
@@ -441,26 +447,26 @@ func NewHouseworkMemoServiceHandler(svc HouseworkMemoServiceHandler, opts ...con
 // UnimplementedHouseworkMemoServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedHouseworkMemoServiceHandler struct{}
 
-func (UnimplementedHouseworkMemoServiceHandler) GetHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemoRequest]) (*connect.Response[grpc.HouseworkMemoResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkMemoService.GetHouseworkMemo is not implemented"))
+func (UnimplementedHouseworkMemoServiceHandler) ListHouseworkMemos(context.Context, *connect.Request[grpc.ListHouseworkMemosRequest]) (*connect.Response[grpc.ListHouseworkMemosResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkMemoService.ListHouseworkMemos is not implemented"))
 }
 
-func (UnimplementedHouseworkMemoServiceHandler) CreateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkMemoServiceHandler) CreateHouseworkMemo(context.Context, *connect.Request[grpc.CreateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkMemoService.CreateHouseworkMemo is not implemented"))
 }
 
-func (UnimplementedHouseworkMemoServiceHandler) UpdateHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkMemoServiceHandler) UpdateHouseworkMemo(context.Context, *connect.Request[grpc.UpdateHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkMemoService.UpdateHouseworkMemo is not implemented"))
 }
 
-func (UnimplementedHouseworkMemoServiceHandler) DeleteHouseworkMemo(context.Context, *connect.Request[grpc.HouseworkMemo]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkMemoServiceHandler) DeleteHouseworkMemo(context.Context, *connect.Request[grpc.DeleteHouseworkMemoRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkMemoService.DeleteHouseworkMemo is not implemented"))
 }
 
 // HouseworkPointServiceClient is a client for the shw.HouseworkPointService service.
 type HouseworkPointServiceClient interface {
-	GetHouseworkPoint(context.Context, *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error)
-	GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error)
+	GetHouseworkPoint(context.Context, *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error)
+	ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error)
 }
 
 // NewHouseworkPointServiceClient constructs a client for the shw.HouseworkPointService service. By
@@ -474,16 +480,16 @@ func NewHouseworkPointServiceClient(httpClient connect.HTTPClient, baseURL strin
 	baseURL = strings.TrimRight(baseURL, "/")
 	houseworkPointServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkPointService").Methods()
 	return &houseworkPointServiceClient{
-		getHouseworkPoint: connect.NewClient[grpc.HouseworkPointRequest, grpc.HouseworkPointResponse](
+		getHouseworkPoint: connect.NewClient[grpc.GetHouseworkPointRequest, grpc.GetHouseworkPointResponse](
 			httpClient,
 			baseURL+HouseworkPointServiceGetHouseworkPointProcedure,
 			connect.WithSchema(houseworkPointServiceMethods.ByName("GetHouseworkPoint")),
 			connect.WithClientOptions(opts...),
 		),
-		getHouseworkPointHistory: connect.NewClient[grpc.HouseworkPointHistoryRequest, grpc.HouseworkPointHistoryResponse](
+		listHouseworkPointHistories: connect.NewClient[grpc.ListHouseworkPointHistoriesRequest, grpc.ListHouseworkPointHistoriesResponse](
 			httpClient,
-			baseURL+HouseworkPointServiceGetHouseworkPointHistoryProcedure,
-			connect.WithSchema(houseworkPointServiceMethods.ByName("GetHouseworkPointHistory")),
+			baseURL+HouseworkPointServiceListHouseworkPointHistoriesProcedure,
+			connect.WithSchema(houseworkPointServiceMethods.ByName("ListHouseworkPointHistories")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -491,24 +497,24 @@ func NewHouseworkPointServiceClient(httpClient connect.HTTPClient, baseURL strin
 
 // houseworkPointServiceClient implements HouseworkPointServiceClient.
 type houseworkPointServiceClient struct {
-	getHouseworkPoint        *connect.Client[grpc.HouseworkPointRequest, grpc.HouseworkPointResponse]
-	getHouseworkPointHistory *connect.Client[grpc.HouseworkPointHistoryRequest, grpc.HouseworkPointHistoryResponse]
+	getHouseworkPoint           *connect.Client[grpc.GetHouseworkPointRequest, grpc.GetHouseworkPointResponse]
+	listHouseworkPointHistories *connect.Client[grpc.ListHouseworkPointHistoriesRequest, grpc.ListHouseworkPointHistoriesResponse]
 }
 
 // GetHouseworkPoint calls shw.HouseworkPointService.GetHouseworkPoint.
-func (c *houseworkPointServiceClient) GetHouseworkPoint(ctx context.Context, req *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error) {
+func (c *houseworkPointServiceClient) GetHouseworkPoint(ctx context.Context, req *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error) {
 	return c.getHouseworkPoint.CallUnary(ctx, req)
 }
 
-// GetHouseworkPointHistory calls shw.HouseworkPointService.GetHouseworkPointHistory.
-func (c *houseworkPointServiceClient) GetHouseworkPointHistory(ctx context.Context, req *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error) {
-	return c.getHouseworkPointHistory.CallUnary(ctx, req)
+// ListHouseworkPointHistories calls shw.HouseworkPointService.ListHouseworkPointHistories.
+func (c *houseworkPointServiceClient) ListHouseworkPointHistories(ctx context.Context, req *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error) {
+	return c.listHouseworkPointHistories.CallUnary(ctx, req)
 }
 
 // HouseworkPointServiceHandler is an implementation of the shw.HouseworkPointService service.
 type HouseworkPointServiceHandler interface {
-	GetHouseworkPoint(context.Context, *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error)
-	GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error)
+	GetHouseworkPoint(context.Context, *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error)
+	ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error)
 }
 
 // NewHouseworkPointServiceHandler builds an HTTP handler from the service implementation. It
@@ -524,18 +530,18 @@ func NewHouseworkPointServiceHandler(svc HouseworkPointServiceHandler, opts ...c
 		connect.WithSchema(houseworkPointServiceMethods.ByName("GetHouseworkPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
-	houseworkPointServiceGetHouseworkPointHistoryHandler := connect.NewUnaryHandler(
-		HouseworkPointServiceGetHouseworkPointHistoryProcedure,
-		svc.GetHouseworkPointHistory,
-		connect.WithSchema(houseworkPointServiceMethods.ByName("GetHouseworkPointHistory")),
+	houseworkPointServiceListHouseworkPointHistoriesHandler := connect.NewUnaryHandler(
+		HouseworkPointServiceListHouseworkPointHistoriesProcedure,
+		svc.ListHouseworkPointHistories,
+		connect.WithSchema(houseworkPointServiceMethods.ByName("ListHouseworkPointHistories")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.HouseworkPointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HouseworkPointServiceGetHouseworkPointProcedure:
 			houseworkPointServiceGetHouseworkPointHandler.ServeHTTP(w, r)
-		case HouseworkPointServiceGetHouseworkPointHistoryProcedure:
-			houseworkPointServiceGetHouseworkPointHistoryHandler.ServeHTTP(w, r)
+		case HouseworkPointServiceListHouseworkPointHistoriesProcedure:
+			houseworkPointServiceListHouseworkPointHistoriesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -545,21 +551,21 @@ func NewHouseworkPointServiceHandler(svc HouseworkPointServiceHandler, opts ...c
 // UnimplementedHouseworkPointServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedHouseworkPointServiceHandler struct{}
 
-func (UnimplementedHouseworkPointServiceHandler) GetHouseworkPoint(context.Context, *connect.Request[grpc.HouseworkPointRequest]) (*connect.Response[grpc.HouseworkPointResponse], error) {
+func (UnimplementedHouseworkPointServiceHandler) GetHouseworkPoint(context.Context, *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.GetHouseworkPoint is not implemented"))
 }
 
-func (UnimplementedHouseworkPointServiceHandler) GetHouseworkPointHistory(context.Context, *connect.Request[grpc.HouseworkPointHistoryRequest]) (*connect.Response[grpc.HouseworkPointHistoryResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.GetHouseworkPointHistory is not implemented"))
+func (UnimplementedHouseworkPointServiceHandler) ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.ListHouseworkPointHistories is not implemented"))
 }
 
 // HouseworkTemplateServiceClient is a client for the shw.HouseworkTemplateService service.
 type HouseworkTemplateServiceClient interface {
-	GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error)
-	GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error)
-	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	GetHouseworkTemplate(context.Context, *connect.Request[grpc.GetHouseworkTemplateRequest]) (*connect.Response[grpc.GetHouseworkTemplateResponse], error)
+	ListHouseworkTemplates(context.Context, *connect.Request[grpc.ListHouseworkTemplatesRequest]) (*connect.Response[grpc.ListHouseworkTemplatesResponse], error)
+	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.CreateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.UpdateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.DeleteHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkTemplateServiceClient constructs a client for the shw.HouseworkTemplateService
@@ -573,31 +579,31 @@ func NewHouseworkTemplateServiceClient(httpClient connect.HTTPClient, baseURL st
 	baseURL = strings.TrimRight(baseURL, "/")
 	houseworkTemplateServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkTemplateService").Methods()
 	return &houseworkTemplateServiceClient{
-		getHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplateRequest, grpc.HouseworkTemplateResponse](
+		getHouseworkTemplate: connect.NewClient[grpc.GetHouseworkTemplateRequest, grpc.GetHouseworkTemplateResponse](
 			httpClient,
 			baseURL+HouseworkTemplateServiceGetHouseworkTemplateProcedure,
 			connect.WithSchema(houseworkTemplateServiceMethods.ByName("GetHouseworkTemplate")),
 			connect.WithClientOptions(opts...),
 		),
-		getHouseworkTemplates: connect.NewClient[grpc.HouseworkTemplatesRequest, grpc.HouseworkTemplatesResponse](
+		listHouseworkTemplates: connect.NewClient[grpc.ListHouseworkTemplatesRequest, grpc.ListHouseworkTemplatesResponse](
 			httpClient,
-			baseURL+HouseworkTemplateServiceGetHouseworkTemplatesProcedure,
-			connect.WithSchema(houseworkTemplateServiceMethods.ByName("GetHouseworkTemplates")),
+			baseURL+HouseworkTemplateServiceListHouseworkTemplatesProcedure,
+			connect.WithSchema(houseworkTemplateServiceMethods.ByName("ListHouseworkTemplates")),
 			connect.WithClientOptions(opts...),
 		),
-		createHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+		createHouseworkTemplate: connect.NewClient[grpc.CreateHouseworkTemplateRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkTemplateServiceCreateHouseworkTemplateProcedure,
 			connect.WithSchema(houseworkTemplateServiceMethods.ByName("CreateHouseworkTemplate")),
 			connect.WithClientOptions(opts...),
 		),
-		updateHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+		updateHouseworkTemplate: connect.NewClient[grpc.UpdateHouseworkTemplateRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkTemplateServiceUpdateHouseworkTemplateProcedure,
 			connect.WithSchema(houseworkTemplateServiceMethods.ByName("UpdateHouseworkTemplate")),
 			connect.WithClientOptions(opts...),
 		),
-		deleteHouseworkTemplate: connect.NewClient[grpc.HouseworkTemplate, grpc.CommonResponse](
+		deleteHouseworkTemplate: connect.NewClient[grpc.DeleteHouseworkTemplateRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkTemplateServiceDeleteHouseworkTemplateProcedure,
 			connect.WithSchema(houseworkTemplateServiceMethods.ByName("DeleteHouseworkTemplate")),
@@ -608,45 +614,45 @@ func NewHouseworkTemplateServiceClient(httpClient connect.HTTPClient, baseURL st
 
 // houseworkTemplateServiceClient implements HouseworkTemplateServiceClient.
 type houseworkTemplateServiceClient struct {
-	getHouseworkTemplate    *connect.Client[grpc.HouseworkTemplateRequest, grpc.HouseworkTemplateResponse]
-	getHouseworkTemplates   *connect.Client[grpc.HouseworkTemplatesRequest, grpc.HouseworkTemplatesResponse]
-	createHouseworkTemplate *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
-	updateHouseworkTemplate *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
-	deleteHouseworkTemplate *connect.Client[grpc.HouseworkTemplate, grpc.CommonResponse]
+	getHouseworkTemplate    *connect.Client[grpc.GetHouseworkTemplateRequest, grpc.GetHouseworkTemplateResponse]
+	listHouseworkTemplates  *connect.Client[grpc.ListHouseworkTemplatesRequest, grpc.ListHouseworkTemplatesResponse]
+	createHouseworkTemplate *connect.Client[grpc.CreateHouseworkTemplateRequest, grpc.CommonResponse]
+	updateHouseworkTemplate *connect.Client[grpc.UpdateHouseworkTemplateRequest, grpc.CommonResponse]
+	deleteHouseworkTemplate *connect.Client[grpc.DeleteHouseworkTemplateRequest, grpc.CommonResponse]
 }
 
 // GetHouseworkTemplate calls shw.HouseworkTemplateService.GetHouseworkTemplate.
-func (c *houseworkTemplateServiceClient) GetHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error) {
+func (c *houseworkTemplateServiceClient) GetHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.GetHouseworkTemplateRequest]) (*connect.Response[grpc.GetHouseworkTemplateResponse], error) {
 	return c.getHouseworkTemplate.CallUnary(ctx, req)
 }
 
-// GetHouseworkTemplates calls shw.HouseworkTemplateService.GetHouseworkTemplates.
-func (c *houseworkTemplateServiceClient) GetHouseworkTemplates(ctx context.Context, req *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error) {
-	return c.getHouseworkTemplates.CallUnary(ctx, req)
+// ListHouseworkTemplates calls shw.HouseworkTemplateService.ListHouseworkTemplates.
+func (c *houseworkTemplateServiceClient) ListHouseworkTemplates(ctx context.Context, req *connect.Request[grpc.ListHouseworkTemplatesRequest]) (*connect.Response[grpc.ListHouseworkTemplatesResponse], error) {
+	return c.listHouseworkTemplates.CallUnary(ctx, req)
 }
 
 // CreateHouseworkTemplate calls shw.HouseworkTemplateService.CreateHouseworkTemplate.
-func (c *houseworkTemplateServiceClient) CreateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkTemplateServiceClient) CreateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.CreateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.createHouseworkTemplate.CallUnary(ctx, req)
 }
 
 // UpdateHouseworkTemplate calls shw.HouseworkTemplateService.UpdateHouseworkTemplate.
-func (c *houseworkTemplateServiceClient) UpdateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkTemplateServiceClient) UpdateHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.UpdateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.updateHouseworkTemplate.CallUnary(ctx, req)
 }
 
 // DeleteHouseworkTemplate calls shw.HouseworkTemplateService.DeleteHouseworkTemplate.
-func (c *houseworkTemplateServiceClient) DeleteHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkTemplateServiceClient) DeleteHouseworkTemplate(ctx context.Context, req *connect.Request[grpc.DeleteHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.deleteHouseworkTemplate.CallUnary(ctx, req)
 }
 
 // HouseworkTemplateServiceHandler is an implementation of the shw.HouseworkTemplateService service.
 type HouseworkTemplateServiceHandler interface {
-	GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error)
-	GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error)
-	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error)
+	GetHouseworkTemplate(context.Context, *connect.Request[grpc.GetHouseworkTemplateRequest]) (*connect.Response[grpc.GetHouseworkTemplateResponse], error)
+	ListHouseworkTemplates(context.Context, *connect.Request[grpc.ListHouseworkTemplatesRequest]) (*connect.Response[grpc.ListHouseworkTemplatesResponse], error)
+	CreateHouseworkTemplate(context.Context, *connect.Request[grpc.CreateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.UpdateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.DeleteHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkTemplateServiceHandler builds an HTTP handler from the service implementation. It
@@ -662,10 +668,10 @@ func NewHouseworkTemplateServiceHandler(svc HouseworkTemplateServiceHandler, opt
 		connect.WithSchema(houseworkTemplateServiceMethods.ByName("GetHouseworkTemplate")),
 		connect.WithHandlerOptions(opts...),
 	)
-	houseworkTemplateServiceGetHouseworkTemplatesHandler := connect.NewUnaryHandler(
-		HouseworkTemplateServiceGetHouseworkTemplatesProcedure,
-		svc.GetHouseworkTemplates,
-		connect.WithSchema(houseworkTemplateServiceMethods.ByName("GetHouseworkTemplates")),
+	houseworkTemplateServiceListHouseworkTemplatesHandler := connect.NewUnaryHandler(
+		HouseworkTemplateServiceListHouseworkTemplatesProcedure,
+		svc.ListHouseworkTemplates,
+		connect.WithSchema(houseworkTemplateServiceMethods.ByName("ListHouseworkTemplates")),
 		connect.WithHandlerOptions(opts...),
 	)
 	houseworkTemplateServiceCreateHouseworkTemplateHandler := connect.NewUnaryHandler(
@@ -690,8 +696,8 @@ func NewHouseworkTemplateServiceHandler(svc HouseworkTemplateServiceHandler, opt
 		switch r.URL.Path {
 		case HouseworkTemplateServiceGetHouseworkTemplateProcedure:
 			houseworkTemplateServiceGetHouseworkTemplateHandler.ServeHTTP(w, r)
-		case HouseworkTemplateServiceGetHouseworkTemplatesProcedure:
-			houseworkTemplateServiceGetHouseworkTemplatesHandler.ServeHTTP(w, r)
+		case HouseworkTemplateServiceListHouseworkTemplatesProcedure:
+			houseworkTemplateServiceListHouseworkTemplatesHandler.ServeHTTP(w, r)
 		case HouseworkTemplateServiceCreateHouseworkTemplateProcedure:
 			houseworkTemplateServiceCreateHouseworkTemplateHandler.ServeHTTP(w, r)
 		case HouseworkTemplateServiceUpdateHouseworkTemplateProcedure:
@@ -707,33 +713,33 @@ func NewHouseworkTemplateServiceHandler(svc HouseworkTemplateServiceHandler, opt
 // UnimplementedHouseworkTemplateServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedHouseworkTemplateServiceHandler struct{}
 
-func (UnimplementedHouseworkTemplateServiceHandler) GetHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplateRequest]) (*connect.Response[grpc.HouseworkTemplateResponse], error) {
+func (UnimplementedHouseworkTemplateServiceHandler) GetHouseworkTemplate(context.Context, *connect.Request[grpc.GetHouseworkTemplateRequest]) (*connect.Response[grpc.GetHouseworkTemplateResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.GetHouseworkTemplate is not implemented"))
 }
 
-func (UnimplementedHouseworkTemplateServiceHandler) GetHouseworkTemplates(context.Context, *connect.Request[grpc.HouseworkTemplatesRequest]) (*connect.Response[grpc.HouseworkTemplatesResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.GetHouseworkTemplates is not implemented"))
+func (UnimplementedHouseworkTemplateServiceHandler) ListHouseworkTemplates(context.Context, *connect.Request[grpc.ListHouseworkTemplatesRequest]) (*connect.Response[grpc.ListHouseworkTemplatesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.ListHouseworkTemplates is not implemented"))
 }
 
-func (UnimplementedHouseworkTemplateServiceHandler) CreateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkTemplateServiceHandler) CreateHouseworkTemplate(context.Context, *connect.Request[grpc.CreateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.CreateHouseworkTemplate is not implemented"))
 }
 
-func (UnimplementedHouseworkTemplateServiceHandler) UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkTemplateServiceHandler) UpdateHouseworkTemplate(context.Context, *connect.Request[grpc.UpdateHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.UpdateHouseworkTemplate is not implemented"))
 }
 
-func (UnimplementedHouseworkTemplateServiceHandler) DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.HouseworkTemplate]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkTemplateServiceHandler) DeleteHouseworkTemplate(context.Context, *connect.Request[grpc.DeleteHouseworkTemplateRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkTemplateService.DeleteHouseworkTemplate is not implemented"))
 }
 
 // HouseworkScheduleServiceClient is a client for the shw.HouseworkScheduleService service.
 type HouseworkScheduleServiceClient interface {
-	GetHouseworkSchedules(context.Context, *connect.Request[grpc.HouseworkSchedulesRequest]) (*connect.Response[grpc.HouseworkSchedulesResponse], error)
-	GetHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.HouseworkScheduleResponse], error)
-	CreateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetHouseworkSchedule(context.Context, *connect.Request[grpc.GetHouseworkScheduleRequest]) (*connect.Response[grpc.GetHouseworkScheduleResponse], error)
+	ListHouseworkSchedules(context.Context, *connect.Request[grpc.ListHouseworkSchedulesRequest]) (*connect.Response[grpc.ListHouseworkSchedulesResponse], error)
+	CreateHouseworkSchedule(context.Context, *connect.Request[grpc.CreateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.UpdateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.DeleteHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkScheduleServiceClient constructs a client for the shw.HouseworkScheduleService
@@ -747,31 +753,31 @@ func NewHouseworkScheduleServiceClient(httpClient connect.HTTPClient, baseURL st
 	baseURL = strings.TrimRight(baseURL, "/")
 	houseworkScheduleServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkScheduleService").Methods()
 	return &houseworkScheduleServiceClient{
-		getHouseworkSchedules: connect.NewClient[grpc.HouseworkSchedulesRequest, grpc.HouseworkSchedulesResponse](
-			httpClient,
-			baseURL+HouseworkScheduleServiceGetHouseworkSchedulesProcedure,
-			connect.WithSchema(houseworkScheduleServiceMethods.ByName("GetHouseworkSchedules")),
-			connect.WithClientOptions(opts...),
-		),
-		getHouseworkSchedule: connect.NewClient[grpc.HouseworkScheduleRequest, grpc.HouseworkScheduleResponse](
+		getHouseworkSchedule: connect.NewClient[grpc.GetHouseworkScheduleRequest, grpc.GetHouseworkScheduleResponse](
 			httpClient,
 			baseURL+HouseworkScheduleServiceGetHouseworkScheduleProcedure,
 			connect.WithSchema(houseworkScheduleServiceMethods.ByName("GetHouseworkSchedule")),
 			connect.WithClientOptions(opts...),
 		),
-		createHouseworkSchedule: connect.NewClient[grpc.HouseworkSchedule, grpc.CommonResponse](
+		listHouseworkSchedules: connect.NewClient[grpc.ListHouseworkSchedulesRequest, grpc.ListHouseworkSchedulesResponse](
+			httpClient,
+			baseURL+HouseworkScheduleServiceListHouseworkSchedulesProcedure,
+			connect.WithSchema(houseworkScheduleServiceMethods.ByName("ListHouseworkSchedules")),
+			connect.WithClientOptions(opts...),
+		),
+		createHouseworkSchedule: connect.NewClient[grpc.CreateHouseworkScheduleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkScheduleServiceCreateHouseworkScheduleProcedure,
 			connect.WithSchema(houseworkScheduleServiceMethods.ByName("CreateHouseworkSchedule")),
 			connect.WithClientOptions(opts...),
 		),
-		updateHouseworkSchedule: connect.NewClient[grpc.HouseworkSchedule, grpc.CommonResponse](
+		updateHouseworkSchedule: connect.NewClient[grpc.UpdateHouseworkScheduleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkScheduleServiceUpdateHouseworkScheduleProcedure,
 			connect.WithSchema(houseworkScheduleServiceMethods.ByName("UpdateHouseworkSchedule")),
 			connect.WithClientOptions(opts...),
 		),
-		deleteHouseworkSchedule: connect.NewClient[grpc.HouseworkScheduleRequest, grpc.CommonResponse](
+		deleteHouseworkSchedule: connect.NewClient[grpc.DeleteHouseworkScheduleRequest, grpc.CommonResponse](
 			httpClient,
 			baseURL+HouseworkScheduleServiceDeleteHouseworkScheduleProcedure,
 			connect.WithSchema(houseworkScheduleServiceMethods.ByName("DeleteHouseworkSchedule")),
@@ -782,45 +788,45 @@ func NewHouseworkScheduleServiceClient(httpClient connect.HTTPClient, baseURL st
 
 // houseworkScheduleServiceClient implements HouseworkScheduleServiceClient.
 type houseworkScheduleServiceClient struct {
-	getHouseworkSchedules   *connect.Client[grpc.HouseworkSchedulesRequest, grpc.HouseworkSchedulesResponse]
-	getHouseworkSchedule    *connect.Client[grpc.HouseworkScheduleRequest, grpc.HouseworkScheduleResponse]
-	createHouseworkSchedule *connect.Client[grpc.HouseworkSchedule, grpc.CommonResponse]
-	updateHouseworkSchedule *connect.Client[grpc.HouseworkSchedule, grpc.CommonResponse]
-	deleteHouseworkSchedule *connect.Client[grpc.HouseworkScheduleRequest, grpc.CommonResponse]
-}
-
-// GetHouseworkSchedules calls shw.HouseworkScheduleService.GetHouseworkSchedules.
-func (c *houseworkScheduleServiceClient) GetHouseworkSchedules(ctx context.Context, req *connect.Request[grpc.HouseworkSchedulesRequest]) (*connect.Response[grpc.HouseworkSchedulesResponse], error) {
-	return c.getHouseworkSchedules.CallUnary(ctx, req)
+	getHouseworkSchedule    *connect.Client[grpc.GetHouseworkScheduleRequest, grpc.GetHouseworkScheduleResponse]
+	listHouseworkSchedules  *connect.Client[grpc.ListHouseworkSchedulesRequest, grpc.ListHouseworkSchedulesResponse]
+	createHouseworkSchedule *connect.Client[grpc.CreateHouseworkScheduleRequest, grpc.CommonResponse]
+	updateHouseworkSchedule *connect.Client[grpc.UpdateHouseworkScheduleRequest, grpc.CommonResponse]
+	deleteHouseworkSchedule *connect.Client[grpc.DeleteHouseworkScheduleRequest, grpc.CommonResponse]
 }
 
 // GetHouseworkSchedule calls shw.HouseworkScheduleService.GetHouseworkSchedule.
-func (c *houseworkScheduleServiceClient) GetHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.HouseworkScheduleResponse], error) {
+func (c *houseworkScheduleServiceClient) GetHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.GetHouseworkScheduleRequest]) (*connect.Response[grpc.GetHouseworkScheduleResponse], error) {
 	return c.getHouseworkSchedule.CallUnary(ctx, req)
 }
 
+// ListHouseworkSchedules calls shw.HouseworkScheduleService.ListHouseworkSchedules.
+func (c *houseworkScheduleServiceClient) ListHouseworkSchedules(ctx context.Context, req *connect.Request[grpc.ListHouseworkSchedulesRequest]) (*connect.Response[grpc.ListHouseworkSchedulesResponse], error) {
+	return c.listHouseworkSchedules.CallUnary(ctx, req)
+}
+
 // CreateHouseworkSchedule calls shw.HouseworkScheduleService.CreateHouseworkSchedule.
-func (c *houseworkScheduleServiceClient) CreateHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkScheduleServiceClient) CreateHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.CreateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.createHouseworkSchedule.CallUnary(ctx, req)
 }
 
 // UpdateHouseworkSchedule calls shw.HouseworkScheduleService.UpdateHouseworkSchedule.
-func (c *houseworkScheduleServiceClient) UpdateHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkScheduleServiceClient) UpdateHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.UpdateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.updateHouseworkSchedule.CallUnary(ctx, req)
 }
 
 // DeleteHouseworkSchedule calls shw.HouseworkScheduleService.DeleteHouseworkSchedule.
-func (c *houseworkScheduleServiceClient) DeleteHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (c *houseworkScheduleServiceClient) DeleteHouseworkSchedule(ctx context.Context, req *connect.Request[grpc.DeleteHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return c.deleteHouseworkSchedule.CallUnary(ctx, req)
 }
 
 // HouseworkScheduleServiceHandler is an implementation of the shw.HouseworkScheduleService service.
 type HouseworkScheduleServiceHandler interface {
-	GetHouseworkSchedules(context.Context, *connect.Request[grpc.HouseworkSchedulesRequest]) (*connect.Response[grpc.HouseworkSchedulesResponse], error)
-	GetHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.HouseworkScheduleResponse], error)
-	CreateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error)
-	UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error)
-	DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	GetHouseworkSchedule(context.Context, *connect.Request[grpc.GetHouseworkScheduleRequest]) (*connect.Response[grpc.GetHouseworkScheduleResponse], error)
+	ListHouseworkSchedules(context.Context, *connect.Request[grpc.ListHouseworkSchedulesRequest]) (*connect.Response[grpc.ListHouseworkSchedulesResponse], error)
+	CreateHouseworkSchedule(context.Context, *connect.Request[grpc.CreateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.UpdateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.DeleteHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkScheduleServiceHandler builds an HTTP handler from the service implementation. It
@@ -830,16 +836,16 @@ type HouseworkScheduleServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewHouseworkScheduleServiceHandler(svc HouseworkScheduleServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	houseworkScheduleServiceMethods := grpc.File_housework_proto.Services().ByName("HouseworkScheduleService").Methods()
-	houseworkScheduleServiceGetHouseworkSchedulesHandler := connect.NewUnaryHandler(
-		HouseworkScheduleServiceGetHouseworkSchedulesProcedure,
-		svc.GetHouseworkSchedules,
-		connect.WithSchema(houseworkScheduleServiceMethods.ByName("GetHouseworkSchedules")),
-		connect.WithHandlerOptions(opts...),
-	)
 	houseworkScheduleServiceGetHouseworkScheduleHandler := connect.NewUnaryHandler(
 		HouseworkScheduleServiceGetHouseworkScheduleProcedure,
 		svc.GetHouseworkSchedule,
 		connect.WithSchema(houseworkScheduleServiceMethods.ByName("GetHouseworkSchedule")),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkScheduleServiceListHouseworkSchedulesHandler := connect.NewUnaryHandler(
+		HouseworkScheduleServiceListHouseworkSchedulesProcedure,
+		svc.ListHouseworkSchedules,
+		connect.WithSchema(houseworkScheduleServiceMethods.ByName("ListHouseworkSchedules")),
 		connect.WithHandlerOptions(opts...),
 	)
 	houseworkScheduleServiceCreateHouseworkScheduleHandler := connect.NewUnaryHandler(
@@ -862,10 +868,10 @@ func NewHouseworkScheduleServiceHandler(svc HouseworkScheduleServiceHandler, opt
 	)
 	return "/shw.HouseworkScheduleService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case HouseworkScheduleServiceGetHouseworkSchedulesProcedure:
-			houseworkScheduleServiceGetHouseworkSchedulesHandler.ServeHTTP(w, r)
 		case HouseworkScheduleServiceGetHouseworkScheduleProcedure:
 			houseworkScheduleServiceGetHouseworkScheduleHandler.ServeHTTP(w, r)
+		case HouseworkScheduleServiceListHouseworkSchedulesProcedure:
+			houseworkScheduleServiceListHouseworkSchedulesHandler.ServeHTTP(w, r)
 		case HouseworkScheduleServiceCreateHouseworkScheduleProcedure:
 			houseworkScheduleServiceCreateHouseworkScheduleHandler.ServeHTTP(w, r)
 		case HouseworkScheduleServiceUpdateHouseworkScheduleProcedure:
@@ -881,22 +887,22 @@ func NewHouseworkScheduleServiceHandler(svc HouseworkScheduleServiceHandler, opt
 // UnimplementedHouseworkScheduleServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedHouseworkScheduleServiceHandler struct{}
 
-func (UnimplementedHouseworkScheduleServiceHandler) GetHouseworkSchedules(context.Context, *connect.Request[grpc.HouseworkSchedulesRequest]) (*connect.Response[grpc.HouseworkSchedulesResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.GetHouseworkSchedules is not implemented"))
-}
-
-func (UnimplementedHouseworkScheduleServiceHandler) GetHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.HouseworkScheduleResponse], error) {
+func (UnimplementedHouseworkScheduleServiceHandler) GetHouseworkSchedule(context.Context, *connect.Request[grpc.GetHouseworkScheduleRequest]) (*connect.Response[grpc.GetHouseworkScheduleResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.GetHouseworkSchedule is not implemented"))
 }
 
-func (UnimplementedHouseworkScheduleServiceHandler) CreateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkScheduleServiceHandler) ListHouseworkSchedules(context.Context, *connect.Request[grpc.ListHouseworkSchedulesRequest]) (*connect.Response[grpc.ListHouseworkSchedulesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.ListHouseworkSchedules is not implemented"))
+}
+
+func (UnimplementedHouseworkScheduleServiceHandler) CreateHouseworkSchedule(context.Context, *connect.Request[grpc.CreateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.CreateHouseworkSchedule is not implemented"))
 }
 
-func (UnimplementedHouseworkScheduleServiceHandler) UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkSchedule]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkScheduleServiceHandler) UpdateHouseworkSchedule(context.Context, *connect.Request[grpc.UpdateHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.UpdateHouseworkSchedule is not implemented"))
 }
 
-func (UnimplementedHouseworkScheduleServiceHandler) DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.HouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+func (UnimplementedHouseworkScheduleServiceHandler) DeleteHouseworkSchedule(context.Context, *connect.Request[grpc.DeleteHouseworkScheduleRequest]) (*connect.Response[grpc.CommonResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkScheduleService.DeleteHouseworkSchedule is not implemented"))
 }

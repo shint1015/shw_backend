@@ -9,17 +9,17 @@ import (
 type Seeder struct{}
 
 func DoSeed() {
-	DoAllTruncate()
+	//DoAllTruncate()
 	s := Seeder{}
-	s.user()
-	s.family()
-	s.familyRole()
-	s.housework()
-	s.houseworkMemo()
-	s.houseworkTemplate()
-	s.houseworkPointHistory()
+	//s.user()
+	//s.family()
+	//s.familyRole()
+	//s.housework()
+	//s.houseworkMemo()
+	//s.houseworkTemplate()
+	//s.houseworkPointHistory()
 	s.houseworkPoint()
-	s.addRelation()
+	//s.addRelation()
 }
 
 func DoAllTruncate() {
@@ -159,9 +159,9 @@ func (s *Seeder) houseworkTemplate() {
 
 func (s *Seeder) houseworkPoint() {
 	var houseworkPoints []model.HouseworkPoint
-	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 1, Point: 10})
-	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 4, Point: 0})
-	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 5, Point: 20})
+	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 1, Point: 10, FamilyID: 1})
+	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 4, Point: 0, FamilyID: 1})
+	houseworkPoints = append(houseworkPoints, model.HouseworkPoint{UserID: 5, Point: 20, FamilyID: 1})
 
 	tx := model.DB.Begin()
 	for _, houseworkPoint := range houseworkPoints {

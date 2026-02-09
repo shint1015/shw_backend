@@ -1,20 +1,22 @@
 package main
 
 import (
-	"connectrpc.com/connect"
-	"connectrpc.com/grpcreflect"
 	"context"
 	"fmt"
-	"github.com/rs/cors"
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
 	"log"
 	"net/http"
 	"shwgrpc/config"
 	"shwgrpc/http/controller"
+	"shwgrpc/internal/auth"
 	"shwgrpc/model"
 	shwgrpc "shwgrpc/pkg/grpc"
 	"shwgrpc/pkg/grpc/grpcconnect"
+
+	"connectrpc.com/connect"
+	"connectrpc.com/grpcreflect"
+	"github.com/rs/cors"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 )
 
 var houseworkController = controller.NewHouseworkController()
@@ -27,6 +29,7 @@ type ShwServer struct {
 	grpcconnect.UnimplementedHouseworkServiceHandler
 	grpcconnect.UnimplementedFamilyServiceHandler
 	grpcconnect.UnimplementedUserServiceHandler
+	grpcconnect.UnimplementedPointServiceHandler
 }
 
 func NewShwServer() *ShwServer {
@@ -40,6 +43,7 @@ func newServeMuxWithReflection() *http.ServeMux {
 		"shw.HouseworkService",
 		"shw.FamilyService",
 		"shw.UserService",
+		"shw.PointService",
 	)
 	mux.Handle(grpcreflect.NewHandlerV1(reflector))
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
@@ -47,13 +51,14 @@ func newServeMuxWithReflection() *http.ServeMux {
 }
 
 func newInterceptors() connect.Option {
-	interceptors := func(next connect.UnaryFunc) connect.UnaryFunc {
-		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
-			req.Header().Set("hoge", "fuga")
-			return next(ctx, req)
-		})
+	validator, err := auth.NewAuth0ValidatorFromEnv()
+	if err != nil {
+		log.Fatalf("auth0 config error: %v", err)
 	}
-	return connect.WithInterceptors(connect.UnaryInterceptorFunc(interceptors))
+	authInterceptor := auth.NewInterceptor(validator, []string{
+		"/shw.HelloService/Hello",
+	})
+	return connect.WithInterceptors(authInterceptor.Unary())
 }
 
 func main() {
@@ -65,13 +70,13 @@ func main() {
 	//domain := "localhost"
 	port := 8080
 	shw := NewShwServer()
-	//mux := newServeMuxWithReflection()
 	interceptor := newInterceptors()
 	mux := newServeMuxWithReflection()
 	mux.Handle(grpcconnect.NewFamilyServiceHandler(shw, interceptor))
 	mux.Handle(grpcconnect.NewHouseworkServiceHandler(shw, interceptor))
 	mux.Handle(grpcconnect.NewUserServiceHandler(shw, interceptor))
 	mux.Handle(grpcconnect.NewHelloServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewPointServiceHandler(shw, interceptor))
 
 	//mux.Handle(NewHouse)
 	log.Printf("gRPC server is running on port %d", port)

@@ -21,8 +21,10 @@ import (
 const _ = connect.IsAtLeastVersion1_13_0
 
 const (
-	// PointServiceName is the fully-qualified name of the PointService service.
-	PointServiceName = "shw.PointService"
+	// UserPointServiceName is the fully-qualified name of the UserPointService service.
+	UserPointServiceName = "shw.UserPointService"
+	// FamilyPointServiceName is the fully-qualified name of the FamilyPointService service.
+	FamilyPointServiceName = "shw.FamilyPointService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -33,192 +35,237 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// PointServiceGetPointProcedure is the fully-qualified name of the PointService's GetPoint RPC.
-	PointServiceGetPointProcedure = "/shw.PointService/GetPoint"
-	// PointServiceGetFamilyPointListProcedure is the fully-qualified name of the PointService's
-	// GetFamilyPointList RPC.
-	PointServiceGetFamilyPointListProcedure = "/shw.PointService/GetFamilyPointList"
-	// PointServiceCreatePointProcedure is the fully-qualified name of the PointService's CreatePoint
-	// RPC.
-	PointServiceCreatePointProcedure = "/shw.PointService/CreatePoint"
-	// PointServiceUpdatePointProcedure is the fully-qualified name of the PointService's UpdatePoint
-	// RPC.
-	PointServiceUpdatePointProcedure = "/shw.PointService/UpdatePoint"
-	// PointServiceDeletePointProcedure is the fully-qualified name of the PointService's DeletePoint
-	// RPC.
-	PointServiceDeletePointProcedure = "/shw.PointService/DeletePoint"
+	// UserPointServiceGetUserPointProcedure is the fully-qualified name of the UserPointService's
+	// GetUserPoint RPC.
+	UserPointServiceGetUserPointProcedure = "/shw.UserPointService/GetUserPoint"
+	// UserPointServiceCreateUserPointProcedure is the fully-qualified name of the UserPointService's
+	// CreateUserPoint RPC.
+	UserPointServiceCreateUserPointProcedure = "/shw.UserPointService/CreateUserPoint"
+	// UserPointServiceUpdateUserPointProcedure is the fully-qualified name of the UserPointService's
+	// UpdateUserPoint RPC.
+	UserPointServiceUpdateUserPointProcedure = "/shw.UserPointService/UpdateUserPoint"
+	// UserPointServiceDeleteUserPointProcedure is the fully-qualified name of the UserPointService's
+	// DeleteUserPoint RPC.
+	UserPointServiceDeleteUserPointProcedure = "/shw.UserPointService/DeleteUserPoint"
+	// FamilyPointServiceListFamilyPointsProcedure is the fully-qualified name of the
+	// FamilyPointService's ListFamilyPoints RPC.
+	FamilyPointServiceListFamilyPointsProcedure = "/shw.FamilyPointService/ListFamilyPoints"
 )
 
-// PointServiceClient is a client for the shw.PointService service.
-type PointServiceClient interface {
-	GetPoint(context.Context, *connect.Request[grpc.PointRequest]) (*connect.Response[grpc.PointResponse], error)
-	GetFamilyPointList(context.Context, *connect.Request[grpc.FamilyPointListRequest]) (*connect.Response[grpc.FamilyPointList], error)
-	CreatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
-	UpdatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
-	DeletePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
+// UserPointServiceClient is a client for the shw.UserPointService service.
+type UserPointServiceClient interface {
+	GetUserPoint(context.Context, *connect.Request[grpc.GetUserPointRequest]) (*connect.Response[grpc.GetUserPointResponse], error)
+	CreateUserPoint(context.Context, *connect.Request[grpc.CreateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateUserPoint(context.Context, *connect.Request[grpc.UpdateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteUserPoint(context.Context, *connect.Request[grpc.DeleteUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
-// NewPointServiceClient constructs a client for the shw.PointService service. By default, it uses
-// the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
-// uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
-// connect.WithGRPCWeb() options.
+// NewUserPointServiceClient constructs a client for the shw.UserPointService service. By default,
+// it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and
+// sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC()
+// or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewPointServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) PointServiceClient {
+func NewUserPointServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) UserPointServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	pointServiceMethods := grpc.File_point_proto.Services().ByName("PointService").Methods()
-	return &pointServiceClient{
-		getPoint: connect.NewClient[grpc.PointRequest, grpc.PointResponse](
+	userPointServiceMethods := grpc.File_point_proto.Services().ByName("UserPointService").Methods()
+	return &userPointServiceClient{
+		getUserPoint: connect.NewClient[grpc.GetUserPointRequest, grpc.GetUserPointResponse](
 			httpClient,
-			baseURL+PointServiceGetPointProcedure,
-			connect.WithSchema(pointServiceMethods.ByName("GetPoint")),
+			baseURL+UserPointServiceGetUserPointProcedure,
+			connect.WithSchema(userPointServiceMethods.ByName("GetUserPoint")),
 			connect.WithClientOptions(opts...),
 		),
-		getFamilyPointList: connect.NewClient[grpc.FamilyPointListRequest, grpc.FamilyPointList](
+		createUserPoint: connect.NewClient[grpc.CreateUserPointRequest, grpc.CommonResponse](
 			httpClient,
-			baseURL+PointServiceGetFamilyPointListProcedure,
-			connect.WithSchema(pointServiceMethods.ByName("GetFamilyPointList")),
+			baseURL+UserPointServiceCreateUserPointProcedure,
+			connect.WithSchema(userPointServiceMethods.ByName("CreateUserPoint")),
 			connect.WithClientOptions(opts...),
 		),
-		createPoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
+		updateUserPoint: connect.NewClient[grpc.UpdateUserPointRequest, grpc.CommonResponse](
 			httpClient,
-			baseURL+PointServiceCreatePointProcedure,
-			connect.WithSchema(pointServiceMethods.ByName("CreatePoint")),
+			baseURL+UserPointServiceUpdateUserPointProcedure,
+			connect.WithSchema(userPointServiceMethods.ByName("UpdateUserPoint")),
 			connect.WithClientOptions(opts...),
 		),
-		updatePoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
+		deleteUserPoint: connect.NewClient[grpc.DeleteUserPointRequest, grpc.CommonResponse](
 			httpClient,
-			baseURL+PointServiceUpdatePointProcedure,
-			connect.WithSchema(pointServiceMethods.ByName("UpdatePoint")),
-			connect.WithClientOptions(opts...),
-		),
-		deletePoint: connect.NewClient[grpc.Point, grpc.CommonResponse](
-			httpClient,
-			baseURL+PointServiceDeletePointProcedure,
-			connect.WithSchema(pointServiceMethods.ByName("DeletePoint")),
+			baseURL+UserPointServiceDeleteUserPointProcedure,
+			connect.WithSchema(userPointServiceMethods.ByName("DeleteUserPoint")),
 			connect.WithClientOptions(opts...),
 		),
 	}
 }
 
-// pointServiceClient implements PointServiceClient.
-type pointServiceClient struct {
-	getPoint           *connect.Client[grpc.PointRequest, grpc.PointResponse]
-	getFamilyPointList *connect.Client[grpc.FamilyPointListRequest, grpc.FamilyPointList]
-	createPoint        *connect.Client[grpc.Point, grpc.CommonResponse]
-	updatePoint        *connect.Client[grpc.Point, grpc.CommonResponse]
-	deletePoint        *connect.Client[grpc.Point, grpc.CommonResponse]
+// userPointServiceClient implements UserPointServiceClient.
+type userPointServiceClient struct {
+	getUserPoint    *connect.Client[grpc.GetUserPointRequest, grpc.GetUserPointResponse]
+	createUserPoint *connect.Client[grpc.CreateUserPointRequest, grpc.CommonResponse]
+	updateUserPoint *connect.Client[grpc.UpdateUserPointRequest, grpc.CommonResponse]
+	deleteUserPoint *connect.Client[grpc.DeleteUserPointRequest, grpc.CommonResponse]
 }
 
-// GetPoint calls shw.PointService.GetPoint.
-func (c *pointServiceClient) GetPoint(ctx context.Context, req *connect.Request[grpc.PointRequest]) (*connect.Response[grpc.PointResponse], error) {
-	return c.getPoint.CallUnary(ctx, req)
+// GetUserPoint calls shw.UserPointService.GetUserPoint.
+func (c *userPointServiceClient) GetUserPoint(ctx context.Context, req *connect.Request[grpc.GetUserPointRequest]) (*connect.Response[grpc.GetUserPointResponse], error) {
+	return c.getUserPoint.CallUnary(ctx, req)
 }
 
-// GetFamilyPointList calls shw.PointService.GetFamilyPointList.
-func (c *pointServiceClient) GetFamilyPointList(ctx context.Context, req *connect.Request[grpc.FamilyPointListRequest]) (*connect.Response[grpc.FamilyPointList], error) {
-	return c.getFamilyPointList.CallUnary(ctx, req)
+// CreateUserPoint calls shw.UserPointService.CreateUserPoint.
+func (c *userPointServiceClient) CreateUserPoint(ctx context.Context, req *connect.Request[grpc.CreateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.createUserPoint.CallUnary(ctx, req)
 }
 
-// CreatePoint calls shw.PointService.CreatePoint.
-func (c *pointServiceClient) CreatePoint(ctx context.Context, req *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return c.createPoint.CallUnary(ctx, req)
+// UpdateUserPoint calls shw.UserPointService.UpdateUserPoint.
+func (c *userPointServiceClient) UpdateUserPoint(ctx context.Context, req *connect.Request[grpc.UpdateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.updateUserPoint.CallUnary(ctx, req)
 }
 
-// UpdatePoint calls shw.PointService.UpdatePoint.
-func (c *pointServiceClient) UpdatePoint(ctx context.Context, req *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return c.updatePoint.CallUnary(ctx, req)
+// DeleteUserPoint calls shw.UserPointService.DeleteUserPoint.
+func (c *userPointServiceClient) DeleteUserPoint(ctx context.Context, req *connect.Request[grpc.DeleteUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.deleteUserPoint.CallUnary(ctx, req)
 }
 
-// DeletePoint calls shw.PointService.DeletePoint.
-func (c *pointServiceClient) DeletePoint(ctx context.Context, req *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return c.deletePoint.CallUnary(ctx, req)
+// UserPointServiceHandler is an implementation of the shw.UserPointService service.
+type UserPointServiceHandler interface {
+	GetUserPoint(context.Context, *connect.Request[grpc.GetUserPointRequest]) (*connect.Response[grpc.GetUserPointResponse], error)
+	CreateUserPoint(context.Context, *connect.Request[grpc.CreateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateUserPoint(context.Context, *connect.Request[grpc.UpdateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteUserPoint(context.Context, *connect.Request[grpc.DeleteUserPointRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
-// PointServiceHandler is an implementation of the shw.PointService service.
-type PointServiceHandler interface {
-	GetPoint(context.Context, *connect.Request[grpc.PointRequest]) (*connect.Response[grpc.PointResponse], error)
-	GetFamilyPointList(context.Context, *connect.Request[grpc.FamilyPointListRequest]) (*connect.Response[grpc.FamilyPointList], error)
-	CreatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
-	UpdatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
-	DeletePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error)
-}
-
-// NewPointServiceHandler builds an HTTP handler from the service implementation. It returns the
+// NewUserPointServiceHandler builds an HTTP handler from the service implementation. It returns the
 // path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewPointServiceHandler(svc PointServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	pointServiceMethods := grpc.File_point_proto.Services().ByName("PointService").Methods()
-	pointServiceGetPointHandler := connect.NewUnaryHandler(
-		PointServiceGetPointProcedure,
-		svc.GetPoint,
-		connect.WithSchema(pointServiceMethods.ByName("GetPoint")),
+func NewUserPointServiceHandler(svc UserPointServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	userPointServiceMethods := grpc.File_point_proto.Services().ByName("UserPointService").Methods()
+	userPointServiceGetUserPointHandler := connect.NewUnaryHandler(
+		UserPointServiceGetUserPointProcedure,
+		svc.GetUserPoint,
+		connect.WithSchema(userPointServiceMethods.ByName("GetUserPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
-	pointServiceGetFamilyPointListHandler := connect.NewUnaryHandler(
-		PointServiceGetFamilyPointListProcedure,
-		svc.GetFamilyPointList,
-		connect.WithSchema(pointServiceMethods.ByName("GetFamilyPointList")),
+	userPointServiceCreateUserPointHandler := connect.NewUnaryHandler(
+		UserPointServiceCreateUserPointProcedure,
+		svc.CreateUserPoint,
+		connect.WithSchema(userPointServiceMethods.ByName("CreateUserPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
-	pointServiceCreatePointHandler := connect.NewUnaryHandler(
-		PointServiceCreatePointProcedure,
-		svc.CreatePoint,
-		connect.WithSchema(pointServiceMethods.ByName("CreatePoint")),
+	userPointServiceUpdateUserPointHandler := connect.NewUnaryHandler(
+		UserPointServiceUpdateUserPointProcedure,
+		svc.UpdateUserPoint,
+		connect.WithSchema(userPointServiceMethods.ByName("UpdateUserPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
-	pointServiceUpdatePointHandler := connect.NewUnaryHandler(
-		PointServiceUpdatePointProcedure,
-		svc.UpdatePoint,
-		connect.WithSchema(pointServiceMethods.ByName("UpdatePoint")),
+	userPointServiceDeleteUserPointHandler := connect.NewUnaryHandler(
+		UserPointServiceDeleteUserPointProcedure,
+		svc.DeleteUserPoint,
+		connect.WithSchema(userPointServiceMethods.ByName("DeleteUserPoint")),
 		connect.WithHandlerOptions(opts...),
 	)
-	pointServiceDeletePointHandler := connect.NewUnaryHandler(
-		PointServiceDeletePointProcedure,
-		svc.DeletePoint,
-		connect.WithSchema(pointServiceMethods.ByName("DeletePoint")),
-		connect.WithHandlerOptions(opts...),
-	)
-	return "/shw.PointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/shw.UserPointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case PointServiceGetPointProcedure:
-			pointServiceGetPointHandler.ServeHTTP(w, r)
-		case PointServiceGetFamilyPointListProcedure:
-			pointServiceGetFamilyPointListHandler.ServeHTTP(w, r)
-		case PointServiceCreatePointProcedure:
-			pointServiceCreatePointHandler.ServeHTTP(w, r)
-		case PointServiceUpdatePointProcedure:
-			pointServiceUpdatePointHandler.ServeHTTP(w, r)
-		case PointServiceDeletePointProcedure:
-			pointServiceDeletePointHandler.ServeHTTP(w, r)
+		case UserPointServiceGetUserPointProcedure:
+			userPointServiceGetUserPointHandler.ServeHTTP(w, r)
+		case UserPointServiceCreateUserPointProcedure:
+			userPointServiceCreateUserPointHandler.ServeHTTP(w, r)
+		case UserPointServiceUpdateUserPointProcedure:
+			userPointServiceUpdateUserPointHandler.ServeHTTP(w, r)
+		case UserPointServiceDeleteUserPointProcedure:
+			userPointServiceDeleteUserPointHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
 	})
 }
 
-// UnimplementedPointServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedPointServiceHandler struct{}
+// UnimplementedUserPointServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedUserPointServiceHandler struct{}
 
-func (UnimplementedPointServiceHandler) GetPoint(context.Context, *connect.Request[grpc.PointRequest]) (*connect.Response[grpc.PointResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.PointService.GetPoint is not implemented"))
+func (UnimplementedUserPointServiceHandler) GetUserPoint(context.Context, *connect.Request[grpc.GetUserPointRequest]) (*connect.Response[grpc.GetUserPointResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserPointService.GetUserPoint is not implemented"))
 }
 
-func (UnimplementedPointServiceHandler) GetFamilyPointList(context.Context, *connect.Request[grpc.FamilyPointListRequest]) (*connect.Response[grpc.FamilyPointList], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.PointService.GetFamilyPointList is not implemented"))
+func (UnimplementedUserPointServiceHandler) CreateUserPoint(context.Context, *connect.Request[grpc.CreateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserPointService.CreateUserPoint is not implemented"))
 }
 
-func (UnimplementedPointServiceHandler) CreatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.PointService.CreatePoint is not implemented"))
+func (UnimplementedUserPointServiceHandler) UpdateUserPoint(context.Context, *connect.Request[grpc.UpdateUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserPointService.UpdateUserPoint is not implemented"))
 }
 
-func (UnimplementedPointServiceHandler) UpdatePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.PointService.UpdatePoint is not implemented"))
+func (UnimplementedUserPointServiceHandler) DeleteUserPoint(context.Context, *connect.Request[grpc.DeleteUserPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserPointService.DeleteUserPoint is not implemented"))
 }
 
-func (UnimplementedPointServiceHandler) DeletePoint(context.Context, *connect.Request[grpc.Point]) (*connect.Response[grpc.CommonResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.PointService.DeletePoint is not implemented"))
+// FamilyPointServiceClient is a client for the shw.FamilyPointService service.
+type FamilyPointServiceClient interface {
+	ListFamilyPoints(context.Context, *connect.Request[grpc.ListFamilyPointsRequest]) (*connect.Response[grpc.ListFamilyPointsResponse], error)
+}
+
+// NewFamilyPointServiceClient constructs a client for the shw.FamilyPointService service. By
+// default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses,
+// and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
+// connect.WithGRPC() or connect.WithGRPCWeb() options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewFamilyPointServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) FamilyPointServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	familyPointServiceMethods := grpc.File_point_proto.Services().ByName("FamilyPointService").Methods()
+	return &familyPointServiceClient{
+		listFamilyPoints: connect.NewClient[grpc.ListFamilyPointsRequest, grpc.ListFamilyPointsResponse](
+			httpClient,
+			baseURL+FamilyPointServiceListFamilyPointsProcedure,
+			connect.WithSchema(familyPointServiceMethods.ByName("ListFamilyPoints")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// familyPointServiceClient implements FamilyPointServiceClient.
+type familyPointServiceClient struct {
+	listFamilyPoints *connect.Client[grpc.ListFamilyPointsRequest, grpc.ListFamilyPointsResponse]
+}
+
+// ListFamilyPoints calls shw.FamilyPointService.ListFamilyPoints.
+func (c *familyPointServiceClient) ListFamilyPoints(ctx context.Context, req *connect.Request[grpc.ListFamilyPointsRequest]) (*connect.Response[grpc.ListFamilyPointsResponse], error) {
+	return c.listFamilyPoints.CallUnary(ctx, req)
+}
+
+// FamilyPointServiceHandler is an implementation of the shw.FamilyPointService service.
+type FamilyPointServiceHandler interface {
+	ListFamilyPoints(context.Context, *connect.Request[grpc.ListFamilyPointsRequest]) (*connect.Response[grpc.ListFamilyPointsResponse], error)
+}
+
+// NewFamilyPointServiceHandler builds an HTTP handler from the service implementation. It returns
+// the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewFamilyPointServiceHandler(svc FamilyPointServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	familyPointServiceMethods := grpc.File_point_proto.Services().ByName("FamilyPointService").Methods()
+	familyPointServiceListFamilyPointsHandler := connect.NewUnaryHandler(
+		FamilyPointServiceListFamilyPointsProcedure,
+		svc.ListFamilyPoints,
+		connect.WithSchema(familyPointServiceMethods.ByName("ListFamilyPoints")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/shw.FamilyPointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case FamilyPointServiceListFamilyPointsProcedure:
+			familyPointServiceListFamilyPointsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedFamilyPointServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedFamilyPointServiceHandler struct{}
+
+func (UnimplementedFamilyPointServiceHandler) ListFamilyPoints(context.Context, *connect.Request[grpc.ListFamilyPointsRequest]) (*connect.Response[grpc.ListFamilyPointsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.FamilyPointService.ListFamilyPoints is not implemented"))
 }

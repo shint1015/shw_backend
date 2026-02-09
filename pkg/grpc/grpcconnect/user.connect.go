@@ -33,17 +33,18 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// UserServiceUpdateRoleProcedure is the fully-qualified name of the UserService's UpdateRole RPC.
-	UserServiceUpdateRoleProcedure = "/shw.UserService/UpdateRole"
-	// UserServiceGetBelongToUserProcedure is the fully-qualified name of the UserService's
-	// GetBelongToUser RPC.
-	UserServiceGetBelongToUserProcedure = "/shw.UserService/GetBelongToUser"
+	// UserServiceListFamilyUsersProcedure is the fully-qualified name of the UserService's
+	// ListFamilyUsers RPC.
+	UserServiceListFamilyUsersProcedure = "/shw.UserService/ListFamilyUsers"
+	// UserServiceUpdateUserRoleProcedure is the fully-qualified name of the UserService's
+	// UpdateUserRole RPC.
+	UserServiceUpdateUserRoleProcedure = "/shw.UserService/UpdateUserRole"
 )
 
 // UserServiceClient is a client for the shw.UserService service.
 type UserServiceClient interface {
-	UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
-	GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error)
+	ListFamilyUsers(context.Context, *connect.Request[grpc.ListFamilyUsersRequest]) (*connect.Response[grpc.ListFamilyUsersResponse], error)
+	UpdateUserRole(context.Context, *connect.Request[grpc.UpdateUserRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewUserServiceClient constructs a client for the shw.UserService service. By default, it uses the
@@ -57,16 +58,16 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 	baseURL = strings.TrimRight(baseURL, "/")
 	userServiceMethods := grpc.File_user_proto.Services().ByName("UserService").Methods()
 	return &userServiceClient{
-		updateRole: connect.NewClient[grpc.UpdateRoleRequest, grpc.CommonResponse](
+		listFamilyUsers: connect.NewClient[grpc.ListFamilyUsersRequest, grpc.ListFamilyUsersResponse](
 			httpClient,
-			baseURL+UserServiceUpdateRoleProcedure,
-			connect.WithSchema(userServiceMethods.ByName("UpdateRole")),
+			baseURL+UserServiceListFamilyUsersProcedure,
+			connect.WithSchema(userServiceMethods.ByName("ListFamilyUsers")),
 			connect.WithClientOptions(opts...),
 		),
-		getBelongToUser: connect.NewClient[grpc.GetBelongToUserRequest, grpc.GetBelongToUserResponse](
+		updateUserRole: connect.NewClient[grpc.UpdateUserRoleRequest, grpc.CommonResponse](
 			httpClient,
-			baseURL+UserServiceGetBelongToUserProcedure,
-			connect.WithSchema(userServiceMethods.ByName("GetBelongToUser")),
+			baseURL+UserServiceUpdateUserRoleProcedure,
+			connect.WithSchema(userServiceMethods.ByName("UpdateUserRole")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -74,24 +75,24 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
-	updateRole      *connect.Client[grpc.UpdateRoleRequest, grpc.CommonResponse]
-	getBelongToUser *connect.Client[grpc.GetBelongToUserRequest, grpc.GetBelongToUserResponse]
+	listFamilyUsers *connect.Client[grpc.ListFamilyUsersRequest, grpc.ListFamilyUsersResponse]
+	updateUserRole  *connect.Client[grpc.UpdateUserRoleRequest, grpc.CommonResponse]
 }
 
-// UpdateRole calls shw.UserService.UpdateRole.
-func (c *userServiceClient) UpdateRole(ctx context.Context, req *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
-	return c.updateRole.CallUnary(ctx, req)
+// ListFamilyUsers calls shw.UserService.ListFamilyUsers.
+func (c *userServiceClient) ListFamilyUsers(ctx context.Context, req *connect.Request[grpc.ListFamilyUsersRequest]) (*connect.Response[grpc.ListFamilyUsersResponse], error) {
+	return c.listFamilyUsers.CallUnary(ctx, req)
 }
 
-// GetBelongToUser calls shw.UserService.GetBelongToUser.
-func (c *userServiceClient) GetBelongToUser(ctx context.Context, req *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error) {
-	return c.getBelongToUser.CallUnary(ctx, req)
+// UpdateUserRole calls shw.UserService.UpdateUserRole.
+func (c *userServiceClient) UpdateUserRole(ctx context.Context, req *connect.Request[grpc.UpdateUserRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.updateUserRole.CallUnary(ctx, req)
 }
 
 // UserServiceHandler is an implementation of the shw.UserService service.
 type UserServiceHandler interface {
-	UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
-	GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error)
+	ListFamilyUsers(context.Context, *connect.Request[grpc.ListFamilyUsersRequest]) (*connect.Response[grpc.ListFamilyUsersResponse], error)
+	UpdateUserRole(context.Context, *connect.Request[grpc.UpdateUserRoleRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewUserServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -101,24 +102,24 @@ type UserServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	userServiceMethods := grpc.File_user_proto.Services().ByName("UserService").Methods()
-	userServiceUpdateRoleHandler := connect.NewUnaryHandler(
-		UserServiceUpdateRoleProcedure,
-		svc.UpdateRole,
-		connect.WithSchema(userServiceMethods.ByName("UpdateRole")),
+	userServiceListFamilyUsersHandler := connect.NewUnaryHandler(
+		UserServiceListFamilyUsersProcedure,
+		svc.ListFamilyUsers,
+		connect.WithSchema(userServiceMethods.ByName("ListFamilyUsers")),
 		connect.WithHandlerOptions(opts...),
 	)
-	userServiceGetBelongToUserHandler := connect.NewUnaryHandler(
-		UserServiceGetBelongToUserProcedure,
-		svc.GetBelongToUser,
-		connect.WithSchema(userServiceMethods.ByName("GetBelongToUser")),
+	userServiceUpdateUserRoleHandler := connect.NewUnaryHandler(
+		UserServiceUpdateUserRoleProcedure,
+		svc.UpdateUserRole,
+		connect.WithSchema(userServiceMethods.ByName("UpdateUserRole")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/shw.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case UserServiceUpdateRoleProcedure:
-			userServiceUpdateRoleHandler.ServeHTTP(w, r)
-		case UserServiceGetBelongToUserProcedure:
-			userServiceGetBelongToUserHandler.ServeHTTP(w, r)
+		case UserServiceListFamilyUsersProcedure:
+			userServiceListFamilyUsersHandler.ServeHTTP(w, r)
+		case UserServiceUpdateUserRoleProcedure:
+			userServiceUpdateUserRoleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -128,10 +129,10 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 // UnimplementedUserServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedUserServiceHandler struct{}
 
-func (UnimplementedUserServiceHandler) UpdateRole(context.Context, *connect.Request[grpc.UpdateRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.UpdateRole is not implemented"))
+func (UnimplementedUserServiceHandler) ListFamilyUsers(context.Context, *connect.Request[grpc.ListFamilyUsersRequest]) (*connect.Response[grpc.ListFamilyUsersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.ListFamilyUsers is not implemented"))
 }
 
-func (UnimplementedUserServiceHandler) GetBelongToUser(context.Context, *connect.Request[grpc.GetBelongToUserRequest]) (*connect.Response[grpc.GetBelongToUserResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.GetBelongToUser is not implemented"))
+func (UnimplementedUserServiceHandler) UpdateUserRole(context.Context, *connect.Request[grpc.UpdateUserRoleRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.UserService.UpdateUserRole is not implemented"))
 }
