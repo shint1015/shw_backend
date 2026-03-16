@@ -27,9 +27,12 @@ var pointController = controller.NewPointController()
 type ShwServer struct {
 	grpcconnect.UnimplementedHelloServiceHandler
 	grpcconnect.UnimplementedHouseworkServiceHandler
+	grpcconnect.UnimplementedHouseworkMemoServiceHandler
+	grpcconnect.UnimplementedHouseworkPointServiceHandler
+	grpcconnect.UnimplementedHouseworkTemplateServiceHandler
+	grpcconnect.UnimplementedHouseworkScheduleServiceHandler
 	grpcconnect.UnimplementedFamilyServiceHandler
 	grpcconnect.UnimplementedUserServiceHandler
-	grpcconnect.UnimplementedPointServiceHandler
 }
 
 func NewShwServer() *ShwServer {
@@ -41,9 +44,12 @@ func newServeMuxWithReflection() *http.ServeMux {
 	reflector := grpcreflect.NewStaticReflector(
 		"shw.HelloService",
 		"shw.HouseworkService",
+		"shw.HouseworkMemoService",
+		"shw.HouseworkPointService",
+		"shw.HouseworkTemplateService",
+		"shw.HouseworkScheduleService",
 		"shw.FamilyService",
 		"shw.UserService",
-		"shw.PointService",
 	)
 	mux.Handle(grpcreflect.NewHandlerV1(reflector))
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
@@ -72,11 +78,14 @@ func main() {
 	shw := NewShwServer()
 	interceptor := newInterceptors()
 	mux := newServeMuxWithReflection()
-	mux.Handle(grpcconnect.NewFamilyServiceHandler(shw, interceptor))
-	mux.Handle(grpcconnect.NewHouseworkServiceHandler(shw, interceptor))
-	mux.Handle(grpcconnect.NewUserServiceHandler(shw, interceptor))
 	mux.Handle(grpcconnect.NewHelloServiceHandler(shw, interceptor))
-	mux.Handle(grpcconnect.NewPointServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewHouseworkServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewHouseworkMemoServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewHouseworkPointServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewHouseworkTemplateServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewHouseworkScheduleServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewFamilyServiceHandler(shw, interceptor))
+	mux.Handle(grpcconnect.NewUserServiceHandler(shw, interceptor))
 
 	//mux.Handle(NewHouse)
 	log.Printf("gRPC server is running on port %d", port)
