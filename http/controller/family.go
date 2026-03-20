@@ -1,81 +1,68 @@
 package controller
 
 import (
-	"connectrpc.com/connect"
 	"context"
-	"shwgrpc/internal/service"
+	"shwgrpc/internal/family/infra"
+	"shwgrpc/internal/family/port"
+	"shwgrpc/internal/family/usecase"
 	shwgrpc "shwgrpc/pkg/grpc"
+
+	"connectrpc.com/connect"
 )
 
 type FamilyController struct{}
 
-var familyService = service.NewFamilyService()
+var familyUsecase port.FamilyUsecase = usecase.NewFamilyUsecase(
+	infra.NewFamilyRepository(),
+)
 
 func NewFamilyController() *FamilyController {
 	return &FamilyController{}
 }
 
-func (c *FamilyController) GetFamily(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyResponse], error) {
-	family, err := familyService.GetFamily(req.Msg)
+func (c *FamilyController) GetFamily(ctx context.Context, req *connect.Request[shwgrpc.GetFamilyRequest]) (*connect.Response[shwgrpc.GetFamilyResponse], error) {
+	family, err := familyUsecase.GetFamily(ctx, req.Msg.FamilyId)
 	if err != nil {
 		return nil, err
 	}
-	res := connect.NewResponse(&shwgrpc.FamilyResponse{Family: family})
+	res := connect.NewResponse(&shwgrpc.GetFamilyResponse{Family: family})
 	return res, nil
 }
 
-func (c *FamilyController) CreateFamily(ctx context.Context, req *connect.Request[shwgrpc.Family]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.CreateFamily(req.Msg); err != nil {
+func (c *FamilyController) CreateFamily(ctx context.Context, req *connect.Request[shwgrpc.CreateFamilyRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyUsecase.CreateFamily(ctx, mapCreateFamilyInput(req.Msg.Family)); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
 
-func (c *FamilyController) UpdateFamily(ctx context.Context, req *connect.Request[shwgrpc.Family]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.UpdateFamily(req.Msg); err != nil {
+func (c *FamilyController) UpdateFamily(ctx context.Context, req *connect.Request[shwgrpc.UpdateFamilyRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyUsecase.UpdateFamily(mapUpdateFamilyInput(req.Msg.Family)); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
 
-func (c *FamilyController) DeleteFamily(ctx context.Context, req *connect.Request[shwgrpc.Family]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.DeleteFamily(req.Msg); err != nil {
+func (c *FamilyController) DeleteFamily(ctx context.Context, req *connect.Request[shwgrpc.DeleteFamilyRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+	if err := familyUsecase.DeleteFamily(req.Msg); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
-	return res, nil
-}
-
-func (c *FamilyController) GetFamilyHouseworkPoints(ctx context.Context, req *connect.Request[shwgrpc.FamilyHouseworkPointRequest]) (*connect.Response[shwgrpc.FamilyHouseworkPointResponse], error) {
-	familyHouseworkPoints, err := familyService.GetFamilyHouseworkPoints(req.Msg)
-	if err != nil {
-		return nil, err
-	}
-	res := connect.NewResponse(&shwgrpc.FamilyHouseworkPointResponse{HouseworkPoint: familyHouseworkPoints})
 	return res, nil
 }
 
 func (c *FamilyController) AddFamilyMember(ctx context.Context, req *connect.Request[shwgrpc.AddFamilyMemberRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.AddFamilyMember(req.Msg); err != nil {
+	if err := familyUsecase.AddFamilyMember(req.Msg); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
 
-func (c *FamilyController) GetBelongToUser(ctx context.Context, req *connect.Request[shwgrpc.GetBelongToUserRequest]) (*connect.Response[shwgrpc.GetBelongToUserResponse], error) {
-	users, err := familyService.GetBelongToUser(req.Msg)
-	if err != nil {
-		return nil, err
-	}
-	res := connect.NewResponse(&shwgrpc.GetBelongToUserResponse{Users: users})
-	return res, nil
-}
-
 func (c *FamilyController) GetRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRequest]) (*connect.Response[shwgrpc.FamilyRoleResponse], error) {
-	roles, err := familyService.GetRole(req.Msg)
+	roles, err := familyRoleUsecase.GetRole(req.Msg)
 	if err != nil {
 		return nil, err
 	}
@@ -83,23 +70,42 @@ func (c *FamilyController) GetRole(ctx context.Context, req *connect.Request[shw
 	return res, nil
 }
 func (c *FamilyController) CreateRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.CreateRole(req.Msg); err != nil {
+	if err := familyRoleUsecase.CreateRole(req.Msg); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
 func (c *FamilyController) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRole]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.UpdateRole(req.Msg); err != nil {
+	if err := familyRoleUsecase.UpdateRole(req.Msg); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
 }
 func (c *FamilyController) DeleteRole(ctx context.Context, req *connect.Request[shwgrpc.FamilyRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
-	if err := familyService.DeleteRole(req.Msg); err != nil {
+	if err := familyRoleUsecase.DeleteRole(req.Msg); err != nil {
 		return nil, err
 	}
 	res := connect.NewResponse(&shwgrpc.CommonResponse{Message: "success"})
 	return res, nil
+}
+
+func mapCreateFamilyInput(f *shwgrpc.Family) port.CreateFamilyInput {
+	if f == nil {
+		return port.CreateFamilyInput{}
+	}
+	return port.CreateFamilyInput{
+		Name: f.Name,
+	}
+}
+
+func mapUpdateFamilyInput(f *shwgrpc.Family) port.UpdateFamilyInput {
+	if f == nil {
+		return port.UpdateFamilyInput{}
+	}
+	return port.UpdateFamilyInput{
+		ID:   f.Id,
+		Name: f.Name,
+	}
 }
