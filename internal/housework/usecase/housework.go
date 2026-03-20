@@ -39,13 +39,37 @@ func (u *HouseworkUsecase) GetHouseworkDetail(ctx context.Context, id uint64) (d
 	return u.houseworkRepo.GetDetail(ctx, id)
 }
 
-func (u *HouseworkUsecase) CreateHousework(ctx context.Context, housework domain.Housework) error {
-	housework.Status = string(domain.HouseworkStatusPlan)
-	return u.houseworkRepo.Create(ctx, housework)
+func (u *HouseworkUsecase) CreateHousework(ctx context.Context, input port.CreateHouseworkInput) error {
+	housework := domain.Housework{
+		FamilyID: input.FamilyID,
+		Title:    input.Title,
+		Detail:   input.Detail,
+		StatusID: input.StatusID,
+		WorkUser: domain.UserInfo{ID: input.WorkUserID},
+		StartedAt: input.StartedAt,
+		EndedAt:   input.EndedAt,
+	}
+	validated, err := domain.NewHouseworkForCreate(housework)
+	if err != nil {
+		return err
+	}
+	return u.houseworkRepo.Create(ctx, validated)
 }
 
-func (u *HouseworkUsecase) UpdateHousework(ctx context.Context, housework domain.Housework) error {
-	return u.houseworkRepo.Update(ctx, housework)
+func (u *HouseworkUsecase) UpdateHousework(ctx context.Context, input port.UpdateHouseworkInput) error {
+	housework := domain.Housework{
+		ID:       input.ID,
+		Title:    input.Title,
+		Detail:   input.Detail,
+		WorkUser: domain.UserInfo{ID: input.WorkUserID},
+		StartedAt: input.StartedAt,
+		EndedAt:   input.EndedAt,
+	}
+	validated, err := domain.NewHouseworkForUpdate(housework)
+	if err != nil {
+		return err
+	}
+	return u.houseworkRepo.Update(ctx, validated)
 }
 
 func (u *HouseworkUsecase) FinishHousework(ctx context.Context, id uint64) error {
@@ -60,11 +84,21 @@ func (u *HouseworkUsecase) ListHouseworkMemo(ctx context.Context, houseworkID ui
 	return u.houseworkMemoRepo.ListByHouseworkID(ctx, houseworkID)
 }
 
-func (u *HouseworkUsecase) CreateHouseworkMemo(ctx context.Context, memo domain.HouseworkMemo) error {
+
+func (u *HouseworkUsecase) CreateHouseworkMemo(ctx context.Context, input port.CreateHouseworkMemoInput) error {
+	memo := domain.HouseworkMemo{
+		HouseworkID: input.HouseworkID,
+		Message:     input.Message,
+		SendFrom:    domain.UserInfo{ID: input.SendFromID},
+	}
 	return u.houseworkMemoRepo.Create(ctx, memo)
 }
 
-func (u *HouseworkUsecase) UpdateHouseworkMemo(ctx context.Context, memo domain.HouseworkMemo) error {
+func (u *HouseworkUsecase) UpdateHouseworkMemo(ctx context.Context, input port.UpdateHouseworkMemoInput) error {
+	memo := domain.HouseworkMemo{
+		ID:      input.ID,
+		Message: input.Message,
+	}
 	return u.houseworkMemoRepo.Update(ctx, memo)
 }
 
@@ -89,11 +123,21 @@ func (u *HouseworkUsecase) ListHouseworkTemplates(ctx context.Context, familyID 
 	return u.houseworkTemplateRepo.ListByFamilyID(ctx, familyID)
 }
 
-func (u *HouseworkUsecase) CreateHouseworkTemplate(ctx context.Context, template domain.HouseworkTemplate) error {
+func (u *HouseworkUsecase) CreateHouseworkTemplate(ctx context.Context, input port.CreateHouseworkTemplateInput) error {
+	template := domain.HouseworkTemplate{
+		FamilyID: input.FamilyID,
+		Title:    input.Title,
+		Detail:   input.Detail,
+	}
 	return u.houseworkTemplateRepo.Create(ctx, template)
 }
 
-func (u *HouseworkUsecase) UpdateHouseworkTemplate(ctx context.Context, template domain.HouseworkTemplate) error {
+func (u *HouseworkUsecase) UpdateHouseworkTemplate(ctx context.Context, input port.UpdateHouseworkTemplateInput) error {
+	template := domain.HouseworkTemplate{
+		ID:     input.ID,
+		Title:  input.Title,
+		Detail: input.Detail,
+	}
 	return u.houseworkTemplateRepo.Update(ctx, template)
 }
 
