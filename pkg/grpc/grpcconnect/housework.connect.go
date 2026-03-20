@@ -77,6 +77,15 @@ const (
 	// HouseworkPointServiceListHouseworkPointHistoriesProcedure is the fully-qualified name of the
 	// HouseworkPointService's ListHouseworkPointHistories RPC.
 	HouseworkPointServiceListHouseworkPointHistoriesProcedure = "/shw.HouseworkPointService/ListHouseworkPointHistories"
+	// HouseworkPointServiceCreateHouseworkPointProcedure is the fully-qualified name of the
+	// HouseworkPointService's CreateHouseworkPoint RPC.
+	HouseworkPointServiceCreateHouseworkPointProcedure = "/shw.HouseworkPointService/CreateHouseworkPoint"
+	// HouseworkPointServiceUpdateHouseworkPointProcedure is the fully-qualified name of the
+	// HouseworkPointService's UpdateHouseworkPoint RPC.
+	HouseworkPointServiceUpdateHouseworkPointProcedure = "/shw.HouseworkPointService/UpdateHouseworkPoint"
+	// HouseworkPointServiceDeleteHouseworkPointProcedure is the fully-qualified name of the
+	// HouseworkPointService's DeleteHouseworkPoint RPC.
+	HouseworkPointServiceDeleteHouseworkPointProcedure = "/shw.HouseworkPointService/DeleteHouseworkPoint"
 	// HouseworkTemplateServiceGetHouseworkTemplateProcedure is the fully-qualified name of the
 	// HouseworkTemplateService's GetHouseworkTemplate RPC.
 	HouseworkTemplateServiceGetHouseworkTemplateProcedure = "/shw.HouseworkTemplateService/GetHouseworkTemplate"
@@ -467,6 +476,9 @@ func (UnimplementedHouseworkMemoServiceHandler) DeleteHouseworkMemo(context.Cont
 type HouseworkPointServiceClient interface {
 	GetHouseworkPoint(context.Context, *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error)
 	ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error)
+	CreateHouseworkPoint(context.Context, *connect.Request[grpc.CreateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkPoint(context.Context, *connect.Request[grpc.UpdateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkPoint(context.Context, *connect.Request[grpc.DeleteHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkPointServiceClient constructs a client for the shw.HouseworkPointService service. By
@@ -492,6 +504,24 @@ func NewHouseworkPointServiceClient(httpClient connect.HTTPClient, baseURL strin
 			connect.WithSchema(houseworkPointServiceMethods.ByName("ListHouseworkPointHistories")),
 			connect.WithClientOptions(opts...),
 		),
+		createHouseworkPoint: connect.NewClient[grpc.CreateHouseworkPointRequest, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkPointServiceCreateHouseworkPointProcedure,
+			connect.WithSchema(houseworkPointServiceMethods.ByName("CreateHouseworkPoint")),
+			connect.WithClientOptions(opts...),
+		),
+		updateHouseworkPoint: connect.NewClient[grpc.UpdateHouseworkPointRequest, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkPointServiceUpdateHouseworkPointProcedure,
+			connect.WithSchema(houseworkPointServiceMethods.ByName("UpdateHouseworkPoint")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteHouseworkPoint: connect.NewClient[grpc.DeleteHouseworkPointRequest, grpc.CommonResponse](
+			httpClient,
+			baseURL+HouseworkPointServiceDeleteHouseworkPointProcedure,
+			connect.WithSchema(houseworkPointServiceMethods.ByName("DeleteHouseworkPoint")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -499,6 +529,9 @@ func NewHouseworkPointServiceClient(httpClient connect.HTTPClient, baseURL strin
 type houseworkPointServiceClient struct {
 	getHouseworkPoint           *connect.Client[grpc.GetHouseworkPointRequest, grpc.GetHouseworkPointResponse]
 	listHouseworkPointHistories *connect.Client[grpc.ListHouseworkPointHistoriesRequest, grpc.ListHouseworkPointHistoriesResponse]
+	createHouseworkPoint        *connect.Client[grpc.CreateHouseworkPointRequest, grpc.CommonResponse]
+	updateHouseworkPoint        *connect.Client[grpc.UpdateHouseworkPointRequest, grpc.CommonResponse]
+	deleteHouseworkPoint        *connect.Client[grpc.DeleteHouseworkPointRequest, grpc.CommonResponse]
 }
 
 // GetHouseworkPoint calls shw.HouseworkPointService.GetHouseworkPoint.
@@ -511,10 +544,28 @@ func (c *houseworkPointServiceClient) ListHouseworkPointHistories(ctx context.Co
 	return c.listHouseworkPointHistories.CallUnary(ctx, req)
 }
 
+// CreateHouseworkPoint calls shw.HouseworkPointService.CreateHouseworkPoint.
+func (c *houseworkPointServiceClient) CreateHouseworkPoint(ctx context.Context, req *connect.Request[grpc.CreateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.createHouseworkPoint.CallUnary(ctx, req)
+}
+
+// UpdateHouseworkPoint calls shw.HouseworkPointService.UpdateHouseworkPoint.
+func (c *houseworkPointServiceClient) UpdateHouseworkPoint(ctx context.Context, req *connect.Request[grpc.UpdateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.updateHouseworkPoint.CallUnary(ctx, req)
+}
+
+// DeleteHouseworkPoint calls shw.HouseworkPointService.DeleteHouseworkPoint.
+func (c *houseworkPointServiceClient) DeleteHouseworkPoint(ctx context.Context, req *connect.Request[grpc.DeleteHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return c.deleteHouseworkPoint.CallUnary(ctx, req)
+}
+
 // HouseworkPointServiceHandler is an implementation of the shw.HouseworkPointService service.
 type HouseworkPointServiceHandler interface {
 	GetHouseworkPoint(context.Context, *connect.Request[grpc.GetHouseworkPointRequest]) (*connect.Response[grpc.GetHouseworkPointResponse], error)
 	ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error)
+	CreateHouseworkPoint(context.Context, *connect.Request[grpc.CreateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	UpdateHouseworkPoint(context.Context, *connect.Request[grpc.UpdateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
+	DeleteHouseworkPoint(context.Context, *connect.Request[grpc.DeleteHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error)
 }
 
 // NewHouseworkPointServiceHandler builds an HTTP handler from the service implementation. It
@@ -536,12 +587,36 @@ func NewHouseworkPointServiceHandler(svc HouseworkPointServiceHandler, opts ...c
 		connect.WithSchema(houseworkPointServiceMethods.ByName("ListHouseworkPointHistories")),
 		connect.WithHandlerOptions(opts...),
 	)
+	houseworkPointServiceCreateHouseworkPointHandler := connect.NewUnaryHandler(
+		HouseworkPointServiceCreateHouseworkPointProcedure,
+		svc.CreateHouseworkPoint,
+		connect.WithSchema(houseworkPointServiceMethods.ByName("CreateHouseworkPoint")),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkPointServiceUpdateHouseworkPointHandler := connect.NewUnaryHandler(
+		HouseworkPointServiceUpdateHouseworkPointProcedure,
+		svc.UpdateHouseworkPoint,
+		connect.WithSchema(houseworkPointServiceMethods.ByName("UpdateHouseworkPoint")),
+		connect.WithHandlerOptions(opts...),
+	)
+	houseworkPointServiceDeleteHouseworkPointHandler := connect.NewUnaryHandler(
+		HouseworkPointServiceDeleteHouseworkPointProcedure,
+		svc.DeleteHouseworkPoint,
+		connect.WithSchema(houseworkPointServiceMethods.ByName("DeleteHouseworkPoint")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/shw.HouseworkPointService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HouseworkPointServiceGetHouseworkPointProcedure:
 			houseworkPointServiceGetHouseworkPointHandler.ServeHTTP(w, r)
 		case HouseworkPointServiceListHouseworkPointHistoriesProcedure:
 			houseworkPointServiceListHouseworkPointHistoriesHandler.ServeHTTP(w, r)
+		case HouseworkPointServiceCreateHouseworkPointProcedure:
+			houseworkPointServiceCreateHouseworkPointHandler.ServeHTTP(w, r)
+		case HouseworkPointServiceUpdateHouseworkPointProcedure:
+			houseworkPointServiceUpdateHouseworkPointHandler.ServeHTTP(w, r)
+		case HouseworkPointServiceDeleteHouseworkPointProcedure:
+			houseworkPointServiceDeleteHouseworkPointHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -557,6 +632,18 @@ func (UnimplementedHouseworkPointServiceHandler) GetHouseworkPoint(context.Conte
 
 func (UnimplementedHouseworkPointServiceHandler) ListHouseworkPointHistories(context.Context, *connect.Request[grpc.ListHouseworkPointHistoriesRequest]) (*connect.Response[grpc.ListHouseworkPointHistoriesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.ListHouseworkPointHistories is not implemented"))
+}
+
+func (UnimplementedHouseworkPointServiceHandler) CreateHouseworkPoint(context.Context, *connect.Request[grpc.CreateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.CreateHouseworkPoint is not implemented"))
+}
+
+func (UnimplementedHouseworkPointServiceHandler) UpdateHouseworkPoint(context.Context, *connect.Request[grpc.UpdateHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.UpdateHouseworkPoint is not implemented"))
+}
+
+func (UnimplementedHouseworkPointServiceHandler) DeleteHouseworkPoint(context.Context, *connect.Request[grpc.DeleteHouseworkPointRequest]) (*connect.Response[grpc.CommonResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("shw.HouseworkPointService.DeleteHouseworkPoint is not implemented"))
 }
 
 // HouseworkTemplateServiceClient is a client for the shw.HouseworkTemplateService service.

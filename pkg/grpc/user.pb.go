@@ -91,7 +91,7 @@ func (x *FamilyUser) GetFamilyId() uint64 {
 
 type ListFamilyUsersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FamilyId      uint64                 `protobuf:"varint,1,opt,name=family_id,json=familyId,proto3" json:"family_id,omitempty"` // was GetBelongToUserRequest.family_id
+	FamilyId      uint64                 `protobuf:"varint,1,opt,name=family_id,json=familyId,proto3" json:"family_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

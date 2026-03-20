@@ -7,11 +7,12 @@
 package grpc
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -25,21 +26,24 @@ type ScheduleRepeatType int32
 
 const (
 	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_UNSPECIFIED ScheduleRepeatType = 0
-	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_WEEKLY      ScheduleRepeatType = 1
-	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_MONTHLY     ScheduleRepeatType = 2
+	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_DAILY       ScheduleRepeatType = 1
+	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_WEEKLY      ScheduleRepeatType = 2
+	ScheduleRepeatType_SCHEDULE_REPEAT_TYPE_MONTHLY     ScheduleRepeatType = 3
 )
 
 // Enum value maps for ScheduleRepeatType.
 var (
 	ScheduleRepeatType_name = map[int32]string{
 		0: "SCHEDULE_REPEAT_TYPE_UNSPECIFIED",
-		1: "SCHEDULE_REPEAT_TYPE_WEEKLY",
-		2: "SCHEDULE_REPEAT_TYPE_MONTHLY",
+		1: "SCHEDULE_REPEAT_TYPE_DAILY",
+		2: "SCHEDULE_REPEAT_TYPE_WEEKLY",
+		3: "SCHEDULE_REPEAT_TYPE_MONTHLY",
 	}
 	ScheduleRepeatType_value = map[string]int32{
 		"SCHEDULE_REPEAT_TYPE_UNSPECIFIED": 0,
-		"SCHEDULE_REPEAT_TYPE_WEEKLY":      1,
-		"SCHEDULE_REPEAT_TYPE_MONTHLY":     2,
+		"SCHEDULE_REPEAT_TYPE_DAILY":       1,
+		"SCHEDULE_REPEAT_TYPE_WEEKLY":      2,
+		"SCHEDULE_REPEAT_TYPE_MONTHLY":     3,
 	}
 )
 
@@ -826,6 +830,138 @@ func (x *ListHouseworkPointHistoriesResponse) GetHistories() []*HouseworkPointHi
 	return nil
 }
 
+type CreateHouseworkPointRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Point         *HouseworkPoint        `protobuf:"bytes,1,opt,name=point,proto3" json:"point,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateHouseworkPointRequest) Reset() {
+	*x = CreateHouseworkPointRequest{}
+	mi := &file_housework_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateHouseworkPointRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateHouseworkPointRequest) ProtoMessage() {}
+
+func (x *CreateHouseworkPointRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_housework_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateHouseworkPointRequest.ProtoReflect.Descriptor instead.
+func (*CreateHouseworkPointRequest) Descriptor() ([]byte, []int) {
+	return file_housework_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *CreateHouseworkPointRequest) GetPoint() *HouseworkPoint {
+	if x != nil {
+		return x.Point
+	}
+	return nil
+}
+
+type UpdateHouseworkPointRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Point         *HouseworkPoint        `protobuf:"bytes,1,opt,name=point,proto3" json:"point,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateHouseworkPointRequest) Reset() {
+	*x = UpdateHouseworkPointRequest{}
+	mi := &file_housework_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateHouseworkPointRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateHouseworkPointRequest) ProtoMessage() {}
+
+func (x *UpdateHouseworkPointRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_housework_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateHouseworkPointRequest.ProtoReflect.Descriptor instead.
+func (*UpdateHouseworkPointRequest) Descriptor() ([]byte, []int) {
+	return file_housework_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *UpdateHouseworkPointRequest) GetPoint() *HouseworkPoint {
+	if x != nil {
+		return x.Point
+	}
+	return nil
+}
+
+type DeleteHouseworkPointRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHouseworkPointRequest) Reset() {
+	*x = DeleteHouseworkPointRequest{}
+	mi := &file_housework_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHouseworkPointRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHouseworkPointRequest) ProtoMessage() {}
+
+func (x *DeleteHouseworkPointRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_housework_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHouseworkPointRequest.ProtoReflect.Descriptor instead.
+func (*DeleteHouseworkPointRequest) Descriptor() ([]byte, []int) {
+	return file_housework_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *DeleteHouseworkPointRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
 type GetHouseworkTemplateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -835,7 +971,7 @@ type GetHouseworkTemplateRequest struct {
 
 func (x *GetHouseworkTemplateRequest) Reset() {
 	*x = GetHouseworkTemplateRequest{}
-	mi := &file_housework_proto_msgTypes[17]
+	mi := &file_housework_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -847,7 +983,7 @@ func (x *GetHouseworkTemplateRequest) String() string {
 func (*GetHouseworkTemplateRequest) ProtoMessage() {}
 
 func (x *GetHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[17]
+	mi := &file_housework_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -860,7 +996,7 @@ func (x *GetHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHouseworkTemplateRequest.ProtoReflect.Descriptor instead.
 func (*GetHouseworkTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{17}
+	return file_housework_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetHouseworkTemplateRequest) GetId() uint64 {
@@ -879,7 +1015,7 @@ type GetHouseworkTemplateResponse struct {
 
 func (x *GetHouseworkTemplateResponse) Reset() {
 	*x = GetHouseworkTemplateResponse{}
-	mi := &file_housework_proto_msgTypes[18]
+	mi := &file_housework_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -891,7 +1027,7 @@ func (x *GetHouseworkTemplateResponse) String() string {
 func (*GetHouseworkTemplateResponse) ProtoMessage() {}
 
 func (x *GetHouseworkTemplateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[18]
+	mi := &file_housework_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -904,7 +1040,7 @@ func (x *GetHouseworkTemplateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHouseworkTemplateResponse.ProtoReflect.Descriptor instead.
 func (*GetHouseworkTemplateResponse) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{18}
+	return file_housework_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetHouseworkTemplateResponse) GetTemplate() *HouseworkTemplate {
@@ -923,7 +1059,7 @@ type ListHouseworkTemplatesRequest struct {
 
 func (x *ListHouseworkTemplatesRequest) Reset() {
 	*x = ListHouseworkTemplatesRequest{}
-	mi := &file_housework_proto_msgTypes[19]
+	mi := &file_housework_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -935,7 +1071,7 @@ func (x *ListHouseworkTemplatesRequest) String() string {
 func (*ListHouseworkTemplatesRequest) ProtoMessage() {}
 
 func (x *ListHouseworkTemplatesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[19]
+	mi := &file_housework_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -948,7 +1084,7 @@ func (x *ListHouseworkTemplatesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHouseworkTemplatesRequest.ProtoReflect.Descriptor instead.
 func (*ListHouseworkTemplatesRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{19}
+	return file_housework_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListHouseworkTemplatesRequest) GetFamilyId() uint64 {
@@ -967,7 +1103,7 @@ type ListHouseworkTemplatesResponse struct {
 
 func (x *ListHouseworkTemplatesResponse) Reset() {
 	*x = ListHouseworkTemplatesResponse{}
-	mi := &file_housework_proto_msgTypes[20]
+	mi := &file_housework_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -979,7 +1115,7 @@ func (x *ListHouseworkTemplatesResponse) String() string {
 func (*ListHouseworkTemplatesResponse) ProtoMessage() {}
 
 func (x *ListHouseworkTemplatesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[20]
+	mi := &file_housework_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -992,7 +1128,7 @@ func (x *ListHouseworkTemplatesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHouseworkTemplatesResponse.ProtoReflect.Descriptor instead.
 func (*ListHouseworkTemplatesResponse) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{20}
+	return file_housework_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListHouseworkTemplatesResponse) GetTemplates() []*HouseworkTemplate {
@@ -1011,7 +1147,7 @@ type CreateHouseworkTemplateRequest struct {
 
 func (x *CreateHouseworkTemplateRequest) Reset() {
 	*x = CreateHouseworkTemplateRequest{}
-	mi := &file_housework_proto_msgTypes[21]
+	mi := &file_housework_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1023,7 +1159,7 @@ func (x *CreateHouseworkTemplateRequest) String() string {
 func (*CreateHouseworkTemplateRequest) ProtoMessage() {}
 
 func (x *CreateHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[21]
+	mi := &file_housework_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1036,7 +1172,7 @@ func (x *CreateHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHouseworkTemplateRequest.ProtoReflect.Descriptor instead.
 func (*CreateHouseworkTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{21}
+	return file_housework_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *CreateHouseworkTemplateRequest) GetTemplate() *HouseworkTemplate {
@@ -1055,7 +1191,7 @@ type UpdateHouseworkTemplateRequest struct {
 
 func (x *UpdateHouseworkTemplateRequest) Reset() {
 	*x = UpdateHouseworkTemplateRequest{}
-	mi := &file_housework_proto_msgTypes[22]
+	mi := &file_housework_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1067,7 +1203,7 @@ func (x *UpdateHouseworkTemplateRequest) String() string {
 func (*UpdateHouseworkTemplateRequest) ProtoMessage() {}
 
 func (x *UpdateHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[22]
+	mi := &file_housework_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1080,7 +1216,7 @@ func (x *UpdateHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHouseworkTemplateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHouseworkTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{22}
+	return file_housework_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *UpdateHouseworkTemplateRequest) GetTemplate() *HouseworkTemplate {
@@ -1099,7 +1235,7 @@ type DeleteHouseworkTemplateRequest struct {
 
 func (x *DeleteHouseworkTemplateRequest) Reset() {
 	*x = DeleteHouseworkTemplateRequest{}
-	mi := &file_housework_proto_msgTypes[23]
+	mi := &file_housework_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1111,7 +1247,7 @@ func (x *DeleteHouseworkTemplateRequest) String() string {
 func (*DeleteHouseworkTemplateRequest) ProtoMessage() {}
 
 func (x *DeleteHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[23]
+	mi := &file_housework_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1124,7 +1260,7 @@ func (x *DeleteHouseworkTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHouseworkTemplateRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHouseworkTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{23}
+	return file_housework_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *DeleteHouseworkTemplateRequest) GetId() uint64 {
@@ -1143,7 +1279,7 @@ type GetHouseworkScheduleRequest struct {
 
 func (x *GetHouseworkScheduleRequest) Reset() {
 	*x = GetHouseworkScheduleRequest{}
-	mi := &file_housework_proto_msgTypes[24]
+	mi := &file_housework_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1155,7 +1291,7 @@ func (x *GetHouseworkScheduleRequest) String() string {
 func (*GetHouseworkScheduleRequest) ProtoMessage() {}
 
 func (x *GetHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[24]
+	mi := &file_housework_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1168,7 +1304,7 @@ func (x *GetHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHouseworkScheduleRequest.ProtoReflect.Descriptor instead.
 func (*GetHouseworkScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{24}
+	return file_housework_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *GetHouseworkScheduleRequest) GetId() uint64 {
@@ -1187,7 +1323,7 @@ type GetHouseworkScheduleResponse struct {
 
 func (x *GetHouseworkScheduleResponse) Reset() {
 	*x = GetHouseworkScheduleResponse{}
-	mi := &file_housework_proto_msgTypes[25]
+	mi := &file_housework_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1199,7 +1335,7 @@ func (x *GetHouseworkScheduleResponse) String() string {
 func (*GetHouseworkScheduleResponse) ProtoMessage() {}
 
 func (x *GetHouseworkScheduleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[25]
+	mi := &file_housework_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1212,7 +1348,7 @@ func (x *GetHouseworkScheduleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHouseworkScheduleResponse.ProtoReflect.Descriptor instead.
 func (*GetHouseworkScheduleResponse) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{25}
+	return file_housework_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetHouseworkScheduleResponse) GetSchedule() *HouseworkSchedule {
@@ -1231,7 +1367,7 @@ type ListHouseworkSchedulesRequest struct {
 
 func (x *ListHouseworkSchedulesRequest) Reset() {
 	*x = ListHouseworkSchedulesRequest{}
-	mi := &file_housework_proto_msgTypes[26]
+	mi := &file_housework_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1243,7 +1379,7 @@ func (x *ListHouseworkSchedulesRequest) String() string {
 func (*ListHouseworkSchedulesRequest) ProtoMessage() {}
 
 func (x *ListHouseworkSchedulesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[26]
+	mi := &file_housework_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1256,7 +1392,7 @@ func (x *ListHouseworkSchedulesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHouseworkSchedulesRequest.ProtoReflect.Descriptor instead.
 func (*ListHouseworkSchedulesRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{26}
+	return file_housework_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ListHouseworkSchedulesRequest) GetFamilyId() uint64 {
@@ -1275,7 +1411,7 @@ type ListHouseworkSchedulesResponse struct {
 
 func (x *ListHouseworkSchedulesResponse) Reset() {
 	*x = ListHouseworkSchedulesResponse{}
-	mi := &file_housework_proto_msgTypes[27]
+	mi := &file_housework_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1287,7 +1423,7 @@ func (x *ListHouseworkSchedulesResponse) String() string {
 func (*ListHouseworkSchedulesResponse) ProtoMessage() {}
 
 func (x *ListHouseworkSchedulesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[27]
+	mi := &file_housework_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1300,7 +1436,7 @@ func (x *ListHouseworkSchedulesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHouseworkSchedulesResponse.ProtoReflect.Descriptor instead.
 func (*ListHouseworkSchedulesResponse) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{27}
+	return file_housework_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ListHouseworkSchedulesResponse) GetSchedules() []*HouseworkSchedule {
@@ -1319,7 +1455,7 @@ type CreateHouseworkScheduleRequest struct {
 
 func (x *CreateHouseworkScheduleRequest) Reset() {
 	*x = CreateHouseworkScheduleRequest{}
-	mi := &file_housework_proto_msgTypes[28]
+	mi := &file_housework_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1331,7 +1467,7 @@ func (x *CreateHouseworkScheduleRequest) String() string {
 func (*CreateHouseworkScheduleRequest) ProtoMessage() {}
 
 func (x *CreateHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[28]
+	mi := &file_housework_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1344,7 +1480,7 @@ func (x *CreateHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHouseworkScheduleRequest.ProtoReflect.Descriptor instead.
 func (*CreateHouseworkScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{28}
+	return file_housework_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *CreateHouseworkScheduleRequest) GetSchedule() *HouseworkSchedule {
@@ -1363,7 +1499,7 @@ type UpdateHouseworkScheduleRequest struct {
 
 func (x *UpdateHouseworkScheduleRequest) Reset() {
 	*x = UpdateHouseworkScheduleRequest{}
-	mi := &file_housework_proto_msgTypes[29]
+	mi := &file_housework_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1375,7 +1511,7 @@ func (x *UpdateHouseworkScheduleRequest) String() string {
 func (*UpdateHouseworkScheduleRequest) ProtoMessage() {}
 
 func (x *UpdateHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[29]
+	mi := &file_housework_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1388,7 +1524,7 @@ func (x *UpdateHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHouseworkScheduleRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHouseworkScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{29}
+	return file_housework_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *UpdateHouseworkScheduleRequest) GetSchedule() *HouseworkSchedule {
@@ -1407,7 +1543,7 @@ type DeleteHouseworkScheduleRequest struct {
 
 func (x *DeleteHouseworkScheduleRequest) Reset() {
 	*x = DeleteHouseworkScheduleRequest{}
-	mi := &file_housework_proto_msgTypes[30]
+	mi := &file_housework_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1419,7 +1555,7 @@ func (x *DeleteHouseworkScheduleRequest) String() string {
 func (*DeleteHouseworkScheduleRequest) ProtoMessage() {}
 
 func (x *DeleteHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[30]
+	mi := &file_housework_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1432,7 +1568,7 @@ func (x *DeleteHouseworkScheduleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHouseworkScheduleRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHouseworkScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{30}
+	return file_housework_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *DeleteHouseworkScheduleRequest) GetId() uint64 {
@@ -1458,7 +1594,7 @@ type Housework struct {
 
 func (x *Housework) Reset() {
 	*x = Housework{}
-	mi := &file_housework_proto_msgTypes[31]
+	mi := &file_housework_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1470,7 +1606,7 @@ func (x *Housework) String() string {
 func (*Housework) ProtoMessage() {}
 
 func (x *Housework) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[31]
+	mi := &file_housework_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1483,7 +1619,7 @@ func (x *Housework) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Housework.ProtoReflect.Descriptor instead.
 func (*Housework) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{31}
+	return file_housework_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *Housework) GetId() uint64 {
@@ -1558,7 +1694,7 @@ type HouseworkMemo struct {
 
 func (x *HouseworkMemo) Reset() {
 	*x = HouseworkMemo{}
-	mi := &file_housework_proto_msgTypes[32]
+	mi := &file_housework_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1570,7 +1706,7 @@ func (x *HouseworkMemo) String() string {
 func (*HouseworkMemo) ProtoMessage() {}
 
 func (x *HouseworkMemo) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[32]
+	mi := &file_housework_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1583,7 +1719,7 @@ func (x *HouseworkMemo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HouseworkMemo.ProtoReflect.Descriptor instead.
 func (*HouseworkMemo) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{32}
+	return file_housework_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *HouseworkMemo) GetId() uint64 {
@@ -1655,7 +1791,7 @@ type HouseworkPoint struct {
 
 func (x *HouseworkPoint) Reset() {
 	*x = HouseworkPoint{}
-	mi := &file_housework_proto_msgTypes[33]
+	mi := &file_housework_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1667,7 +1803,7 @@ func (x *HouseworkPoint) String() string {
 func (*HouseworkPoint) ProtoMessage() {}
 
 func (x *HouseworkPoint) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[33]
+	mi := &file_housework_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1680,7 +1816,7 @@ func (x *HouseworkPoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HouseworkPoint.ProtoReflect.Descriptor instead.
 func (*HouseworkPoint) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{33}
+	return file_housework_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *HouseworkPoint) GetId() uint64 {
@@ -1732,7 +1868,7 @@ type HouseworkPointHistory struct {
 
 func (x *HouseworkPointHistory) Reset() {
 	*x = HouseworkPointHistory{}
-	mi := &file_housework_proto_msgTypes[34]
+	mi := &file_housework_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1744,7 +1880,7 @@ func (x *HouseworkPointHistory) String() string {
 func (*HouseworkPointHistory) ProtoMessage() {}
 
 func (x *HouseworkPointHistory) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[34]
+	mi := &file_housework_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1757,7 +1893,7 @@ func (x *HouseworkPointHistory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HouseworkPointHistory.ProtoReflect.Descriptor instead.
 func (*HouseworkPointHistory) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{34}
+	return file_housework_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *HouseworkPointHistory) GetId() uint64 {
@@ -1816,7 +1952,7 @@ type HouseworkTemplate struct {
 
 func (x *HouseworkTemplate) Reset() {
 	*x = HouseworkTemplate{}
-	mi := &file_housework_proto_msgTypes[35]
+	mi := &file_housework_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1828,7 +1964,7 @@ func (x *HouseworkTemplate) String() string {
 func (*HouseworkTemplate) ProtoMessage() {}
 
 func (x *HouseworkTemplate) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[35]
+	mi := &file_housework_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1841,7 +1977,7 @@ func (x *HouseworkTemplate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HouseworkTemplate.ProtoReflect.Descriptor instead.
 func (*HouseworkTemplate) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{35}
+	return file_housework_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *HouseworkTemplate) GetId() uint64 {
@@ -1904,7 +2040,7 @@ type HouseworkSchedule struct {
 
 func (x *HouseworkSchedule) Reset() {
 	*x = HouseworkSchedule{}
-	mi := &file_housework_proto_msgTypes[36]
+	mi := &file_housework_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1916,7 +2052,7 @@ func (x *HouseworkSchedule) String() string {
 func (*HouseworkSchedule) ProtoMessage() {}
 
 func (x *HouseworkSchedule) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[36]
+	mi := &file_housework_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1929,7 +2065,7 @@ func (x *HouseworkSchedule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HouseworkSchedule.ProtoReflect.Descriptor instead.
 func (*HouseworkSchedule) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{36}
+	return file_housework_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *HouseworkSchedule) GetId() uint64 {
@@ -2014,7 +2150,7 @@ type ScheduleRepeat struct {
 
 func (x *ScheduleRepeat) Reset() {
 	*x = ScheduleRepeat{}
-	mi := &file_housework_proto_msgTypes[37]
+	mi := &file_housework_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2026,7 +2162,7 @@ func (x *ScheduleRepeat) String() string {
 func (*ScheduleRepeat) ProtoMessage() {}
 
 func (x *ScheduleRepeat) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[37]
+	mi := &file_housework_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2039,7 +2175,7 @@ func (x *ScheduleRepeat) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScheduleRepeat.ProtoReflect.Descriptor instead.
 func (*ScheduleRepeat) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{37}
+	return file_housework_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ScheduleRepeat) GetType() ScheduleRepeatType {
@@ -2079,7 +2215,7 @@ type ScheduleReminder struct {
 
 func (x *ScheduleReminder) Reset() {
 	*x = ScheduleReminder{}
-	mi := &file_housework_proto_msgTypes[38]
+	mi := &file_housework_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2091,7 +2227,7 @@ func (x *ScheduleReminder) String() string {
 func (*ScheduleReminder) ProtoMessage() {}
 
 func (x *ScheduleReminder) ProtoReflect() protoreflect.Message {
-	mi := &file_housework_proto_msgTypes[38]
+	mi := &file_housework_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2104,7 +2240,7 @@ func (x *ScheduleReminder) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScheduleReminder.ProtoReflect.Descriptor instead.
 func (*ScheduleReminder) Descriptor() ([]byte, []int) {
-	return file_housework_proto_rawDescGZIP(), []int{38}
+	return file_housework_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ScheduleReminder) GetMinutesBefore() int32 {
@@ -2155,7 +2291,13 @@ const file_housework_proto_rawDesc = "" +
 	"\"ListHouseworkPointHistoriesRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x04R\x06userId\"_\n" +
 	"#ListHouseworkPointHistoriesResponse\x128\n" +
-	"\thistories\x18\x01 \x03(\v2\x1a.shw.HouseworkPointHistoryR\thistories\"-\n" +
+	"\thistories\x18\x01 \x03(\v2\x1a.shw.HouseworkPointHistoryR\thistories\"H\n" +
+	"\x1bCreateHouseworkPointRequest\x12)\n" +
+	"\x05point\x18\x01 \x01(\v2\x13.shw.HouseworkPointR\x05point\"H\n" +
+	"\x1bUpdateHouseworkPointRequest\x12)\n" +
+	"\x05point\x18\x01 \x01(\v2\x13.shw.HouseworkPointR\x05point\"-\n" +
+	"\x1bDeleteHouseworkPointRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\"-\n" +
 	"\x1bGetHouseworkTemplateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\"R\n" +
 	"\x1cGetHouseworkTemplateResponse\x122\n" +
@@ -2252,11 +2394,12 @@ const file_housework_proto_rawDesc = "" +
 	"\rweek_of_month\x18\x03 \x03(\x05R\vweekOfMonth\x12(\n" +
 	"\x10weekday_in_month\x18\x04 \x03(\x05R\x0eweekdayInMonth\"9\n" +
 	"\x10ScheduleReminder\x12%\n" +
-	"\x0eminutes_before\x18\x01 \x01(\x05R\rminutesBefore*}\n" +
+	"\x0eminutes_before\x18\x01 \x01(\x05R\rminutesBefore*\x9d\x01\n" +
 	"\x12ScheduleRepeatType\x12$\n" +
-	" SCHEDULE_REPEAT_TYPE_UNSPECIFIED\x10\x00\x12\x1f\n" +
-	"\x1bSCHEDULE_REPEAT_TYPE_WEEKLY\x10\x01\x12 \n" +
-	"\x1cSCHEDULE_REPEAT_TYPE_MONTHLY\x10\x022\xc2\x03\n" +
+	" SCHEDULE_REPEAT_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aSCHEDULE_REPEAT_TYPE_DAILY\x10\x01\x12\x1f\n" +
+	"\x1bSCHEDULE_REPEAT_TYPE_WEEKLY\x10\x02\x12 \n" +
+	"\x1cSCHEDULE_REPEAT_TYPE_MONTHLY\x10\x032\xc2\x03\n" +
 	"\x10HouseworkService\x12K\n" +
 	"\x0eListHouseworks\x12\x1a.shw.ListHouseworksRequest\x1a\x1b.shw.ListHouseworksResponse\"\x00\x12E\n" +
 	"\fGetHousework\x12\x18.shw.GetHouseworkRequest\x1a\x19.shw.GetHouseworkResponse\"\x00\x12E\n" +
@@ -2268,10 +2411,13 @@ const file_housework_proto_rawDesc = "" +
 	"\x12ListHouseworkMemos\x12\x1e.shw.ListHouseworkMemosRequest\x1a\x1f.shw.ListHouseworkMemosResponse\"\x00\x12M\n" +
 	"\x13CreateHouseworkMemo\x12\x1f.shw.CreateHouseworkMemoRequest\x1a\x13.shw.CommonResponse\"\x00\x12M\n" +
 	"\x13UpdateHouseworkMemo\x12\x1f.shw.UpdateHouseworkMemoRequest\x1a\x13.shw.CommonResponse\"\x00\x12M\n" +
-	"\x13DeleteHouseworkMemo\x12\x1f.shw.DeleteHouseworkMemoRequest\x1a\x13.shw.CommonResponse\"\x002\xe1\x01\n" +
+	"\x13DeleteHouseworkMemo\x12\x1f.shw.DeleteHouseworkMemoRequest\x1a\x13.shw.CommonResponse\"\x002\xd4\x03\n" +
 	"\x15HouseworkPointService\x12T\n" +
 	"\x11GetHouseworkPoint\x12\x1d.shw.GetHouseworkPointRequest\x1a\x1e.shw.GetHouseworkPointResponse\"\x00\x12r\n" +
-	"\x1bListHouseworkPointHistories\x12'.shw.ListHouseworkPointHistoriesRequest\x1a(.shw.ListHouseworkPointHistoriesResponse\"\x002\xe3\x03\n" +
+	"\x1bListHouseworkPointHistories\x12'.shw.ListHouseworkPointHistoriesRequest\x1a(.shw.ListHouseworkPointHistoriesResponse\"\x00\x12O\n" +
+	"\x14CreateHouseworkPoint\x12 .shw.CreateHouseworkPointRequest\x1a\x13.shw.CommonResponse\"\x00\x12O\n" +
+	"\x14UpdateHouseworkPoint\x12 .shw.UpdateHouseworkPointRequest\x1a\x13.shw.CommonResponse\"\x00\x12O\n" +
+	"\x14DeleteHouseworkPoint\x12 .shw.DeleteHouseworkPointRequest\x1a\x13.shw.CommonResponse\"\x002\xe3\x03\n" +
 	"\x18HouseworkTemplateService\x12]\n" +
 	"\x14GetHouseworkTemplate\x12 .shw.GetHouseworkTemplateRequest\x1a!.shw.GetHouseworkTemplateResponse\"\x00\x12c\n" +
 	"\x16ListHouseworkTemplates\x12\".shw.ListHouseworkTemplatesRequest\x1a#.shw.ListHouseworkTemplatesResponse\"\x00\x12U\n" +
@@ -2298,7 +2444,7 @@ func file_housework_proto_rawDescGZIP() []byte {
 }
 
 var file_housework_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_housework_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
+var file_housework_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_housework_proto_goTypes = []any{
 	(ScheduleRepeatType)(0),                     // 0: shw.ScheduleRepeatType
 	(*ListHouseworksRequest)(nil),               // 1: shw.ListHouseworksRequest
@@ -2318,107 +2464,118 @@ var file_housework_proto_goTypes = []any{
 	(*GetHouseworkPointResponse)(nil),           // 15: shw.GetHouseworkPointResponse
 	(*ListHouseworkPointHistoriesRequest)(nil),  // 16: shw.ListHouseworkPointHistoriesRequest
 	(*ListHouseworkPointHistoriesResponse)(nil), // 17: shw.ListHouseworkPointHistoriesResponse
-	(*GetHouseworkTemplateRequest)(nil),         // 18: shw.GetHouseworkTemplateRequest
-	(*GetHouseworkTemplateResponse)(nil),        // 19: shw.GetHouseworkTemplateResponse
-	(*ListHouseworkTemplatesRequest)(nil),       // 20: shw.ListHouseworkTemplatesRequest
-	(*ListHouseworkTemplatesResponse)(nil),      // 21: shw.ListHouseworkTemplatesResponse
-	(*CreateHouseworkTemplateRequest)(nil),      // 22: shw.CreateHouseworkTemplateRequest
-	(*UpdateHouseworkTemplateRequest)(nil),      // 23: shw.UpdateHouseworkTemplateRequest
-	(*DeleteHouseworkTemplateRequest)(nil),      // 24: shw.DeleteHouseworkTemplateRequest
-	(*GetHouseworkScheduleRequest)(nil),         // 25: shw.GetHouseworkScheduleRequest
-	(*GetHouseworkScheduleResponse)(nil),        // 26: shw.GetHouseworkScheduleResponse
-	(*ListHouseworkSchedulesRequest)(nil),       // 27: shw.ListHouseworkSchedulesRequest
-	(*ListHouseworkSchedulesResponse)(nil),      // 28: shw.ListHouseworkSchedulesResponse
-	(*CreateHouseworkScheduleRequest)(nil),      // 29: shw.CreateHouseworkScheduleRequest
-	(*UpdateHouseworkScheduleRequest)(nil),      // 30: shw.UpdateHouseworkScheduleRequest
-	(*DeleteHouseworkScheduleRequest)(nil),      // 31: shw.DeleteHouseworkScheduleRequest
-	(*Housework)(nil),                           // 32: shw.Housework
-	(*HouseworkMemo)(nil),                       // 33: shw.HouseworkMemo
-	(*HouseworkPoint)(nil),                      // 34: shw.HouseworkPoint
-	(*HouseworkPointHistory)(nil),               // 35: shw.HouseworkPointHistory
-	(*HouseworkTemplate)(nil),                   // 36: shw.HouseworkTemplate
-	(*HouseworkSchedule)(nil),                   // 37: shw.HouseworkSchedule
-	(*ScheduleRepeat)(nil),                      // 38: shw.ScheduleRepeat
-	(*ScheduleReminder)(nil),                    // 39: shw.ScheduleReminder
-	(*UserInfo)(nil),                            // 40: shw.UserInfo
-	(*CommonResponse)(nil),                      // 41: shw.CommonResponse
+	(*CreateHouseworkPointRequest)(nil),         // 18: shw.CreateHouseworkPointRequest
+	(*UpdateHouseworkPointRequest)(nil),         // 19: shw.UpdateHouseworkPointRequest
+	(*DeleteHouseworkPointRequest)(nil),         // 20: shw.DeleteHouseworkPointRequest
+	(*GetHouseworkTemplateRequest)(nil),         // 21: shw.GetHouseworkTemplateRequest
+	(*GetHouseworkTemplateResponse)(nil),        // 22: shw.GetHouseworkTemplateResponse
+	(*ListHouseworkTemplatesRequest)(nil),       // 23: shw.ListHouseworkTemplatesRequest
+	(*ListHouseworkTemplatesResponse)(nil),      // 24: shw.ListHouseworkTemplatesResponse
+	(*CreateHouseworkTemplateRequest)(nil),      // 25: shw.CreateHouseworkTemplateRequest
+	(*UpdateHouseworkTemplateRequest)(nil),      // 26: shw.UpdateHouseworkTemplateRequest
+	(*DeleteHouseworkTemplateRequest)(nil),      // 27: shw.DeleteHouseworkTemplateRequest
+	(*GetHouseworkScheduleRequest)(nil),         // 28: shw.GetHouseworkScheduleRequest
+	(*GetHouseworkScheduleResponse)(nil),        // 29: shw.GetHouseworkScheduleResponse
+	(*ListHouseworkSchedulesRequest)(nil),       // 30: shw.ListHouseworkSchedulesRequest
+	(*ListHouseworkSchedulesResponse)(nil),      // 31: shw.ListHouseworkSchedulesResponse
+	(*CreateHouseworkScheduleRequest)(nil),      // 32: shw.CreateHouseworkScheduleRequest
+	(*UpdateHouseworkScheduleRequest)(nil),      // 33: shw.UpdateHouseworkScheduleRequest
+	(*DeleteHouseworkScheduleRequest)(nil),      // 34: shw.DeleteHouseworkScheduleRequest
+	(*Housework)(nil),                           // 35: shw.Housework
+	(*HouseworkMemo)(nil),                       // 36: shw.HouseworkMemo
+	(*HouseworkPoint)(nil),                      // 37: shw.HouseworkPoint
+	(*HouseworkPointHistory)(nil),               // 38: shw.HouseworkPointHistory
+	(*HouseworkTemplate)(nil),                   // 39: shw.HouseworkTemplate
+	(*HouseworkSchedule)(nil),                   // 40: shw.HouseworkSchedule
+	(*ScheduleRepeat)(nil),                      // 41: shw.ScheduleRepeat
+	(*ScheduleReminder)(nil),                    // 42: shw.ScheduleReminder
+	(*UserInfo)(nil),                            // 43: shw.UserInfo
+	(*CommonResponse)(nil),                      // 44: shw.CommonResponse
 }
 var file_housework_proto_depIdxs = []int32{
-	32, // 0: shw.ListHouseworksResponse.houseworks:type_name -> shw.Housework
-	32, // 1: shw.GetHouseworkResponse.housework:type_name -> shw.Housework
-	33, // 2: shw.GetHouseworkResponse.memos:type_name -> shw.HouseworkMemo
-	32, // 3: shw.CreateHouseworkRequest.housework:type_name -> shw.Housework
-	32, // 4: shw.UpdateHouseworkRequest.housework:type_name -> shw.Housework
-	33, // 5: shw.ListHouseworkMemosResponse.memos:type_name -> shw.HouseworkMemo
-	33, // 6: shw.CreateHouseworkMemoRequest.memo:type_name -> shw.HouseworkMemo
-	33, // 7: shw.UpdateHouseworkMemoRequest.memo:type_name -> shw.HouseworkMemo
-	34, // 8: shw.GetHouseworkPointResponse.point:type_name -> shw.HouseworkPoint
-	35, // 9: shw.ListHouseworkPointHistoriesResponse.histories:type_name -> shw.HouseworkPointHistory
-	36, // 10: shw.GetHouseworkTemplateResponse.template:type_name -> shw.HouseworkTemplate
-	36, // 11: shw.ListHouseworkTemplatesResponse.templates:type_name -> shw.HouseworkTemplate
-	36, // 12: shw.CreateHouseworkTemplateRequest.template:type_name -> shw.HouseworkTemplate
-	36, // 13: shw.UpdateHouseworkTemplateRequest.template:type_name -> shw.HouseworkTemplate
-	37, // 14: shw.GetHouseworkScheduleResponse.schedule:type_name -> shw.HouseworkSchedule
-	37, // 15: shw.ListHouseworkSchedulesResponse.schedules:type_name -> shw.HouseworkSchedule
-	37, // 16: shw.CreateHouseworkScheduleRequest.schedule:type_name -> shw.HouseworkSchedule
-	37, // 17: shw.UpdateHouseworkScheduleRequest.schedule:type_name -> shw.HouseworkSchedule
-	40, // 18: shw.Housework.work_user:type_name -> shw.UserInfo
-	40, // 19: shw.HouseworkMemo.send_from:type_name -> shw.UserInfo
-	40, // 20: shw.HouseworkPoint.user:type_name -> shw.UserInfo
-	40, // 21: shw.HouseworkPointHistory.user:type_name -> shw.UserInfo
-	40, // 22: shw.HouseworkSchedule.assignee:type_name -> shw.UserInfo
-	38, // 23: shw.HouseworkSchedule.repeat:type_name -> shw.ScheduleRepeat
-	39, // 24: shw.HouseworkSchedule.reminders:type_name -> shw.ScheduleReminder
-	0,  // 25: shw.ScheduleRepeat.type:type_name -> shw.ScheduleRepeatType
-	1,  // 26: shw.HouseworkService.ListHouseworks:input_type -> shw.ListHouseworksRequest
-	3,  // 27: shw.HouseworkService.GetHousework:input_type -> shw.GetHouseworkRequest
-	5,  // 28: shw.HouseworkService.CreateHousework:input_type -> shw.CreateHouseworkRequest
-	6,  // 29: shw.HouseworkService.UpdateHousework:input_type -> shw.UpdateHouseworkRequest
-	7,  // 30: shw.HouseworkService.FinishHousework:input_type -> shw.FinishHouseworkRequest
-	8,  // 31: shw.HouseworkService.DeleteHousework:input_type -> shw.DeleteHouseworkRequest
-	9,  // 32: shw.HouseworkMemoService.ListHouseworkMemos:input_type -> shw.ListHouseworkMemosRequest
-	11, // 33: shw.HouseworkMemoService.CreateHouseworkMemo:input_type -> shw.CreateHouseworkMemoRequest
-	12, // 34: shw.HouseworkMemoService.UpdateHouseworkMemo:input_type -> shw.UpdateHouseworkMemoRequest
-	13, // 35: shw.HouseworkMemoService.DeleteHouseworkMemo:input_type -> shw.DeleteHouseworkMemoRequest
-	14, // 36: shw.HouseworkPointService.GetHouseworkPoint:input_type -> shw.GetHouseworkPointRequest
-	16, // 37: shw.HouseworkPointService.ListHouseworkPointHistories:input_type -> shw.ListHouseworkPointHistoriesRequest
-	18, // 38: shw.HouseworkTemplateService.GetHouseworkTemplate:input_type -> shw.GetHouseworkTemplateRequest
-	20, // 39: shw.HouseworkTemplateService.ListHouseworkTemplates:input_type -> shw.ListHouseworkTemplatesRequest
-	22, // 40: shw.HouseworkTemplateService.CreateHouseworkTemplate:input_type -> shw.CreateHouseworkTemplateRequest
-	23, // 41: shw.HouseworkTemplateService.UpdateHouseworkTemplate:input_type -> shw.UpdateHouseworkTemplateRequest
-	24, // 42: shw.HouseworkTemplateService.DeleteHouseworkTemplate:input_type -> shw.DeleteHouseworkTemplateRequest
-	25, // 43: shw.HouseworkScheduleService.GetHouseworkSchedule:input_type -> shw.GetHouseworkScheduleRequest
-	27, // 44: shw.HouseworkScheduleService.ListHouseworkSchedules:input_type -> shw.ListHouseworkSchedulesRequest
-	29, // 45: shw.HouseworkScheduleService.CreateHouseworkSchedule:input_type -> shw.CreateHouseworkScheduleRequest
-	30, // 46: shw.HouseworkScheduleService.UpdateHouseworkSchedule:input_type -> shw.UpdateHouseworkScheduleRequest
-	31, // 47: shw.HouseworkScheduleService.DeleteHouseworkSchedule:input_type -> shw.DeleteHouseworkScheduleRequest
-	2,  // 48: shw.HouseworkService.ListHouseworks:output_type -> shw.ListHouseworksResponse
-	4,  // 49: shw.HouseworkService.GetHousework:output_type -> shw.GetHouseworkResponse
-	41, // 50: shw.HouseworkService.CreateHousework:output_type -> shw.CommonResponse
-	41, // 51: shw.HouseworkService.UpdateHousework:output_type -> shw.CommonResponse
-	41, // 52: shw.HouseworkService.FinishHousework:output_type -> shw.CommonResponse
-	41, // 53: shw.HouseworkService.DeleteHousework:output_type -> shw.CommonResponse
-	10, // 54: shw.HouseworkMemoService.ListHouseworkMemos:output_type -> shw.ListHouseworkMemosResponse
-	41, // 55: shw.HouseworkMemoService.CreateHouseworkMemo:output_type -> shw.CommonResponse
-	41, // 56: shw.HouseworkMemoService.UpdateHouseworkMemo:output_type -> shw.CommonResponse
-	41, // 57: shw.HouseworkMemoService.DeleteHouseworkMemo:output_type -> shw.CommonResponse
-	15, // 58: shw.HouseworkPointService.GetHouseworkPoint:output_type -> shw.GetHouseworkPointResponse
-	17, // 59: shw.HouseworkPointService.ListHouseworkPointHistories:output_type -> shw.ListHouseworkPointHistoriesResponse
-	19, // 60: shw.HouseworkTemplateService.GetHouseworkTemplate:output_type -> shw.GetHouseworkTemplateResponse
-	21, // 61: shw.HouseworkTemplateService.ListHouseworkTemplates:output_type -> shw.ListHouseworkTemplatesResponse
-	41, // 62: shw.HouseworkTemplateService.CreateHouseworkTemplate:output_type -> shw.CommonResponse
-	41, // 63: shw.HouseworkTemplateService.UpdateHouseworkTemplate:output_type -> shw.CommonResponse
-	41, // 64: shw.HouseworkTemplateService.DeleteHouseworkTemplate:output_type -> shw.CommonResponse
-	26, // 65: shw.HouseworkScheduleService.GetHouseworkSchedule:output_type -> shw.GetHouseworkScheduleResponse
-	28, // 66: shw.HouseworkScheduleService.ListHouseworkSchedules:output_type -> shw.ListHouseworkSchedulesResponse
-	41, // 67: shw.HouseworkScheduleService.CreateHouseworkSchedule:output_type -> shw.CommonResponse
-	41, // 68: shw.HouseworkScheduleService.UpdateHouseworkSchedule:output_type -> shw.CommonResponse
-	41, // 69: shw.HouseworkScheduleService.DeleteHouseworkSchedule:output_type -> shw.CommonResponse
-	48, // [48:70] is the sub-list for method output_type
-	26, // [26:48] is the sub-list for method input_type
-	26, // [26:26] is the sub-list for extension type_name
-	26, // [26:26] is the sub-list for extension extendee
-	0,  // [0:26] is the sub-list for field type_name
+	35, // 0: shw.ListHouseworksResponse.houseworks:type_name -> shw.Housework
+	35, // 1: shw.GetHouseworkResponse.housework:type_name -> shw.Housework
+	36, // 2: shw.GetHouseworkResponse.memos:type_name -> shw.HouseworkMemo
+	35, // 3: shw.CreateHouseworkRequest.housework:type_name -> shw.Housework
+	35, // 4: shw.UpdateHouseworkRequest.housework:type_name -> shw.Housework
+	36, // 5: shw.ListHouseworkMemosResponse.memos:type_name -> shw.HouseworkMemo
+	36, // 6: shw.CreateHouseworkMemoRequest.memo:type_name -> shw.HouseworkMemo
+	36, // 7: shw.UpdateHouseworkMemoRequest.memo:type_name -> shw.HouseworkMemo
+	37, // 8: shw.GetHouseworkPointResponse.point:type_name -> shw.HouseworkPoint
+	38, // 9: shw.ListHouseworkPointHistoriesResponse.histories:type_name -> shw.HouseworkPointHistory
+	37, // 10: shw.CreateHouseworkPointRequest.point:type_name -> shw.HouseworkPoint
+	37, // 11: shw.UpdateHouseworkPointRequest.point:type_name -> shw.HouseworkPoint
+	39, // 12: shw.GetHouseworkTemplateResponse.template:type_name -> shw.HouseworkTemplate
+	39, // 13: shw.ListHouseworkTemplatesResponse.templates:type_name -> shw.HouseworkTemplate
+	39, // 14: shw.CreateHouseworkTemplateRequest.template:type_name -> shw.HouseworkTemplate
+	39, // 15: shw.UpdateHouseworkTemplateRequest.template:type_name -> shw.HouseworkTemplate
+	40, // 16: shw.GetHouseworkScheduleResponse.schedule:type_name -> shw.HouseworkSchedule
+	40, // 17: shw.ListHouseworkSchedulesResponse.schedules:type_name -> shw.HouseworkSchedule
+	40, // 18: shw.CreateHouseworkScheduleRequest.schedule:type_name -> shw.HouseworkSchedule
+	40, // 19: shw.UpdateHouseworkScheduleRequest.schedule:type_name -> shw.HouseworkSchedule
+	43, // 20: shw.Housework.work_user:type_name -> shw.UserInfo
+	43, // 21: shw.HouseworkMemo.send_from:type_name -> shw.UserInfo
+	43, // 22: shw.HouseworkPoint.user:type_name -> shw.UserInfo
+	43, // 23: shw.HouseworkPointHistory.user:type_name -> shw.UserInfo
+	43, // 24: shw.HouseworkSchedule.assignee:type_name -> shw.UserInfo
+	41, // 25: shw.HouseworkSchedule.repeat:type_name -> shw.ScheduleRepeat
+	42, // 26: shw.HouseworkSchedule.reminders:type_name -> shw.ScheduleReminder
+	0,  // 27: shw.ScheduleRepeat.type:type_name -> shw.ScheduleRepeatType
+	1,  // 28: shw.HouseworkService.ListHouseworks:input_type -> shw.ListHouseworksRequest
+	3,  // 29: shw.HouseworkService.GetHousework:input_type -> shw.GetHouseworkRequest
+	5,  // 30: shw.HouseworkService.CreateHousework:input_type -> shw.CreateHouseworkRequest
+	6,  // 31: shw.HouseworkService.UpdateHousework:input_type -> shw.UpdateHouseworkRequest
+	7,  // 32: shw.HouseworkService.FinishHousework:input_type -> shw.FinishHouseworkRequest
+	8,  // 33: shw.HouseworkService.DeleteHousework:input_type -> shw.DeleteHouseworkRequest
+	9,  // 34: shw.HouseworkMemoService.ListHouseworkMemos:input_type -> shw.ListHouseworkMemosRequest
+	11, // 35: shw.HouseworkMemoService.CreateHouseworkMemo:input_type -> shw.CreateHouseworkMemoRequest
+	12, // 36: shw.HouseworkMemoService.UpdateHouseworkMemo:input_type -> shw.UpdateHouseworkMemoRequest
+	13, // 37: shw.HouseworkMemoService.DeleteHouseworkMemo:input_type -> shw.DeleteHouseworkMemoRequest
+	14, // 38: shw.HouseworkPointService.GetHouseworkPoint:input_type -> shw.GetHouseworkPointRequest
+	16, // 39: shw.HouseworkPointService.ListHouseworkPointHistories:input_type -> shw.ListHouseworkPointHistoriesRequest
+	18, // 40: shw.HouseworkPointService.CreateHouseworkPoint:input_type -> shw.CreateHouseworkPointRequest
+	19, // 41: shw.HouseworkPointService.UpdateHouseworkPoint:input_type -> shw.UpdateHouseworkPointRequest
+	20, // 42: shw.HouseworkPointService.DeleteHouseworkPoint:input_type -> shw.DeleteHouseworkPointRequest
+	21, // 43: shw.HouseworkTemplateService.GetHouseworkTemplate:input_type -> shw.GetHouseworkTemplateRequest
+	23, // 44: shw.HouseworkTemplateService.ListHouseworkTemplates:input_type -> shw.ListHouseworkTemplatesRequest
+	25, // 45: shw.HouseworkTemplateService.CreateHouseworkTemplate:input_type -> shw.CreateHouseworkTemplateRequest
+	26, // 46: shw.HouseworkTemplateService.UpdateHouseworkTemplate:input_type -> shw.UpdateHouseworkTemplateRequest
+	27, // 47: shw.HouseworkTemplateService.DeleteHouseworkTemplate:input_type -> shw.DeleteHouseworkTemplateRequest
+	28, // 48: shw.HouseworkScheduleService.GetHouseworkSchedule:input_type -> shw.GetHouseworkScheduleRequest
+	30, // 49: shw.HouseworkScheduleService.ListHouseworkSchedules:input_type -> shw.ListHouseworkSchedulesRequest
+	32, // 50: shw.HouseworkScheduleService.CreateHouseworkSchedule:input_type -> shw.CreateHouseworkScheduleRequest
+	33, // 51: shw.HouseworkScheduleService.UpdateHouseworkSchedule:input_type -> shw.UpdateHouseworkScheduleRequest
+	34, // 52: shw.HouseworkScheduleService.DeleteHouseworkSchedule:input_type -> shw.DeleteHouseworkScheduleRequest
+	2,  // 53: shw.HouseworkService.ListHouseworks:output_type -> shw.ListHouseworksResponse
+	4,  // 54: shw.HouseworkService.GetHousework:output_type -> shw.GetHouseworkResponse
+	44, // 55: shw.HouseworkService.CreateHousework:output_type -> shw.CommonResponse
+	44, // 56: shw.HouseworkService.UpdateHousework:output_type -> shw.CommonResponse
+	44, // 57: shw.HouseworkService.FinishHousework:output_type -> shw.CommonResponse
+	44, // 58: shw.HouseworkService.DeleteHousework:output_type -> shw.CommonResponse
+	10, // 59: shw.HouseworkMemoService.ListHouseworkMemos:output_type -> shw.ListHouseworkMemosResponse
+	44, // 60: shw.HouseworkMemoService.CreateHouseworkMemo:output_type -> shw.CommonResponse
+	44, // 61: shw.HouseworkMemoService.UpdateHouseworkMemo:output_type -> shw.CommonResponse
+	44, // 62: shw.HouseworkMemoService.DeleteHouseworkMemo:output_type -> shw.CommonResponse
+	15, // 63: shw.HouseworkPointService.GetHouseworkPoint:output_type -> shw.GetHouseworkPointResponse
+	17, // 64: shw.HouseworkPointService.ListHouseworkPointHistories:output_type -> shw.ListHouseworkPointHistoriesResponse
+	44, // 65: shw.HouseworkPointService.CreateHouseworkPoint:output_type -> shw.CommonResponse
+	44, // 66: shw.HouseworkPointService.UpdateHouseworkPoint:output_type -> shw.CommonResponse
+	44, // 67: shw.HouseworkPointService.DeleteHouseworkPoint:output_type -> shw.CommonResponse
+	22, // 68: shw.HouseworkTemplateService.GetHouseworkTemplate:output_type -> shw.GetHouseworkTemplateResponse
+	24, // 69: shw.HouseworkTemplateService.ListHouseworkTemplates:output_type -> shw.ListHouseworkTemplatesResponse
+	44, // 70: shw.HouseworkTemplateService.CreateHouseworkTemplate:output_type -> shw.CommonResponse
+	44, // 71: shw.HouseworkTemplateService.UpdateHouseworkTemplate:output_type -> shw.CommonResponse
+	44, // 72: shw.HouseworkTemplateService.DeleteHouseworkTemplate:output_type -> shw.CommonResponse
+	29, // 73: shw.HouseworkScheduleService.GetHouseworkSchedule:output_type -> shw.GetHouseworkScheduleResponse
+	31, // 74: shw.HouseworkScheduleService.ListHouseworkSchedules:output_type -> shw.ListHouseworkSchedulesResponse
+	44, // 75: shw.HouseworkScheduleService.CreateHouseworkSchedule:output_type -> shw.CommonResponse
+	44, // 76: shw.HouseworkScheduleService.UpdateHouseworkSchedule:output_type -> shw.CommonResponse
+	44, // 77: shw.HouseworkScheduleService.DeleteHouseworkSchedule:output_type -> shw.CommonResponse
+	53, // [53:78] is the sub-list for method output_type
+	28, // [28:53] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_housework_proto_init() }
@@ -2433,7 +2590,7 @@ func file_housework_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_housework_proto_rawDesc), len(file_housework_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   39,
+			NumMessages:   42,
 			NumExtensions: 0,
 			NumServices:   5,
 		},
