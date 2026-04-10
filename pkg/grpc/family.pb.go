@@ -244,7 +244,7 @@ func (x *DeleteFamilyRequest) GetFamilyId() uint64 {
 type AddFamilyMemberRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Email         *string                `protobuf:"bytes,2,opt,name=email,proto3,oneof" json:"email,omitempty"`
 	FamilyId      uint64                 `protobuf:"varint,3,opt,name=family_id,json=familyId,proto3" json:"family_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -288,8 +288,8 @@ func (x *AddFamilyMemberRequest) GetName() string {
 }
 
 func (x *AddFamilyMemberRequest) GetEmail() string {
-	if x != nil {
-		return x.Email
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
@@ -361,104 +361,16 @@ func (x *Family) GetName() string {
 	return ""
 }
 
-type ListFamilyRolesRequest struct {
+type GetFamilyRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FamilyId      uint64                 `protobuf:"varint,1,opt,name=family_id,json=familyId,proto3" json:"family_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListFamilyRolesRequest) Reset() {
-	*x = ListFamilyRolesRequest{}
-	mi := &file_family_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFamilyRolesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFamilyRolesRequest) ProtoMessage() {}
-
-func (x *ListFamilyRolesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFamilyRolesRequest.ProtoReflect.Descriptor instead.
-func (*ListFamilyRolesRequest) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *ListFamilyRolesRequest) GetFamilyId() uint64 {
-	if x != nil {
-		return x.FamilyId
-	}
-	return 0
-}
-
-type ListFamilyRolesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*FamilyRole          `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"` // was family_role
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListFamilyRolesResponse) Reset() {
-	*x = ListFamilyRolesResponse{}
-	mi := &file_family_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFamilyRolesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFamilyRolesResponse) ProtoMessage() {}
-
-func (x *ListFamilyRolesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFamilyRolesResponse.ProtoReflect.Descriptor instead.
-func (*ListFamilyRolesResponse) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *ListFamilyRolesResponse) GetRoles() []*FamilyRole {
-	if x != nil {
-		return x.Roles
-	}
-	return nil
-}
-
-type GetFamilyRoleRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	FamilyRoleId  uint64                 `protobuf:"varint,1,opt,name=family_role_id,json=familyRoleId,proto3" json:"family_role_id,omitempty"` // was FamilyRoleRequest.family_role_id
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
 func (x *GetFamilyRoleRequest) Reset() {
 	*x = GetFamilyRoleRequest{}
-	mi := &file_family_proto_msgTypes[9]
+	mi := &file_family_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -470,7 +382,7 @@ func (x *GetFamilyRoleRequest) String() string {
 func (*GetFamilyRoleRequest) ProtoMessage() {}
 
 func (x *GetFamilyRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[9]
+	mi := &file_family_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -483,26 +395,26 @@ func (x *GetFamilyRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFamilyRoleRequest.ProtoReflect.Descriptor instead.
 func (*GetFamilyRoleRequest) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{9}
+	return file_family_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetFamilyRoleRequest) GetFamilyRoleId() uint64 {
+func (x *GetFamilyRoleRequest) GetFamilyId() uint64 {
 	if x != nil {
-		return x.FamilyRoleId
+		return x.FamilyId
 	}
 	return 0
 }
 
 type GetFamilyRoleResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role          *FamilyRole            `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Roles         []*FamilyRole          `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetFamilyRoleResponse) Reset() {
 	*x = GetFamilyRoleResponse{}
-	mi := &file_family_proto_msgTypes[10]
+	mi := &file_family_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -514,7 +426,7 @@ func (x *GetFamilyRoleResponse) String() string {
 func (*GetFamilyRoleResponse) ProtoMessage() {}
 
 func (x *GetFamilyRoleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[10]
+	mi := &file_family_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -527,12 +439,12 @@ func (x *GetFamilyRoleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFamilyRoleResponse.ProtoReflect.Descriptor instead.
 func (*GetFamilyRoleResponse) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{10}
+	return file_family_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GetFamilyRoleResponse) GetRole() *FamilyRole {
+func (x *GetFamilyRoleResponse) GetRoles() []*FamilyRole {
 	if x != nil {
-		return x.Role
+		return x.Roles
 	}
 	return nil
 }
@@ -546,7 +458,7 @@ type CreateFamilyRoleRequest struct {
 
 func (x *CreateFamilyRoleRequest) Reset() {
 	*x = CreateFamilyRoleRequest{}
-	mi := &file_family_proto_msgTypes[11]
+	mi := &file_family_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -558,7 +470,7 @@ func (x *CreateFamilyRoleRequest) String() string {
 func (*CreateFamilyRoleRequest) ProtoMessage() {}
 
 func (x *CreateFamilyRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[11]
+	mi := &file_family_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -571,7 +483,7 @@ func (x *CreateFamilyRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateFamilyRoleRequest.ProtoReflect.Descriptor instead.
 func (*CreateFamilyRoleRequest) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{11}
+	return file_family_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateFamilyRoleRequest) GetRole() *FamilyRole {
@@ -590,7 +502,7 @@ type UpdateFamilyRoleRequest struct {
 
 func (x *UpdateFamilyRoleRequest) Reset() {
 	*x = UpdateFamilyRoleRequest{}
-	mi := &file_family_proto_msgTypes[12]
+	mi := &file_family_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -602,7 +514,7 @@ func (x *UpdateFamilyRoleRequest) String() string {
 func (*UpdateFamilyRoleRequest) ProtoMessage() {}
 
 func (x *UpdateFamilyRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[12]
+	mi := &file_family_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -615,7 +527,7 @@ func (x *UpdateFamilyRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFamilyRoleRequest.ProtoReflect.Descriptor instead.
 func (*UpdateFamilyRoleRequest) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{12}
+	return file_family_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateFamilyRoleRequest) GetRole() *FamilyRole {
@@ -634,7 +546,7 @@ type DeleteFamilyRoleRequest struct {
 
 func (x *DeleteFamilyRoleRequest) Reset() {
 	*x = DeleteFamilyRoleRequest{}
-	mi := &file_family_proto_msgTypes[13]
+	mi := &file_family_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +558,7 @@ func (x *DeleteFamilyRoleRequest) String() string {
 func (*DeleteFamilyRoleRequest) ProtoMessage() {}
 
 func (x *DeleteFamilyRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[13]
+	mi := &file_family_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +571,7 @@ func (x *DeleteFamilyRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteFamilyRoleRequest.ProtoReflect.Descriptor instead.
 func (*DeleteFamilyRoleRequest) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{13}
+	return file_family_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *DeleteFamilyRoleRequest) GetFamilyRoleId() uint64 {
@@ -681,7 +593,7 @@ type FamilyRole struct {
 
 func (x *FamilyRole) Reset() {
 	*x = FamilyRole{}
-	mi := &file_family_proto_msgTypes[14]
+	mi := &file_family_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -693,7 +605,7 @@ func (x *FamilyRole) String() string {
 func (*FamilyRole) ProtoMessage() {}
 
 func (x *FamilyRole) ProtoReflect() protoreflect.Message {
-	mi := &file_family_proto_msgTypes[14]
+	mi := &file_family_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -706,7 +618,7 @@ func (x *FamilyRole) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FamilyRole.ProtoReflect.Descriptor instead.
 func (*FamilyRole) Descriptor() ([]byte, []int) {
-	return file_family_proto_rawDescGZIP(), []int{14}
+	return file_family_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *FamilyRole) GetId() uint64 {
@@ -751,23 +663,20 @@ const file_family_proto_rawDesc = "" +
 	"\x13UpdateFamilyRequest\x12#\n" +
 	"\x06family\x18\x01 \x01(\v2\v.shw.FamilyR\x06family\"2\n" +
 	"\x13DeleteFamilyRequest\x12\x1b\n" +
-	"\tfamily_id\x18\x01 \x01(\x04R\bfamilyId\"_\n" +
+	"\tfamily_id\x18\x01 \x01(\x04R\bfamilyId\"n\n" +
 	"\x16AddFamilyMemberRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1b\n" +
-	"\tfamily_id\x18\x03 \x01(\x04R\bfamilyId\"Q\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x19\n" +
+	"\x05email\x18\x02 \x01(\tH\x00R\x05email\x88\x01\x01\x12\x1b\n" +
+	"\tfamily_id\x18\x03 \x01(\x04R\bfamilyIdB\b\n" +
+	"\x06_email\"Q\n" +
 	"\x06Family\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12#\n" +
 	"\x05users\x18\x02 \x03(\v2\r.shw.UserInfoR\x05users\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"5\n" +
-	"\x16ListFamilyRolesRequest\x12\x1b\n" +
-	"\tfamily_id\x18\x01 \x01(\x04R\bfamilyId\"@\n" +
-	"\x17ListFamilyRolesResponse\x12%\n" +
-	"\x05roles\x18\x01 \x03(\v2\x0f.shw.FamilyRoleR\x05roles\"<\n" +
-	"\x14GetFamilyRoleRequest\x12$\n" +
-	"\x0efamily_role_id\x18\x01 \x01(\x04R\ffamilyRoleId\"<\n" +
-	"\x15GetFamilyRoleResponse\x12#\n" +
-	"\x04role\x18\x01 \x01(\v2\x0f.shw.FamilyRoleR\x04role\">\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"3\n" +
+	"\x14GetFamilyRoleRequest\x12\x1b\n" +
+	"\tfamily_id\x18\x01 \x01(\x04R\bfamilyId\">\n" +
+	"\x15GetFamilyRoleResponse\x12%\n" +
+	"\x05roles\x18\x01 \x03(\v2\x0f.shw.FamilyRoleR\x05roles\">\n" +
 	"\x17CreateFamilyRoleRequest\x12#\n" +
 	"\x04role\x18\x01 \x01(\v2\x0f.shw.FamilyRoleR\x04role\">\n" +
 	"\x17UpdateFamilyRoleRequest\x12#\n" +
@@ -785,10 +694,9 @@ const file_family_proto_rawDesc = "" +
 	"\fCreateFamily\x12\x18.shw.CreateFamilyRequest\x1a\x13.shw.CommonResponse\"\x00\x12?\n" +
 	"\fUpdateFamily\x12\x18.shw.UpdateFamilyRequest\x1a\x13.shw.CommonResponse\"\x00\x12?\n" +
 	"\fDeleteFamily\x12\x18.shw.DeleteFamilyRequest\x1a\x13.shw.CommonResponse\"\x00\x12E\n" +
-	"\x0fAddFamilyMember\x12\x1b.shw.AddFamilyMemberRequest\x1a\x13.shw.CommonResponse\"\x002\x88\x03\n" +
-	"\x11FamilyRoleService\x12N\n" +
-	"\x0fListFamilyRoles\x12\x1b.shw.ListFamilyRolesRequest\x1a\x1c.shw.ListFamilyRolesResponse\"\x00\x12H\n" +
-	"\rGetFamilyRole\x12\x19.shw.GetFamilyRoleRequest\x1a\x1a.shw.GetFamilyRoleResponse\"\x00\x12G\n" +
+	"\x0fAddFamilyMember\x12\x1b.shw.AddFamilyMemberRequest\x1a\x13.shw.CommonResponse\"\x002\xb9\x02\n" +
+	"\x11FamilyRoleService\x12I\n" +
+	"\x0eGetFamilyRoles\x12\x19.shw.GetFamilyRoleRequest\x1a\x1a.shw.GetFamilyRoleResponse\"\x00\x12G\n" +
 	"\x10CreateFamilyRole\x12\x1c.shw.CreateFamilyRoleRequest\x1a\x13.shw.CommonResponse\"\x00\x12G\n" +
 	"\x10UpdateFamilyRole\x12\x1c.shw.UpdateFamilyRoleRequest\x1a\x13.shw.CommonResponse\"\x00\x12G\n" +
 	"\x10DeleteFamilyRole\x12\x1c.shw.DeleteFamilyRoleRequest\x1a\x13.shw.CommonResponse\"\x00B\x12Z\x10shwgrpc/pkg/grpcb\x06proto3"
@@ -805,7 +713,7 @@ func file_family_proto_rawDescGZIP() []byte {
 	return file_family_proto_rawDescData
 }
 
-var file_family_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_family_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_family_proto_goTypes = []any{
 	(*GetFamilyRequest)(nil),        // 0: shw.GetFamilyRequest
 	(*GetFamilyResponse)(nil),       // 1: shw.GetFamilyResponse
@@ -814,51 +722,46 @@ var file_family_proto_goTypes = []any{
 	(*DeleteFamilyRequest)(nil),     // 4: shw.DeleteFamilyRequest
 	(*AddFamilyMemberRequest)(nil),  // 5: shw.AddFamilyMemberRequest
 	(*Family)(nil),                  // 6: shw.Family
-	(*ListFamilyRolesRequest)(nil),  // 7: shw.ListFamilyRolesRequest
-	(*ListFamilyRolesResponse)(nil), // 8: shw.ListFamilyRolesResponse
-	(*GetFamilyRoleRequest)(nil),    // 9: shw.GetFamilyRoleRequest
-	(*GetFamilyRoleResponse)(nil),   // 10: shw.GetFamilyRoleResponse
-	(*CreateFamilyRoleRequest)(nil), // 11: shw.CreateFamilyRoleRequest
-	(*UpdateFamilyRoleRequest)(nil), // 12: shw.UpdateFamilyRoleRequest
-	(*DeleteFamilyRoleRequest)(nil), // 13: shw.DeleteFamilyRoleRequest
-	(*FamilyRole)(nil),              // 14: shw.FamilyRole
-	(*UserInfo)(nil),                // 15: shw.UserInfo
-	(*CommonResponse)(nil),          // 16: shw.CommonResponse
+	(*GetFamilyRoleRequest)(nil),    // 7: shw.GetFamilyRoleRequest
+	(*GetFamilyRoleResponse)(nil),   // 8: shw.GetFamilyRoleResponse
+	(*CreateFamilyRoleRequest)(nil), // 9: shw.CreateFamilyRoleRequest
+	(*UpdateFamilyRoleRequest)(nil), // 10: shw.UpdateFamilyRoleRequest
+	(*DeleteFamilyRoleRequest)(nil), // 11: shw.DeleteFamilyRoleRequest
+	(*FamilyRole)(nil),              // 12: shw.FamilyRole
+	(*UserInfo)(nil),                // 13: shw.UserInfo
+	(*CommonResponse)(nil),          // 14: shw.CommonResponse
 }
 var file_family_proto_depIdxs = []int32{
 	6,  // 0: shw.GetFamilyResponse.family:type_name -> shw.Family
 	6,  // 1: shw.CreateFamilyRequest.family:type_name -> shw.Family
 	6,  // 2: shw.UpdateFamilyRequest.family:type_name -> shw.Family
-	15, // 3: shw.Family.users:type_name -> shw.UserInfo
-	14, // 4: shw.ListFamilyRolesResponse.roles:type_name -> shw.FamilyRole
-	14, // 5: shw.GetFamilyRoleResponse.role:type_name -> shw.FamilyRole
-	14, // 6: shw.CreateFamilyRoleRequest.role:type_name -> shw.FamilyRole
-	14, // 7: shw.UpdateFamilyRoleRequest.role:type_name -> shw.FamilyRole
-	0,  // 8: shw.FamilyService.GetFamily:input_type -> shw.GetFamilyRequest
-	2,  // 9: shw.FamilyService.CreateFamily:input_type -> shw.CreateFamilyRequest
-	3,  // 10: shw.FamilyService.UpdateFamily:input_type -> shw.UpdateFamilyRequest
-	4,  // 11: shw.FamilyService.DeleteFamily:input_type -> shw.DeleteFamilyRequest
-	5,  // 12: shw.FamilyService.AddFamilyMember:input_type -> shw.AddFamilyMemberRequest
-	7,  // 13: shw.FamilyRoleService.ListFamilyRoles:input_type -> shw.ListFamilyRolesRequest
-	9,  // 14: shw.FamilyRoleService.GetFamilyRole:input_type -> shw.GetFamilyRoleRequest
-	11, // 15: shw.FamilyRoleService.CreateFamilyRole:input_type -> shw.CreateFamilyRoleRequest
-	12, // 16: shw.FamilyRoleService.UpdateFamilyRole:input_type -> shw.UpdateFamilyRoleRequest
-	13, // 17: shw.FamilyRoleService.DeleteFamilyRole:input_type -> shw.DeleteFamilyRoleRequest
-	1,  // 18: shw.FamilyService.GetFamily:output_type -> shw.GetFamilyResponse
-	16, // 19: shw.FamilyService.CreateFamily:output_type -> shw.CommonResponse
-	16, // 20: shw.FamilyService.UpdateFamily:output_type -> shw.CommonResponse
-	16, // 21: shw.FamilyService.DeleteFamily:output_type -> shw.CommonResponse
-	16, // 22: shw.FamilyService.AddFamilyMember:output_type -> shw.CommonResponse
-	8,  // 23: shw.FamilyRoleService.ListFamilyRoles:output_type -> shw.ListFamilyRolesResponse
-	10, // 24: shw.FamilyRoleService.GetFamilyRole:output_type -> shw.GetFamilyRoleResponse
-	16, // 25: shw.FamilyRoleService.CreateFamilyRole:output_type -> shw.CommonResponse
-	16, // 26: shw.FamilyRoleService.UpdateFamilyRole:output_type -> shw.CommonResponse
-	16, // 27: shw.FamilyRoleService.DeleteFamilyRole:output_type -> shw.CommonResponse
-	18, // [18:28] is the sub-list for method output_type
-	8,  // [8:18] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	13, // 3: shw.Family.users:type_name -> shw.UserInfo
+	12, // 4: shw.GetFamilyRoleResponse.roles:type_name -> shw.FamilyRole
+	12, // 5: shw.CreateFamilyRoleRequest.role:type_name -> shw.FamilyRole
+	12, // 6: shw.UpdateFamilyRoleRequest.role:type_name -> shw.FamilyRole
+	0,  // 7: shw.FamilyService.GetFamily:input_type -> shw.GetFamilyRequest
+	2,  // 8: shw.FamilyService.CreateFamily:input_type -> shw.CreateFamilyRequest
+	3,  // 9: shw.FamilyService.UpdateFamily:input_type -> shw.UpdateFamilyRequest
+	4,  // 10: shw.FamilyService.DeleteFamily:input_type -> shw.DeleteFamilyRequest
+	5,  // 11: shw.FamilyService.AddFamilyMember:input_type -> shw.AddFamilyMemberRequest
+	7,  // 12: shw.FamilyRoleService.GetFamilyRoles:input_type -> shw.GetFamilyRoleRequest
+	9,  // 13: shw.FamilyRoleService.CreateFamilyRole:input_type -> shw.CreateFamilyRoleRequest
+	10, // 14: shw.FamilyRoleService.UpdateFamilyRole:input_type -> shw.UpdateFamilyRoleRequest
+	11, // 15: shw.FamilyRoleService.DeleteFamilyRole:input_type -> shw.DeleteFamilyRoleRequest
+	1,  // 16: shw.FamilyService.GetFamily:output_type -> shw.GetFamilyResponse
+	14, // 17: shw.FamilyService.CreateFamily:output_type -> shw.CommonResponse
+	14, // 18: shw.FamilyService.UpdateFamily:output_type -> shw.CommonResponse
+	14, // 19: shw.FamilyService.DeleteFamily:output_type -> shw.CommonResponse
+	14, // 20: shw.FamilyService.AddFamilyMember:output_type -> shw.CommonResponse
+	8,  // 21: shw.FamilyRoleService.GetFamilyRoles:output_type -> shw.GetFamilyRoleResponse
+	14, // 22: shw.FamilyRoleService.CreateFamilyRole:output_type -> shw.CommonResponse
+	14, // 23: shw.FamilyRoleService.UpdateFamilyRole:output_type -> shw.CommonResponse
+	14, // 24: shw.FamilyRoleService.DeleteFamilyRole:output_type -> shw.CommonResponse
+	16, // [16:25] is the sub-list for method output_type
+	7,  // [7:16] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_family_proto_init() }
@@ -867,13 +770,14 @@ func file_family_proto_init() {
 		return
 	}
 	file_common_proto_init()
+	file_family_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_family_proto_rawDesc), len(file_family_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

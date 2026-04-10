@@ -1,12 +1,13 @@
 package controller
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"shwgrpc/internal/user/infra"
 	"shwgrpc/internal/user/port"
 	"shwgrpc/internal/user/usecase"
 	shwgrpc "shwgrpc/pkg/grpc"
+
+	"connectrpc.com/connect"
 )
 
 type UserController struct{}
@@ -19,7 +20,7 @@ func NewUserController() *UserController {
 	return &UserController{}
 }
 
-func (c *UserController) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.UpdateRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
+func (c *UserController) UpdateRole(ctx context.Context, req *connect.Request[shwgrpc.UpdateUserRoleRequest]) (*connect.Response[shwgrpc.CommonResponse], error) {
 	if err := userUsecase.UpdateRole(ctx, req.Msg.UserId, req.Msg.RoleId); err != nil {
 		return nil, err
 	}

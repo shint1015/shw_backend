@@ -12,9 +12,9 @@ type FamilyRepository interface {
 	Get(ctx context.Context, familyId uint64) (domain.Family, error)
 }
 
-type FamiyRoleRepository interface {
+type FamilyRoleRepository interface {
 	Create(ctx context.Context, familyRole domain.FamilyRole) error
 	Update(ctx context.Context, familyRole domain.FamilyRole) error
 	Delete(ctx context.Context, familyRoleId uint64) error
-	Get(ctx context.Context, familyId uint64) (domain.FamilyRole, error)
+	Get(ctx context.Context, familyId uint64) ([]domain.FamilyRole, error)
 }

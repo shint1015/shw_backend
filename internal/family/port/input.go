@@ -9,6 +9,12 @@ type UpdateFamilyInput struct {
 	Name string
 }
 
+type AddFamilyMemberInput struct {
+	Name string
+	Email *string
+	FamilyID uint64
+}
+
 type CreateRoleInput struct {
 	Name string
 	FamilyID uint64

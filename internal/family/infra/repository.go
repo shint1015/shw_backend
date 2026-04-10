@@ -4,9 +4,9 @@ import (
 	"context"
 	"shwgrpc/internal/family/domain"
 	"shwgrpc/internal/family/port"
-	"shwgrpc/model"
+	houseworkdomain "shwgrpc/internal/housework/domain"
 	sharedmapper "shwgrpc/internal/shared/mapper"
-	"time"
+	"shwgrpc/model"
 )
 
 type FamilyRepository struct {}
@@ -16,10 +16,10 @@ func NewFamilyRepository() port.FamilyRepository {
 }
 
 func (r *FamilyRepository) Get(_ context.Context, familyID uint64) (domain.Family, error) {
-	var res []model.Family
+	var res model.Family
 	if err := model.DB.
 		Where(&model.Family{ID: uint(familyID)}).
-		Find(&res).Error; err != nil {
+		First(&res).Error; err != nil {
 		return domain.Family{}, err
 	}
 	return mapFamily(res), nil
@@ -38,7 +38,7 @@ func (r *FamilyRepository) Create(_ context.Context, family domain.Family) error
 func (r *FamilyRepository) Update(_ context.Context, family domain.Family) error {
 	// TODO: check user id is for the family data
 	m := model.Family{
-		ID: family.ID,
+		ID: uint(*family.ID),
 		Name: family.Name,
 	}
 	return m.Update(nil)
@@ -56,14 +56,14 @@ func NewFamilyRoleRepository() port.FamilyRoleRepository {
 	return &FamilyRoleRepository{}
 }
 
-func (r *FamilyRoleRepository) Get(_ context.Context, familyId uint64) (domain.FamilyRole, error) {
+func (r *FamilyRoleRepository) Get(_ context.Context, familyId uint64) ([]domain.FamilyRole, error) {
 	var res []model.FamilyRole
 	if err := model.DB.
 		Where(&model.FamilyRole{FamilyID: uint(familyId)}).
 		Find(&res).Error; err != nil {
-		return domain.FamilyRole{}, err
+		return nil, err
 	}
-	return mapFamilyRole(res), nil
+	return mapFamilyRoleList(res), nil
 }
 
 func (r *FamilyRoleRepository) Create(_ context.Context, familyRole domain.FamilyRole) error {
@@ -76,7 +76,7 @@ func (r *FamilyRoleRepository) Create(_ context.Context, familyRole domain.Famil
 
 func (r *FamilyRoleRepository) Update(_ context.Context, familyRole domain.FamilyRole) error {
 	m := model.FamilyRole{
-		ID: familyRole.ID,
+		ID: uint(*familyRole.ID),
 		Name: familyRole.Name,
 		FamilyID: uint(familyRole.FamilyID),
 	}
@@ -88,9 +88,11 @@ func (r *FamilyRoleRepository) Delete(_ context.Context, familyRoleId uint64) er
 	return m.Delete(nil)
 }
 
+
 func mapFamilyRole(f model.FamilyRole) domain.FamilyRole {
+	id := uint64(f.ID)
 	return domain.FamilyRole{
-		ID: uint64(f.ID),
+		ID: &id,
 		Name: f.Name,
 		FamilyID: uint64(f.FamilyID),
 	}
@@ -106,23 +108,28 @@ func mapFamilyRoleList(f []model.FamilyRole) []domain.FamilyRole {
 
 
 func mapFamily(f model.Family) domain.Family {
+	id := uint64(f.ID)
 	return domain.Family{
-		ID: uint64(f.ID),
+		ID: &id,
 		Name: f.Name,
-		Users: mapUserInfoList(f.Users),
+		Users: mapUserInfoList(f),
 	}
 }
 
-func mapUserInfoList(u model.Family.Users) domain.Family.Users {
-	var users []domain.Family.Users
-	for user := range u {
-		userDomain := sharedmapper.MapUserInfoAs(u, func(id uint64, name string) domain.UserInfo {
-			return domain.UserInfo{
+func mapUserInfoList(u model.Family) []houseworkdomain.UserInfo {
+	var users []houseworkdomain.UserInfo
+	if u.Users == nil {
+		return users
+	}
+	for _, user := range *u.Users {
+		userDomain := sharedmapper.MapUserInfoAs(user, func(id uint64, name string) houseworkdomain.UserInfo {
+			return houseworkdomain.UserInfo{
 				ID:   id,
 				Name: name,
 			}
 		})
-		users.append()
+		users = append(users, userDomain)
 	}
+	return users
 }
 

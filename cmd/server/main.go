@@ -22,7 +22,6 @@ import (
 var houseworkController = controller.NewHouseworkController()
 var familyController = controller.NewFamilyController()
 var userController = controller.NewUserController()
-var pointController = controller.NewPointController()
 
 type ShwServer struct {
 	grpcconnect.UnimplementedHelloServiceHandler

@@ -12,5 +12,6 @@ type Family struct {
 
 type FamilyRole struct {
 	ID *uint64
-	Name string 
+	Name string
+	FamilyID uint64
 }

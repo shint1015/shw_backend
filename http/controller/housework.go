@@ -27,22 +27,24 @@ func NewHouseworkController() *HouseworkController {
 }
 
 func (c *HouseworkController) GetHousework(ctx context.Context, req *connect.Request[shwgrpc.GetHouseworkRequest]) (*connect.Response[shwgrpc.GetHouseworkResponse], error) {
-	housework, err := houseworkUsecase.ListHousework(ctx, req.Msg.Id)
+	housework, memo, err := houseworkUsecase.GetHouseworkDetail(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
-	res := connect.NewResponse(&shwgrpc.GetHouseworkResponse{Housework: mapHouseworkListToGrpc(housework)})
+	res := connect.NewResponse(&shwgrpc.GetHouseworkResponse{
+		Housework: mapHouseworkToGrpc(housework),
+		Memos:      mapHouseworkMemoListToGrpc(memo),
+	})
 	return res, nil
 }
 
 func (c *HouseworkController) ListHouseworks(ctx context.Context, req *connect.Request[shwgrpc.ListHouseworksRequest]) (*connect.Response[shwgrpc.ListHouseworksResponse], error) {
-	houseworks, _, err := houseworkUsecase.ListHouseworks(ctx, req.Msg.FamilyId)
+	houseworks, err := houseworkUsecase.ListHousework(ctx, req.Msg.FamilyId)
 	if err != nil {
 		return nil, err
 	}
-	houseworks := []
 	res := connect.NewResponse(&shwgrpc.ListHouseworksResponse{
-		Houseworks: mapHouseworkToGrpc(housework),
+		Houseworks: mapHouseworkListToGrpc(houseworks),
 	})
 	return res, nil
 }
